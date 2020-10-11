@@ -1,8 +1,8 @@
 import 'package:android_guru/app_localizations.dart';
-import 'package:android_guru/global/lang/app_langs.dart';
-import 'package:android_guru/global/lang/lang_bloc.dart';
-import 'package:android_guru/global/theme/app_themes.dart';
-import 'package:android_guru/global/theme/theme_bloc.dart';
+import 'package:android_guru/blocs/lang/app_langs.dart';
+import 'package:android_guru/blocs/lang/lang_bloc.dart';
+import 'package:android_guru/blocs/theme/app_themes.dart';
+import 'package:android_guru/blocs/theme/theme_bloc.dart';
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

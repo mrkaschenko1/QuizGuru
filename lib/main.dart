@@ -1,9 +1,9 @@
-import 'package:android_guru/global/lang/lang_bloc.dart';
+import 'package:android_guru/blocs/lang/lang_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'app_localizations.dart';
 import 'widgets/home_wrapper.dart';
-import 'package:android_guru/global/theme/theme_bloc.dart';
+import 'package:android_guru/blocs/theme/theme_bloc.dart';
 import 'package:android_guru/screens/question_screen.dart';
 import 'package:android_guru/screens/tests_screen.dart';
 import 'package:firebase_core/firebase_core.dart';

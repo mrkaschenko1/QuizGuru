@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:android_guru/global/theme/app_themes.dart';
+import 'package:android_guru/blocs/theme/app_themes.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';

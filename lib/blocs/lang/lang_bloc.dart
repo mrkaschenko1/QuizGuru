@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:android_guru/app_localizations.dart';
-import 'package:android_guru/global/lang/app_langs.dart';
+import 'package:android_guru/blocs/lang/app_langs.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:meta/meta.dart';
