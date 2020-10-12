@@ -34,16 +34,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         );
 
         userCredential.fold(
-          (l) => {
-              throw FirebaseAuthException(message: l.message)
-            },
-          (r) async* {
-              yield LoginInitial();
-      });
+                (l) => {throw FirebaseAuthException(message: l.message)},
+                (r) async* {yield LoginInitial();}
+        );
       } catch (error) {
         yield LoginFailure(error: error.toString(), isLogin: true);
         yield LoginFormState();
       }
+
     } else if (event is SignUpButtonPressed) {
       yield LoginLoading(isLogin: false);
 
@@ -55,12 +53,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         );
 
         userCredential.fold(
-                (l) => {
-              throw FirebaseAuthException(message: l.message)
-            },
-                (r) async* {
-              yield LoginInitial();
-            });
+          (l) => {throw FirebaseAuthException(message: l.message)},
+          (r) async* {yield LoginInitial();}
+        );
       } catch (error) {
         yield LoginFailure(error: error.toString(), isLogin: false);
         yield SignUpFormState();
@@ -71,12 +66,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         final userCredential = await userRepository.signInWithGoogle();
 
         userCredential.fold(
-          (l) => {
-            throw FirebaseAuthException(message: l.message)
-          },
-          (r) async* {
-            yield LoginInitial();
-          });
+          (l) => {throw FirebaseAuthException(message: l.message)},
+          (r) async* {yield LoginInitial();}
+        );
+
       } catch (error) {
         yield LoginFailure(error: error.toString(), isLogin: event.isLogin);
         if (event.isLogin) {

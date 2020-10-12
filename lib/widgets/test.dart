@@ -1,8 +1,9 @@
 import 'package:android_guru/app_localizations.dart';
+import 'package:android_guru/repositories/test_repository.dart';
+import 'package:android_guru/repositories/user_repository.dart';
 import 'package:android_guru/screens/question_screen.dart';
 import 'package:android_guru/widgets/custom_expansion_tile.dart';
 import 'package:android_guru/widgets/statistics_info_card.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
@@ -18,76 +19,23 @@ class Test extends StatefulWidget {
 
 class _TestState extends State<Test> {
   var _isLoading = false;
-  var _userId = FirebaseAuth.instance.currentUser.uid;
+  static final _firebaseDatabase = FirebaseDatabase();
+  var _testRepository = TestRepository(userRepository: UserRepository(), firebaseDatabase: _firebaseDatabase);
 
-  Future<Map<String, dynamic>> runTestsPassedTransaction(
-      DatabaseReference ref, bool isTestPassed) async {
-    final transactionResult = await ref.runTransaction((userTest) async {
-      if (userTest == null) {
-        return userTest;
-      }
-      if (userTest.value == null) {
-        return userTest;
-      }
-      if (!userTest.value.containsKey('tests_passed')) {
-        print('making tests_passed list');
-        userTest.value['tests_passed'] = List<dynamic>();
-      }
-      if (!userTest.value['tests_passed']
-          .any((e) => e.keys.contains(widget.test.id) ? true : false)) {
-        print('we don\'t have our test in user list');
-        var testsPassed =
-            List.of(userTest.value['tests_passed'], growable: true);
-        testsPassed.add({
-          widget.test.id: {
-            'user_tries': 1,
-            'best_score': 0,
-          }
-        });
-        userTest.value['tests_passed'] = testsPassed;
-      } else {
-        print('we have our test in list');
-        isTestPassed = true;
-        var index = userTest.value['tests_passed']
-            .indexWhere((e) => e.keys.contains(widget.test.id) ? true : false);
-        await userTest.value['tests_passed'][index][widget.test.id]
-            ['user_tries']++;
-      }
-      return userTest;
-    });
-    return {
-      'transaction_result': transactionResult,
-      'is_test_passed': isTestPassed
-    };
-  }
-
-  Future<TransactionResult> runTestIncrementTransaction(
-      DatabaseReference ref, bool isTestPassed) async {
-    return await ref.runTransaction((test) async {
-      if (test == null) {
-        return test;
-      }
-      await test.value['total_tries']++;
-      if (!isTestPassed) {
-        await test.value['students_passed']++;
-      }
-      return test;
-    });
-  }
-
-  void startTest() async {
+  void startTest(String testId) async {
     setState(() {
       _isLoading = true;
     });
     try {
       var isTestPassed = false;
-      final firebaseRef = FirebaseDatabase.instance.reference();
-      final user = firebaseRef.child('users').child(_userId);
-      var transactionMap = await runTestsPassedTransaction(user, isTestPassed);
+      var transactionMap = await TestRepository()
+          .runTestsPassedTransactionOnTest(
+            isTestPassed: isTestPassed,
+            testId: testId
+          );
       isTestPassed = transactionMap['is_test_passed'];
 
-      final test = firebaseRef.child('tests').child(widget.test.id);
-      await runTestIncrementTransaction(test, isTestPassed);
+      await _testRepository.runTestIncrementTransactionOnTest(isTestPassed: isTestPassed, testId: widget.test.id);
 
     } catch (e) {
       Scaffold.of(context).showSnackBar(SnackBar(
@@ -207,7 +155,7 @@ class _TestState extends State<Test> {
                         letterSpacing: 8,
                       ),
                     ),
-              onPressed: _isLoading ? () {} : startTest,
+              onPressed: _isLoading ? () {} : () => startTest(widget.test.id),
             ),
           ),
         ],

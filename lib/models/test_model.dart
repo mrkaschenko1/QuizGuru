@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class TestModel {
   final id;
   final title;
@@ -8,5 +10,14 @@ class TestModel {
   final userTries;
   final userBestScore;
 
-  TestModel({this.id, this.questions, this.studentsPassed, this.averageScore, this.userTries, this.userBestScore, this.totalPoints, this.title});
+  TestModel({
+    @required this.id,
+    @required this.questions,
+    @required this.studentsPassed,
+    @required this.averageScore,
+    @required this.userTries,
+    @required this.userBestScore,
+    @required this.totalPoints,
+    @required this.title
+  });
 }
