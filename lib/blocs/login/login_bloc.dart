@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:android_guru/blocs/auth/authentication_bloc.dart';
 import 'package:android_guru/repositories/user_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -12,22 +11,23 @@ part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UserRepository userRepository;
-  final AuthenticationBloc authenticationBloc;
 
   LoginBloc({
     @required this.userRepository,
-    @required this.authenticationBloc,
   }) : super(LoginInitial());
 
   @override
   Stream<LoginState> mapEventToState(
     LoginEvent event,
   ) async* {
-    if (event is LoginButtonPressed) {
-      yield LoginLoading();
+    if (event is ShowLoginForm) {
+      yield LoginFormState();
+    } else if (event is ShowSignUpForm) {
+      yield SignUpFormState();
+    } else if (event is LoginButtonPressed) {
+      yield LoginLoading(isLogin: true);
 
       try {
-
         final userCredential = await userRepository.signInWithEmailAndPassword(
           email: event.email,
           password: event.password,
@@ -38,17 +38,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
               throw FirebaseAuthException(message: l.message)
             },
           (r) async* {
-              authenticationBloc.add(LoggedIn(userCredential: r));
               yield LoginInitial();
       });
       } catch (error) {
-        yield LoginFailure(error: error.toString());
+        yield LoginFailure(error: error.toString(), isLogin: true);
+        yield LoginFormState();
       }
     } else if (event is SignUpButtonPressed) {
-      yield LoginLoading();
+      yield LoginLoading(isLogin: false);
 
       try {
-
         final userCredential = await userRepository.signUp(
           username: event.username,
           email: event.email,
@@ -60,14 +59,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
               throw FirebaseAuthException(message: l.message)
             },
                 (r) async* {
-              authenticationBloc.add(LoggedIn(userCredential: r));
               yield LoginInitial();
             });
       } catch (error) {
-        yield LoginFailure(error: error.toString());
+        yield LoginFailure(error: error.toString(), isLogin: false);
+        yield SignUpFormState();
       }
     } else if (event is GoogleSignUpButtonPressed) {
-      yield LoginLoading();
+      yield LoginLoading(isLogin: event.isLogin);
       try {
         final userCredential = await userRepository.signInWithGoogle();
 
@@ -76,11 +75,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             throw FirebaseAuthException(message: l.message)
           },
           (r) async* {
-            authenticationBloc.add(LoggedIn(userCredential: r));
             yield LoginInitial();
           });
       } catch (error) {
-        yield LoginFailure(error: error.toString());
+        yield LoginFailure(error: error.toString(), isLogin: event.isLogin);
+        if (event.isLogin) {
+          yield LoginInitial();
+        } else {
+          yield SignUpFormState();
+        }
       }
     }
   }

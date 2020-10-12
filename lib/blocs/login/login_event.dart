@@ -41,11 +41,24 @@ class SignUpButtonPressed extends LoginEvent {
 }
 
 class GoogleSignUpButtonPressed extends LoginEvent {
+  final bool isLogin;
+
+  GoogleSignUpButtonPressed(this.isLogin);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [isLogin];
 
   @override
   String toString() =>
       'GoogleSignUpButtonPressed';
+}
+
+class ShowLoginForm extends LoginEvent {
+  @override
+  List<Object> get props => [];
+}
+
+class ShowSignUpForm extends LoginEvent {
+  @override
+  List<Object> get props => [];
 }
