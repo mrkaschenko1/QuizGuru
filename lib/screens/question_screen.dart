@@ -1,4 +1,6 @@
 import 'package:android_guru/app_localizations.dart';
+import 'package:android_guru/repositories/test_repository.dart';
+import 'package:android_guru/repositories/user_repository.dart';
 import 'package:android_guru/screens/test_result_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -13,6 +15,9 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
+  static final _firebaseDatabase = FirebaseDatabase();
+  var _testRepository = TestRepository(userRepository: UserRepository(), firebaseDatabase: _firebaseDatabase);
+
   var _questions;
   var _questionNumber = 0;
   var _currentScore = 0;
@@ -22,44 +27,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
   var _isLoading = false;
   var _isFinished = false;
 
-  Future<Map<String, dynamic>> runUpdatePointsAndBestScore(DatabaseReference ref, int diff, String testId) async {
-    var transaction = await ref.runTransaction((user) async {
-      if (user == null) {
-        return user;
-      }
-      if (user.value == null) {
-        return user;
-      }
-      var test = user.value['tests_passed'].firstWhere((test) => test.keys.contains(testId) ? true : false);
-      print(test.values.first['best_score']);
-      var prevBestScore = test.values.first['best_score'];
-      if (_currentScore > prevBestScore) {
-        diff = _currentScore - prevBestScore;
-        user.value['points'] += diff;
-        test.values.first['best_score'] = _currentScore;
-      }
-
-      return user;
-    });
-    return {
-      'transaction_result': transaction,
-      'diff': diff
-    };
-  }
-
-  Future<TransactionResult> runUpdateTestPoints(DatabaseReference ref, int diff) async {
-    return ref.runTransaction((testPoints) async {
-      if (testPoints == null) {
-        return testPoints;
-      }
-      if (testPoints.value == null) {
-        return testPoints;
-      }
-      print(testPoints.value);
-      testPoints.value += diff;
-      return testPoints;
-    });
-  }
 
     Future<void> fixResults() async {
     try {
@@ -67,22 +34,15 @@ class _QuestionScreenState extends State<QuestionScreen> {
         _isLoading = true;
       });
       var testId = _questions['testId'];
-      final userId = FirebaseAuth.instance.currentUser.uid;
-      final firebaseRef = FirebaseDatabase.instance.reference();
 
-      var diff = 0;
-      var user = firebaseRef
-          .child('users')
-          .child(userId);
-      var transactionMap = await runUpdatePointsAndBestScore(user, diff, testId);
-      diff = transactionMap['diff'];
+      var transactionMap = await _testRepository.runUpdatePointsAndBestScore(
+          testId: testId,
+          currentScore: _currentScore
+      );
+      var diff = transactionMap['diff'];
 
       if (diff != 0) {
-        var points = firebaseRef
-            .child('tests')
-            .child(testId)
-            .child('total_points');
-        var transaction = await runUpdateTestPoints(points, diff);
+        await _testRepository.runUpdateTestPoints(testId, diff);
       }
     } catch (e) {
       print(e.toString());
@@ -94,8 +54,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (BuildContext context) =>
           TestResultScreen(
-          questionsLength: questionsLength,
-          totalScore: currentScore
+            questionsLength: questionsLength,
+            totalScore: currentScore
           )
     ));
   }

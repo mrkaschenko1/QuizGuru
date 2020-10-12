@@ -113,4 +113,54 @@ class TestRepository {
       return test;
     });
   }
+
+  Future<Map<String, dynamic>> runUpdatePointsAndBestScore({String testId, int currentScore}) async {
+    final userId = _userRepository.user.uid;
+    var userRef = _firebaseDatabase
+        .reference()
+        .child('users')
+        .child(userId);
+    var diff = 0;
+    var transaction = await userRef.runTransaction((user) async {
+      if (user == null) {
+        return user;
+      }
+      if (user.value == null) {
+        return user;
+      }
+      var test = user.value['tests_passed'].firstWhere((test) => test.keys.contains(testId) ? true : false);
+      print(test.values.first['best_score']);
+      var prevBestScore = test.values.first['best_score'];
+      if (currentScore > prevBestScore) {
+        diff = currentScore - prevBestScore;
+        user.value['points'] += diff;
+        test.values.first['best_score'] = currentScore;
+      }
+
+      return user;
+    });
+    return {
+      'transaction_result': transaction,
+      'diff': diff
+    };
+  }
+
+  Future<TransactionResult> runUpdateTestPoints(String testId, int diff) async {
+    var totalPointsRef = _firebaseDatabase
+        .reference()
+        .child('tests')
+        .child(testId)
+        .child('total_points');
+    return totalPointsRef.runTransaction((testPoints) async {
+      if (testPoints == null) {
+        return testPoints;
+      }
+      if (testPoints.value == null) {
+        return testPoints;
+      }
+      print(testPoints.value);
+      testPoints.value += diff;
+      return testPoints;
+    });
+  }
 }
