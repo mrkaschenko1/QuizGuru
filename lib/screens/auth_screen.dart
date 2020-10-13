@@ -1,11 +1,16 @@
 import 'dart:math';
 
 import 'package:android_guru/blocs/login/login_bloc.dart';
+import 'package:android_guru/network/network_info.dart';
 import 'package:android_guru/repositories/user_repository.dart';
 import 'package:android_guru/widgets/animated_wave.dart';
 import 'package:android_guru/widgets/auth_form.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthScreen extends StatelessWidget {
 
@@ -30,7 +35,14 @@ class AuthScreen extends StatelessWidget {
             ),),
             Positioned.fill(
                 child: BlocProvider<LoginBloc>(
-                    create: (context) => LoginBloc(userRepository: UserRepository()),
+                    create: (context) => LoginBloc(
+                        userRepository: UserRepository(
+                          firebaseAuth: FirebaseAuth.instance,
+                          googleSignIn: GoogleSignIn(),
+                          firebaseDatabase: FirebaseDatabase.instance,
+                          networkInfo: NetworkInfoImpl(DataConnectionChecker())
+                        )
+                    ),
                     child: AuthForm()
                 )
             ),

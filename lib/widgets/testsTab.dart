@@ -1,18 +1,30 @@
 import 'package:android_guru/app_localizations.dart';
-import 'package:android_guru/models/test_model.dart';
+import 'package:android_guru/network/network_info.dart';
 import 'package:android_guru/repositories/test_repository.dart';
 import 'package:android_guru/repositories/user_repository.dart';
 import 'package:android_guru/widgets/test.dart';
 import 'package:basic_utils/basic_utils.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class TestsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: TestRepository(userRepository: UserRepository(), firebaseDatabase: FirebaseDatabase()).getTestsWithStatistics(),
+      future: TestRepository(userRepository: UserRepository(
+                firebaseAuth: FirebaseAuth.instance,
+                googleSignIn: GoogleSignIn(),
+                firebaseDatabase: FirebaseDatabase.instance,
+                networkInfo: NetworkInfoImpl(DataConnectionChecker())
+              ),
+              firebaseDatabase: FirebaseDatabase(),
+              networkInfo: NetworkInfoImpl(DataConnectionChecker()
+            )
+      ).getTestsWithStatistics(),
       builder: (ctx, futureSnapshot) {
         if (futureSnapshot.connectionState == ConnectionState.waiting) {
           return Center(

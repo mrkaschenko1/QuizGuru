@@ -1,15 +1,22 @@
 import 'package:android_guru/models/test_model.dart';
+import 'package:android_guru/network/network_info.dart';
 import 'package:android_guru/repositories/user_repository.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 
 class TestRepository {
+  final NetworkInfo networkInfo;
   final UserRepository _userRepository;
   final FirebaseDatabase _firebaseDatabase;
 
-  TestRepository({UserRepository userRepository, FirebaseDatabase firebaseDatabase})
+  TestRepository({
+    @required UserRepository userRepository,
+    @required FirebaseDatabase firebaseDatabase,
+    @required NetworkInfo this.networkInfo
+  })
       :
-        _userRepository = userRepository ?? UserRepository(),
-        _firebaseDatabase = firebaseDatabase ?? FirebaseDatabase.instance;
+        _userRepository = userRepository,
+        _firebaseDatabase = firebaseDatabase;
 
 
   Future<List<dynamic>> getTestsWithStatistics() async {

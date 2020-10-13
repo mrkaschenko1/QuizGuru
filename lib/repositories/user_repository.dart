@@ -1,6 +1,9 @@
 import 'dart:async';
 
 import 'package:android_guru/exceptions/auth_exception.dart';
+import 'package:android_guru/exceptions/base_exception.dart';
+import 'package:android_guru/exceptions/network_exception.dart';
+import 'package:android_guru/network/network_info.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -9,21 +12,31 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:optional/optional.dart';
 
 class UserRepository {
+  final NetworkInfo networkInfo;
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
   final FirebaseDatabase _firebaseDatabase;
 
-  UserRepository({FirebaseAuth firebaseAuth, GoogleSignIn googleSignIn, FirebaseDatabase firebaseDatabase})
+  UserRepository({
+    @required FirebaseAuth firebaseAuth,
+    @required GoogleSignIn googleSignIn,
+    @required FirebaseDatabase firebaseDatabase,
+    @required NetworkInfo this.networkInfo
+  })
       :
     _googleSignIn = googleSignIn ?? GoogleSignIn(),
     _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
     _firebaseDatabase = firebaseDatabase ?? FirebaseDatabase.instance;
 
 
-  Future<Either<AuthException, UserCredential>> signInWithEmailAndPassword ({
+  Future<Either<BaseException, UserCredential>> signInWithEmailAndPassword ({
     @required String email,
     @required String password,
   }) async {
+    var isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      return Left(NetworkException('No internet connection'));
+    }
     try {
       UserCredential signInResult = await _firebaseAuth.signInWithEmailAndPassword(
           email: email,
@@ -35,11 +48,15 @@ class UserRepository {
     }
   }
 
-  Future<Either<AuthException, UserCredential>> signUp ({
+  Future<Either<BaseException, UserCredential>> signUp ({
     @required String username,
     @required String email,
     @required String password,
   }) async {
+    var isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      return Left(NetworkException('No internet connection'));
+    }
     try {
       UserCredential signUpResult = await _firebaseAuth
           .createUserWithEmailAndPassword(
@@ -58,7 +75,11 @@ class UserRepository {
     }
   }
 
-  Future<Either<AuthException, UserCredential>> signInWithGoogle() async {
+  Future<Either<BaseException, UserCredential>> signInWithGoogle() async {
+    var isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      return Left(NetworkException('No internet connection'));
+    }
     try {
       final GoogleSignInAccount googleSignInAccount = await _googleSignIn
           .signIn();
@@ -97,7 +118,11 @@ class UserRepository {
     }
   }
 
-  Future<Either<AuthException, Optional>> logout() async {
+  Future<Either<BaseException, Optional>> logout() async {
+    var isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      return Left(NetworkException('No internet connection'));
+    }
     try {
       await _googleSignIn.signOut();
       await _firebaseAuth.signOut();

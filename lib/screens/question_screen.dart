@@ -1,10 +1,13 @@
 import 'package:android_guru/app_localizations.dart';
+import 'package:android_guru/network/network_info.dart';
 import 'package:android_guru/repositories/test_repository.dart';
 import 'package:android_guru/repositories/user_repository.dart';
 import 'package:android_guru/screens/test_result_screen.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 
 class QuestionScreen extends StatefulWidget {
@@ -16,7 +19,16 @@ class QuestionScreen extends StatefulWidget {
 
 class _QuestionScreenState extends State<QuestionScreen> {
   static final _firebaseDatabase = FirebaseDatabase();
-  var _testRepository = TestRepository(userRepository: UserRepository(), firebaseDatabase: _firebaseDatabase);
+  var _testRepository = TestRepository(
+      userRepository: UserRepository(
+        firebaseAuth: FirebaseAuth.instance,
+        googleSignIn: GoogleSignIn(),
+        firebaseDatabase: FirebaseDatabase.instance,
+        networkInfo: NetworkInfoImpl(DataConnectionChecker())
+      ),
+      firebaseDatabase: _firebaseDatabase,
+      networkInfo: NetworkInfoImpl(DataConnectionChecker())
+  );
 
   var _questions;
   var _questionNumber = 0;

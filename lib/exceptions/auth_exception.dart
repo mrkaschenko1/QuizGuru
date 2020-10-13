@@ -1,6 +1,5 @@
-class AuthException implements Exception {
-  final String _message;
+import 'package:android_guru/exceptions/base_exception.dart';
 
-  const AuthException(this._message);
-  String get message => _message;
+class AuthException extends BaseException {
+  AuthException(String message) : super(message);
 }

@@ -1,11 +1,15 @@
 import 'package:android_guru/app_localizations.dart';
+import 'package:android_guru/network/network_info.dart';
 import 'package:android_guru/repositories/test_repository.dart';
 import 'package:android_guru/repositories/user_repository.dart';
 import 'package:android_guru/screens/question_screen.dart';
 import 'package:android_guru/widgets/custom_expansion_tile.dart';
 import 'package:android_guru/widgets/statistics_info_card.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Test extends StatefulWidget {
   final key;
@@ -20,7 +24,14 @@ class Test extends StatefulWidget {
 class _TestState extends State<Test> {
   var _isLoading = false;
   static final _firebaseDatabase = FirebaseDatabase();
-  var _testRepository = TestRepository(userRepository: UserRepository(), firebaseDatabase: _firebaseDatabase);
+  var _testRepository = TestRepository(userRepository: UserRepository(
+      firebaseAuth: FirebaseAuth.instance,
+      googleSignIn: GoogleSignIn(),
+      firebaseDatabase: FirebaseDatabase.instance,
+      networkInfo: NetworkInfoImpl(DataConnectionChecker())
+  ),
+      firebaseDatabase: _firebaseDatabase, networkInfo: NetworkInfoImpl(DataConnectionChecker())
+  );
 
   void startTest(String testId) async {
     setState(() {
@@ -28,7 +39,16 @@ class _TestState extends State<Test> {
     });
     try {
       var isTestPassed = false;
-      var transactionMap = await TestRepository()
+      var transactionMap = await TestRepository(
+          userRepository: UserRepository(
+              firebaseAuth: FirebaseAuth.instance,
+              googleSignIn: GoogleSignIn(),
+              firebaseDatabase: FirebaseDatabase.instance,
+              networkInfo: NetworkInfoImpl(DataConnectionChecker())
+          ),
+          firebaseDatabase: FirebaseDatabase.instance,
+          networkInfo: NetworkInfoImpl(DataConnectionChecker())
+      )
           .runTestsPassedTransactionOnTest(
             isTestPassed: isTestPassed,
             testId: testId
