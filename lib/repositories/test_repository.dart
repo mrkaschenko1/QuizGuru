@@ -1,6 +1,9 @@
+import 'package:android_guru/exceptions/base_exception.dart';
+import 'package:android_guru/exceptions/network_exception.dart';
 import 'package:android_guru/models/test_model.dart';
 import 'package:android_guru/network/network_info.dart';
 import 'package:android_guru/repositories/user_repository.dart';
+import 'package:dartz/dartz.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -19,7 +22,11 @@ class TestRepository {
         _firebaseDatabase = firebaseDatabase;
 
 
-  Future<List<dynamic>> getTestsWithStatistics() async {
+  Future<Either<BaseException, List<TestModel>>> getTestsWithStatistics() async {
+    var isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      return Left(NetworkException('No internet connection'));
+    }
     var tests = await _firebaseDatabase
         .reference()
         .child('tests').once();
@@ -31,7 +38,7 @@ class TestRepository {
         .child('tests_passed')
         .once();
 
-    final result = [];
+    final List<TestModel> result = [];
 
     await tests.value.forEach((key, value) {
       final testId = key;
@@ -57,11 +64,20 @@ class TestRepository {
       )
       );
     });
-    return result;
+    return Right(result);
   }
 
   //runs before test starts
-  Future<Map<String, dynamic>> runTestsPassedTransactionOnTest({bool isTestPassed, String testId}) async {
+  Future<Either<BaseException, Map<String, dynamic>>> runTestsPassedTransactionOnTest(
+      {
+        bool isTestPassed,
+        String testId
+      }
+    ) async {
+    var isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      return Left(NetworkException('No internet connection'));
+    }
     final transactionResult = await _firebaseDatabase.reference().runTransaction((userTest) async {
       if (userTest == null) {
         return userTest;
@@ -95,17 +111,21 @@ class TestRepository {
       }
       return userTest;
     });
-    return {
+    return Right({
       'transaction_result': transactionResult,
       'is_test_passed': isTestPassed
-    };
+    });
   }
 
-  Future<TransactionResult> runTestIncrementTransactionOnTest({
+  Future<Either<BaseException, TransactionResult>> runTestIncrementTransactionOnTest({
     String testId,
     bool isTestPassed
   }) async {
-    return await _firebaseDatabase
+    var isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      return Left(NetworkException('No internet connection'));
+    }
+    var transactionResult = await _firebaseDatabase
         .reference()
         .child('tests')
         .child(testId)
@@ -119,9 +139,14 @@ class TestRepository {
       }
       return test;
     });
+    return Right(transactionResult);
   }
 
-  Future<Map<String, dynamic>> runUpdatePointsAndBestScore({String testId, int currentScore}) async {
+  Future<Either<BaseException, Map<String, dynamic>>> runUpdatePointsAndBestScore({String testId, int currentScore}) async {
+    var isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      return Left(NetworkException('No internet connection'));
+    }
     final userId = _userRepository.user.uid;
     var userRef = _firebaseDatabase
         .reference()
@@ -146,19 +171,23 @@ class TestRepository {
 
       return user;
     });
-    return {
+    return Right({
       'transaction_result': transaction,
       'diff': diff
-    };
+    });
   }
 
-  Future<TransactionResult> runUpdateTestPoints(String testId, int diff) async {
+  Future<Either<BaseException,TransactionResult>> runUpdateTestPoints(String testId, int diff) async {
+    var isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      return Left(NetworkException('No internet connection'));
+    }
     var totalPointsRef = _firebaseDatabase
         .reference()
         .child('tests')
         .child(testId)
         .child('total_points');
-    return totalPointsRef.runTransaction((testPoints) async {
+    var transactionResult = await totalPointsRef.runTransaction((testPoints) async {
       if (testPoints == null) {
         return testPoints;
       }
@@ -169,5 +198,6 @@ class TestRepository {
       testPoints.value += diff;
       return testPoints;
     });
+    return Right(transactionResult);
   }
 }

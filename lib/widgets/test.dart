@@ -1,15 +1,9 @@
 import 'package:android_guru/app_localizations.dart';
-import 'package:android_guru/network/network_info.dart';
-import 'package:android_guru/repositories/test_repository.dart';
-import 'package:android_guru/repositories/user_repository.dart';
-import 'package:android_guru/screens/question_screen.dart';
+import 'package:android_guru/cubits/test/test_cubit.dart';
 import 'package:android_guru/widgets/custom_expansion_tile.dart';
 import 'package:android_guru/widgets/statistics_info_card.dart';
-import 'package:data_connection_checker/data_connection_checker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Test extends StatefulWidget {
   final key;
@@ -22,62 +16,12 @@ class Test extends StatefulWidget {
 }
 
 class _TestState extends State<Test> {
-  var _isLoading = false;
-  static final _firebaseDatabase = FirebaseDatabase();
-  var _testRepository = TestRepository(userRepository: UserRepository(
-      firebaseAuth: FirebaseAuth.instance,
-      googleSignIn: GoogleSignIn(),
-      firebaseDatabase: FirebaseDatabase.instance,
-      networkInfo: NetworkInfoImpl(DataConnectionChecker())
-  ),
-      firebaseDatabase: _firebaseDatabase, networkInfo: NetworkInfoImpl(DataConnectionChecker())
-  );
 
-  void startTest(String testId) async {
-    setState(() {
-      _isLoading = true;
-    });
-    try {
-      var isTestPassed = false;
-      var transactionMap = await TestRepository(
-          userRepository: UserRepository(
-              firebaseAuth: FirebaseAuth.instance,
-              googleSignIn: GoogleSignIn(),
-              firebaseDatabase: FirebaseDatabase.instance,
-              networkInfo: NetworkInfoImpl(DataConnectionChecker())
-          ),
-          firebaseDatabase: FirebaseDatabase.instance,
-          networkInfo: NetworkInfoImpl(DataConnectionChecker())
-      )
-          .runTestsPassedTransactionOnTest(
-            isTestPassed: isTestPassed,
-            testId: testId
-          );
-      isTestPassed = transactionMap['is_test_passed'];
-
-      await _testRepository.runTestIncrementTransactionOnTest(isTestPassed: isTestPassed, testId: widget.test.id);
-
-    } catch (e) {
-      Scaffold.of(context).showSnackBar(SnackBar(
-        backgroundColor: Theme.of(context).errorColor,
-        content: Text(e.toString()),
-      ));
-      setState(() {
-        _isLoading = false;
-      });
-      return;
-    }
-
-    setState(() {
-      _isLoading = false;
-    });
-
-    Navigator.of(context)
-        .pushReplacementNamed(QuestionScreen.routeName, arguments: {
-      'testId': widget.test.id,
-      'questions': widget.test.questions,
-    });
-  }
+//    Navigator.of(context)
+//        .pushReplacementNamed(QuestionScreen.routeName, arguments: {
+//      'testId': widget.test.id,
+//      'questions': widget.test.questions,
+//    });
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +103,7 @@ class _TestState extends State<Test> {
             child: RaisedButton(
               color: Theme.of(context).colorScheme.secondary,
               textColor: Theme.of(context).colorScheme.onSecondary,
-              child: _isLoading
+              child: widget.test.isStarting
                   ? LinearProgressIndicator(
                       backgroundColor:
                           Theme.of(context).colorScheme.primaryVariant,
@@ -175,7 +119,9 @@ class _TestState extends State<Test> {
                         letterSpacing: 8,
                       ),
                     ),
-              onPressed: _isLoading ? () {} : () => startTest(widget.test.id),
+              onPressed: widget.test.isStarting ?
+                  () {} :
+                  () => BlocProvider.of<TestCubit>(context).startTest(widget.test.id),
             ),
           ),
         ],

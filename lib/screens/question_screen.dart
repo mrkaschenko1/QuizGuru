@@ -30,7 +30,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
       networkInfo: NetworkInfoImpl(DataConnectionChecker())
   );
 
-  var _questions;
+  var _test;
   var _questionNumber = 0;
   var _currentScore = 0;
   var _currentChoice = 0;
@@ -45,16 +45,17 @@ class _QuestionScreenState extends State<QuestionScreen> {
       setState(() {
         _isLoading = true;
       });
-      var testId = _questions['testId'];
 
       var transactionMap = await _testRepository.runUpdatePointsAndBestScore(
-          testId: testId,
+          testId: _test.id,
           currentScore: _currentScore
       );
-      var diff = transactionMap['diff'];
+
+      var diff = 0;
+      diff = transactionMap.fold((l) => null, (r) => diff = r['diff']);
 
       if (diff != 0) {
-        await _testRepository.runUpdateTestPoints(testId, diff);
+        await _testRepository.runUpdateTestPoints(_test.id, diff);
       }
     } catch (e) {
       print(e.toString());
@@ -74,23 +75,23 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   @override
   void didChangeDependencies() {
-    if (_questions == null) {
-      _questions = ModalRoute.of(context).settings.arguments;
+    if (_test == null) {
+      _test = ModalRoute.of(context).settings.arguments;
     }
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    _questions = null;
+    _test = null;
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final currentQuestion = _questions['questions'][_questionNumber];
+    final currentQuestion = _test.questions[_questionNumber];
     final width = MediaQuery.of(context).size.width;
-    final widthForQuestion = width/_questions['questions'].length;
+    final widthForQuestion = width/_test.questions.length;
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -129,7 +130,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                             ),
                             onPressed: () {
                               Navigator.of(context).pop();
-                              goToResultScreen(questionsLength: _questions['questions'].length, currentScore: _currentScore);
+                              goToResultScreen(questionsLength: _test.questions.length, currentScore: _currentScore);
                           },),
                         ],
                       )
@@ -199,7 +200,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 child: _isLoading ?
                         Center(child: LinearProgressIndicator(backgroundColor: Theme.of(context).colorScheme.primaryVariant,),) :
                         Text(
-                          _questions['questions'].length > _questionNumber+1 ?
+                          _test.questions.length > _questionNumber+1 ?
                             AppLocalizations.of(context).translate('next_btn').toString().toUpperCase() :
                             AppLocalizations.of(context).translate('finish_quiz_btn').toString().toUpperCase(),
                           style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400, letterSpacing: 8),
@@ -211,11 +212,11 @@ class _QuestionScreenState extends State<QuestionScreen> {
                     _answeredQuestions.add(_questionNumber);
                   }
                   _currentChoice = 0;
-                  if (_questions['questions'].length == _questionNumber+1) {
+                  if (_test.questions.length == _questionNumber+1) {
                     setState(() {
                       _isFinished = true;
                     });
-                    goToResultScreen(questionsLength: _questions['questions'].length, currentScore: _currentScore);
+                    goToResultScreen(questionsLength: _test.questions.length, currentScore: _currentScore);
                   } else {
                     setState(() {
                     _questionNumber += 1;
