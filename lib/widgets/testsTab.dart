@@ -1,15 +1,10 @@
 import 'package:android_guru/cubits/test/test_cubit.dart';
-import 'package:android_guru/network/network_info.dart';
-import 'package:android_guru/repositories/test_repository.dart';
-import 'package:android_guru/repositories/user_repository.dart';
 import 'package:android_guru/screens/question_screen.dart';
 import 'package:android_guru/widgets/test.dart';
-import 'package:data_connection_checker/data_connection_checker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+
+import '../injection_container.dart';
 
 class TestsTab extends StatelessWidget {
 
@@ -17,16 +12,7 @@ class TestsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (_) =>
-        TestCubit(repository: TestRepository(
-          userRepository: UserRepository(
-            firebaseAuth: FirebaseAuth.instance,
-            firebaseDatabase: FirebaseDatabase.instance,
-            googleSignIn: GoogleSignIn(),
-            networkInfo: NetworkInfoImpl(DataConnectionChecker())
-          ),
-          firebaseDatabase: FirebaseDatabase.instance,
-          networkInfo: NetworkInfoImpl(DataConnectionChecker())
-        ))
+        sl.get<TestCubit>()
           ..fetchTests(),
         child: BlocConsumer<TestCubit, TestState>(
             builder: (context, state) {

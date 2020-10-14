@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+import '../injection_container.dart';
+
 class RatingTab extends StatefulWidget {
   @override
   _RatingTabState createState() => _RatingTabState();
@@ -19,7 +21,7 @@ class _RatingTabState extends State<RatingTab> {
         _isLoading = true;
       });
     }
-    var dbRef = FirebaseDatabase.instance.reference();
+    var dbRef = sl.get<FirebaseDatabase>().reference();
     var usersSnapshot = await dbRef.child('users').orderByChild('points').limitToLast(10).once();
     var usersData = [];
     usersSnapshot.value.map((userId, user) {
@@ -54,7 +56,7 @@ class _RatingTabState extends State<RatingTab> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: setRating,
-      child: _isLoading ? const Center(child: CircularProgressIndicator(),) : Container(
+      child: _isLoading ? const Center(child: const CircularProgressIndicator(),) : Container(
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
                 color: Theme.of(context).cardColor.withOpacity(0.3)

@@ -17,12 +17,6 @@ class Test extends StatefulWidget {
 
 class _TestState extends State<Test> {
 
-//    Navigator.of(context)
-//        .pushReplacementNamed(QuestionScreen.routeName, arguments: {
-//      'testId': widget.test.id,
-//      'questions': widget.test.questions,
-//    });
-
   @override
   Widget build(BuildContext context) {
     return Container(

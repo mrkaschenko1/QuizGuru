@@ -4,9 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
+import '../injection_container.dart';
+
 class UserTab extends StatelessWidget {
   Future<Object> getUserInfo() async {
-    var fireBaseRef = FirebaseDatabase.instance.reference();
+    var fireBaseRef = sl.get<FirebaseDatabase>().reference();
     var currentUser = await fireBaseRef.child('users').child(FirebaseAuth.instance.currentUser.uid).once();
     var currentUserPoints = currentUser.value['points'];
     var usersBetter = await fireBaseRef.child('users').orderByChild('points').startAt(currentUserPoints+1).once();

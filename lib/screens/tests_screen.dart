@@ -1,12 +1,13 @@
 import 'package:android_guru/app_localizations.dart';
+import 'package:android_guru/repositories/user_repository.dart';
 import 'package:android_guru/screens/settings_screen.dart';
 import 'package:android_guru/widgets/ratingTab.dart';
 import 'package:android_guru/widgets/testsTab.dart';
 import 'package:android_guru/widgets/userTab.dart';
 import 'package:basic_utils/basic_utils.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+
+import '../injection_container.dart';
 
 enum Tabs {
   TESTS,
@@ -24,11 +25,13 @@ class TestsScreen extends StatefulWidget {
 class _TestsScreenState extends State<TestsScreen>{
   var _pageController;
   Tabs _currentIndex;
+  var _userRepository;
 
   @override
   void initState() {
       _pageController = PageController(keepPage: true);
       _currentIndex = Tabs.TESTS;
+      _userRepository = sl.get<UserRepository>();
       super.initState();
   }
 
@@ -53,8 +56,8 @@ class _TestsScreenState extends State<TestsScreen>{
             ));
           },),
           IconButton(icon: Icon(Icons.exit_to_app), onPressed: () async {
-            await GoogleSignIn().signOut();
-            FirebaseAuth.instance.signOut();
+            //TODO show no network connection error
+            await _userRepository.logout();
           },),
         ],
       ),

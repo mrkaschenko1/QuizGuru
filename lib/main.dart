@@ -2,6 +2,7 @@ import 'package:android_guru/blocs/lang/lang_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'app_localizations.dart';
+import 'injection_container.dart';
 import 'widgets/home_wrapper.dart';
 import 'package:android_guru/blocs/theme/theme_bloc.dart';
 import 'package:android_guru/screens/question_screen.dart';
@@ -10,10 +11,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'injection_container.dart' as di;
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  di.init();
   HydratedBloc.storage = await HydratedStorage.build();
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -24,8 +27,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<ThemeBloc>(create: (context) => ThemeBloc()),
-        BlocProvider<LangBloc>(create: (context) => LangBloc(),),
+        BlocProvider<ThemeBloc>(create: (context) => sl.get<ThemeBloc>()),
+        BlocProvider<LangBloc>(create: (context) => sl.get<LangBloc>()),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: _buildWithTheme,
