@@ -1,5 +1,6 @@
 import 'package:android_guru/cubits/test/test_cubit.dart';
 import 'package:android_guru/screens/question_screen.dart';
+import 'package:android_guru/widgets/tab_refresh_button.dart';
 import 'package:android_guru/widgets/test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,7 +37,7 @@ class TestsTab extends StatelessWidget {
                       ],
                     );
                   } else {
-                    return tab_refresh_icon(refreshTab: () => refreshTab(context),);
+                    return TabRefreshButton(refreshTab: () => refreshTab(context),);
                   }
               }
             },
@@ -51,26 +52,6 @@ class TestsTab extends StatelessWidget {
                 .pushReplacementNamed(QuestionScreen.routeName, arguments: state.test);
               }
             },
-        )
-    );
-  }
-}
-
-class tab_refresh_icon extends StatelessWidget {
-  final Function refreshTab;
-
-  const tab_refresh_icon({
-    Key key, this.refreshTab,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-        child: IconButton(
-          iconSize: 100,
-          icon: Icon(Icons.refresh),
-          onPressed: refreshTab,
-          color: Theme.of(context).backgroundColor,
         )
     );
   }

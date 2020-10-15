@@ -1,6 +1,6 @@
 part of 'rating_cubit.dart';
 
-enum RatingStatus { loading, success, failure }
+enum RatingStatus { loading, success, failure, refreshed }
 
 class RatingState extends Equatable {
   const RatingState._({
@@ -16,6 +16,12 @@ class RatingState extends Equatable {
 
   RatingState.failure(String message, {List<dynamic> rating = const []}) : this._(
       status: RatingStatus.failure,
+      message: message,
+      rating: rating
+  );
+
+  RatingState.refreshed(String message, {List<dynamic> rating = const []}) : this._(
+      status: RatingStatus.refreshed,
       message: message,
       rating: rating
   );

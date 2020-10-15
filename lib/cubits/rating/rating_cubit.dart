@@ -23,4 +23,21 @@ class RatingCubit extends Cubit<RatingState> {
       emit(RatingState.failure(e.message, rating: state.rating));
     }
   }
+
+  Future<void> refreshRating() async {
+    try {
+      final rating = await repository.getRating();
+      var ratingList = [];
+      rating.fold(
+              (l) => throw NetworkException("No internet connection"),
+              (r) => {
+                ratingList = r
+              }
+      );
+      emit(RatingState.success(ratingList));
+      emit(RatingState.refreshed("successfully refreshed rating", rating: ratingList));
+    } on NetworkException catch (e) {
+      emit(RatingState.failure(e.message, rating: state.rating));
+    }
+  }
 }

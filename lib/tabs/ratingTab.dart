@@ -1,62 +1,68 @@
 import 'package:android_guru/app_localizations.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:android_guru/cubits/rating/rating_cubit.dart';
+import 'package:android_guru/widgets/tab_refresh_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../injection_container.dart';
 
-class RatingTab extends StatefulWidget {
-  @override
-  _RatingTabState createState() => _RatingTabState();
-}
+class RatingTab extends StatelessWidget {
 
-class _RatingTabState extends State<RatingTab> {
-  var _isLoading = false;
-  var _users = [];
-
-  Future<void> setRating() async {
-    if (this.mounted) {
-      setState(() {
-        _isLoading = true;
-      });
-    }
-    var dbRef = sl.get<FirebaseDatabase>().reference();
-    var usersSnapshot = await dbRef.child('users').orderByChild('points').limitToLast(10).once();
-    var usersData = [];
-    usersSnapshot.value.map((userId, user) {
-      usersData.add({
-        "username": user['username'],
-        "points": user['points']
-      });
-    return MapEntry(userId, user);
-    });
-    usersData.sort((b, a) => a['points'].compareTo(b['points'])); //sorting in descending order
-    if (this.mounted) {
-      setState(() {
-        _isLoading = false;
-        _users = usersData;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    setRating();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _users = null;
-    super.dispose();
+  void refreshTab(BuildContext context) async {
+    await BlocProvider.of<RatingCubit>(context).fetchRating();
   }
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) =>
+      sl.get<RatingCubit>()
+        ..fetchRating(),
+      child: BlocConsumer<RatingCubit, RatingState>(
+        builder: (context, state) {
+          if (state.status == RatingStatus.loading) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            if (state.rating.isNotEmpty) {
+              return Rating(rating: state.rating);
+            } else {
+              return TabRefreshButton(refreshTab: () => refreshTab(context),);
+            }
+          }
+        },
+        listener: (context, state) {
+          if (state.status == RatingStatus.failure) {
+            Scaffold.of(context).removeCurrentSnackBar();
+            Scaffold.of(context).showSnackBar(
+              SnackBar(backgroundColor: Colors.red, content: Text(state.message),)
+            );
+          } else if (state.status == RatingStatus.refreshed) {
+            Scaffold.of(context).removeCurrentSnackBar();
+            Scaffold.of(context).showSnackBar(
+                SnackBar(backgroundColor: Colors.green, content: Text(state.message),)
+            );
+          }
+        },
+      ),
+    );
+  }
+}
+
+class Rating extends StatelessWidget {
+  final rating;
+
+  const Rating({
+    this.rating,
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: setRating,
-      child: _isLoading ? const Center(child: const CircularProgressIndicator(),) : Container(
+      onRefresh: BlocProvider.of<RatingCubit>(context).refreshRating,
+      child: Container(
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
                 color: Theme.of(context).cardColor.withOpacity(0.3)
@@ -77,7 +83,7 @@ class _RatingTabState extends State<RatingTab> {
                       children: <Widget>[
                         Icon(Icons.school, size: 60, color: Theme.of(context).colorScheme.background,),
                         Text(
-                          "${AppLocalizations.of(context).translate('top').toUpperCase()} 10", 
+                          "${AppLocalizations.of(context).translate('top').toUpperCase()} 10",
                           style: TextStyle(fontSize: 35, color: Theme.of(context).colorScheme.onBackground),
                         ),
                         Icon(Icons.school, size: 60, color: Theme.of(context).colorScheme.background,),
@@ -87,7 +93,7 @@ class _RatingTabState extends State<RatingTab> {
                 Expanded(
                   child: ListView(
                   children: <Widget>[
-                    ...(_users.map((elem) {
+                    ...(rating.map((elem) {
                       return Container(
                         child: ListTile(
                           dense: true,
@@ -96,7 +102,7 @@ class _RatingTabState extends State<RatingTab> {
                             minRadius: 5,
                             maxRadius: 20,
                             child: Text(
-                              (_users.indexOf(elem) + 1).toString(),
+                              (rating.indexOf(elem) + 1).toString(),
                               style: TextStyle(color: Theme.of(context).colorScheme.onBackground, fontWeight: FontWeight.bold, fontSize: 15),
                             ),
                             backgroundColor: Theme.of(context).colorScheme.secondary,
