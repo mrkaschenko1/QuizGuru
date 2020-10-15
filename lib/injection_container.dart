@@ -12,6 +12,7 @@ import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'blocs/theme/theme_bloc.dart';
+import 'cubits/user/user_cubit.dart';
 
 final sl = GetIt.instance;
 
@@ -22,6 +23,7 @@ void init() {
   sl.registerFactory(() => LangBloc());
   sl.registerFactory(() => TestCubit(repository: sl()));
   sl.registerFactory(() => RatingCubit(repository: sl()));
+  sl.registerFactory(() => UserCubit(repository: sl()));
 
   //repository
   sl.registerLazySingleton<UserRepository>(
