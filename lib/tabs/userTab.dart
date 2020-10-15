@@ -1,4 +1,6 @@
 import 'package:android_guru/app_localizations.dart';
+import 'package:android_guru/models/user_model.dart';
+import 'package:android_guru/repositories/user_repository.dart';
 import 'package:android_guru/widgets/statistics_info_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -27,13 +29,13 @@ class UserTab extends StatelessWidget {
       testsCount = currentUser.value['tests_passed'].length;
     }
 
-    return {
-      'username': currentUser.value['username'],
-      'email': currentUser.value['email'],
-      'points': currentUserPoints,
-      'tests_count': testsCount,
-      'rating': userRating
-    };
+    return UserModel(
+      id: sl.get<UserRepository>().user.uid,
+      username: currentUser.value['username'],
+      email: currentUser.value['email'],
+      testsPassedCount: testsCount,
+      ratingPosition: userRating
+    );
   }
 
   @override

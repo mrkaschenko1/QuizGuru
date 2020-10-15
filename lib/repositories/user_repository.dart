@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:android_guru/exceptions/auth_exception.dart';
 import 'package:android_guru/exceptions/base_exception.dart';
 import 'package:android_guru/exceptions/network_exception.dart';
+import 'package:android_guru/models/user_model.dart';
 import 'package:android_guru/network/network_info.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -153,6 +154,40 @@ class UserRepository {
     });
     usersData.sort((b, a) => a['points'].compareTo(b['points'])); //sorting in descending order
     return Right(usersData);
+  }
+
+  Future<Either<BaseException, UserModel>> getUserInfo() async {
+    var isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      return Left(NetworkException('No internet connection'));
+    }
+    var fireBaseRef = _firebaseDatabase.reference();
+    var currentUser = await fireBaseRef.child('users').child(FirebaseAuth.instance.currentUser.uid).once();
+    var userPoints = currentUser.value['points'];
+    var usersBetter = await fireBaseRef.child('users').orderByChild('points').startAt(userPoints+1).once();
+
+    var userRating;
+    if (usersBetter.value == null) {
+      userRating = 1;
+    } else {
+      userRating = usersBetter.value.length+1;
+    }
+
+    var testsCount;
+    if (!currentUser.value.containsKey('tests_passed'))  {
+      testsCount = 0;
+    } else {
+      testsCount = currentUser.value['tests_passed'].length;
+    }
+
+    return Right(UserModel(
+        id: user.uid,
+        username: currentUser.value['username'],
+        email: currentUser.value['email'],
+        testsPassedCount: testsCount,
+        ratingPosition: userRating,
+        points: userPoints
+    ));
   }
 
   User get user => _firebaseAuth.currentUser;
