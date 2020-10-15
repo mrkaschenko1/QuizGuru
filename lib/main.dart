@@ -16,9 +16,9 @@ import 'injection_container.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  di.init();
   HydratedBloc.storage = await HydratedStorage.build();
   await Firebase.initializeApp();
+  di.init();
   runApp(MyApp());
 }
 

@@ -8,6 +8,10 @@ import '../injection_container.dart';
 
 class TestsTab extends StatelessWidget {
 
+  void refreshTab(BuildContext context) async {
+    await BlocProvider.of<TestCubit>(context).fetchTests();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -32,16 +36,7 @@ class TestsTab extends StatelessWidget {
                       ],
                     );
                   } else {
-                    return Center(
-                        child: IconButton(
-                          iconSize: 100,
-                          icon: Icon(Icons.refresh),
-                          onPressed: () async {
-                            await BlocProvider.of<TestCubit>(context).fetchTests();
-                          },
-                          color: Theme.of(context).backgroundColor,
-                        )
-                    );
+                    return tab_refresh_icon(refreshTab: () => refreshTab(context),);
                   }
               }
             },
@@ -56,6 +51,26 @@ class TestsTab extends StatelessWidget {
                 .pushReplacementNamed(QuestionScreen.routeName, arguments: state.test);
               }
             },
+        )
+    );
+  }
+}
+
+class tab_refresh_icon extends StatelessWidget {
+  final Function refreshTab;
+
+  const tab_refresh_icon({
+    Key key, this.refreshTab,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: IconButton(
+          iconSize: 100,
+          icon: Icon(Icons.refresh),
+          onPressed: refreshTab,
+          color: Theme.of(context).backgroundColor,
         )
     );
   }

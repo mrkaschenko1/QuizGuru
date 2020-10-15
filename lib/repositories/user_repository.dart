@@ -132,6 +132,28 @@ class UserRepository {
     }
   }
 
-  User get user => _firebaseAuth.currentUser;
+  Future<Either<BaseException, List<dynamic>>> getRating() async {
+    var isConnected = await networkInfo.isConnected;
+    if (!isConnected) {
+      return Left(NetworkException('No internet connection'));
+    }
+    var usersSnapshot = await _firebaseDatabase.reference()
+        .child('users')
+        .orderByChild('points')
+        .limitToLast(10)
+        .once();
 
+    var usersData = [];
+    usersSnapshot.value.map((userId, user) {
+      usersData.add({
+        "username": user['username'],
+        "points": user['points']
+      });
+      return MapEntry(userId, user);
+    });
+    usersData.sort((b, a) => a['points'].compareTo(b['points'])); //sorting in descending order
+    return Right(usersData);
+  }
+
+  User get user => _firebaseAuth.currentUser;
 }

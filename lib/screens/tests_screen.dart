@@ -1,9 +1,9 @@
 import 'package:android_guru/app_localizations.dart';
 import 'package:android_guru/repositories/user_repository.dart';
 import 'package:android_guru/screens/settings_screen.dart';
-import 'package:android_guru/widgets/ratingTab.dart';
-import 'package:android_guru/widgets/testsTab.dart';
-import 'package:android_guru/widgets/userTab.dart';
+import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/tabs/ratingTab.dart';
+import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/tabs/testsTab.dart';
+import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/tabs/userTab.dart';
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 
