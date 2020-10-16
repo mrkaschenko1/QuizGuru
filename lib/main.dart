@@ -6,7 +6,7 @@ import 'injection_container.dart';
 import 'ui/widgets/home_wrapper.dart';
 import 'package:android_guru/blocs/theme/theme_bloc.dart';
 import 'package:android_guru/ui/screens/question_screen.dart';
-import 'package:android_guru/ui/screens/tests_screen.dart';
+import 'package:android_guru/ui/screens/main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
             routes: {
               HomeWrapper.routeName: (context) => HomeWrapper(),
               QuestionScreen.routeName: (context) => QuestionScreen(),
-              TestsScreen.routeName: (context) => TestsScreen(),
+              MainScreen.routeName: (context) => MainScreen(),
             },
             supportedLocales: [
               Locale('en', 'US'),

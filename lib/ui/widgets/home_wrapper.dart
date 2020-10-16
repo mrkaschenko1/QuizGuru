@@ -1,4 +1,4 @@
-import 'package:android_guru/ui/screens/tests_screen.dart';
+import 'package:android_guru/ui/screens/main_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +14,7 @@ class HomeWrapper extends StatelessWidget {
       if (userSnapshot.connectionState == ConnectionState.waiting) {
         return CircularProgressIndicator();
       } else if (userSnapshot.hasData && userSnapshot.data != null) {
-        return TestsScreen();
+        return MainScreen();
       } else {
         return AuthScreen();
       }

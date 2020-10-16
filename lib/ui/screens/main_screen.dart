@@ -15,14 +15,14 @@ enum Tabs {
   USER
 }
 
-class TestsScreen extends StatefulWidget {
-  static const routeName = '/tests';
+class MainScreen extends StatefulWidget {
+  static const routeName = '/main';
 
   @override
-  _TestsScreenState createState() => _TestsScreenState();
+  _MainScreenState createState() => _MainScreenState();
 }
 
-class _TestsScreenState extends State<TestsScreen>{
+class _MainScreenState extends State<MainScreen>{
   var _pageController;
   Tabs _currentIndex;
   var _userRepository;
@@ -41,6 +41,16 @@ class _TestsScreenState extends State<TestsScreen>{
       super.dispose();
   }
 
+  void _showSnackBarError(BuildContext ctx, String message) {
+    Scaffold.of(ctx).removeCurrentSnackBar();
+    Scaffold.of(ctx).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Colors.red,
+        ),
+    );
+  }
+
   @override
   Widget build(BuildContext context)  {
     return Scaffold(
@@ -55,10 +65,15 @@ class _TestsScreenState extends State<TestsScreen>{
               maintainState: true,
             ));
           },),
-          IconButton(icon: Icon(Icons.exit_to_app), onPressed: () async {
-            //TODO show no network connection error
-            await _userRepository.logout();
-          },),
+          Builder(builder: (ctx) =>
+              IconButton(icon: Icon(Icons.exit_to_app), onPressed: () async {
+                var result = await _userRepository.logout();
+                result.fold(
+                  (l) => _showSnackBarError(ctx, l.message),
+                  (r) => print("logged out"),
+                );
+              },),
+          ),
         ],
       ),
       body: PageView(
