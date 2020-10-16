@@ -1,6 +1,6 @@
 import 'package:android_guru/app_localizations.dart';
 
-import '../widgets/home_wrapper.dart';
+import '../../ui/widgets/home_wrapper.dart';
 import 'package:flutter/material.dart';
 
 class TestResultScreen extends StatelessWidget {

@@ -1,9 +1,9 @@
 import 'package:android_guru/app_localizations.dart';
 import 'package:android_guru/repositories/test_repository.dart';
-import 'package:android_guru/screens/test_result_screen.dart';
+import 'package:android_guru/ui/screens/test_result_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../injection_container.dart';
+import '../../injection_container.dart';
 
 
 class QuestionScreen extends StatefulWidget {

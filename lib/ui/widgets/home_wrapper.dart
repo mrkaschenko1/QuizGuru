@@ -1,9 +1,9 @@
-import 'package:android_guru/screens/tests_screen.dart';
+import 'package:android_guru/ui/screens/tests_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../injection_container.dart';
-import '../screens/auth_screen.dart';
+import '../../injection_container.dart';
+import '../../ui/screens/auth_screen.dart';
 
 class HomeWrapper extends StatelessWidget {
   static const routeName = '/';

@@ -1,7 +1,7 @@
 import 'package:android_guru/app_localizations.dart';
 import 'package:android_guru/cubits/test/test_cubit.dart';
-import 'package:android_guru/widgets/custom_expansion_tile.dart';
-import 'package:android_guru/widgets/statistics_info_card.dart';
+import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/ui/widgets/custom_expansion_tile.dart';
+import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/ui/widgets/statistics_info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

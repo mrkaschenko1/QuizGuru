@@ -1,11 +1,11 @@
 import 'package:android_guru/cubits/test/test_cubit.dart';
-import 'package:android_guru/screens/question_screen.dart';
-import 'package:android_guru/widgets/tab_refresh_button.dart';
-import 'package:android_guru/widgets/test.dart';
+import 'package:android_guru/ui/screens/question_screen.dart';
+import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/ui/widgets/tab_refresh_button.dart';
+import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/ui/widgets/test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../injection_container.dart';
+import '../../injection_container.dart';
 
 class TestsTab extends StatelessWidget {
 

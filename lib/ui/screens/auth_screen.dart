@@ -1,12 +1,12 @@
 import 'dart:math';
 
 import 'package:android_guru/blocs/login/login_bloc.dart';
-import 'package:android_guru/widgets/animated_wave.dart';
-import 'package:android_guru/widgets/auth_form.dart';
+import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/ui/widgets/animated_wave.dart';
+import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/ui/widgets/auth_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../injection_container.dart';
+import '../../injection_container.dart';
 
 class AuthScreen extends StatelessWidget {
 

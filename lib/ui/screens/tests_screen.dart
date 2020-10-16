@@ -1,13 +1,13 @@
 import 'package:android_guru/app_localizations.dart';
 import 'package:android_guru/repositories/user_repository.dart';
-import 'package:android_guru/screens/settings_screen.dart';
-import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/tabs/ratingTab.dart';
-import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/tabs/testsTab.dart';
-import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/tabs/userTab.dart';
+import 'package:android_guru/ui/screens/settings_screen.dart';
+import 'package:android_guru/ui/tabs/ratingTab.dart';
+import 'package:android_guru/ui/tabs/testsTab.dart';
+import 'package:android_guru/ui/tabs/userTab.dart';
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 
-import '../injection_container.dart';
+import '../../injection_container.dart';
 
 enum Tabs {
   TESTS,
