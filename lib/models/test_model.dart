@@ -1,9 +1,10 @@
+import 'package:android_guru/models/question_model.dart';
 import 'package:flutter/foundation.dart';
 
 class TestModel {
   final id;
   final title;
-  final questions;
+  final List<QuestionModel> questions;
   final studentsPassed;
   final averageScore;
   final totalPoints;
@@ -46,4 +47,12 @@ class TestModel {
       isStarting: isStarting ?? this.isStarting
     );
   }
+
+//  TestModel.fromJson(Map<String, dynamic> json)
+//      : text = json['text'] as String,
+//        options = json['options'] == null
+//            ? null
+//            : (jsonConverter.jsonDecode(json['options']) as List)
+//            .map((i) => OptionModel.fromJson(i))
+//            .toList();
 }

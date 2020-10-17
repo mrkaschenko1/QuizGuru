@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:android_guru/exceptions/base_exception.dart';
 import 'package:android_guru/exceptions/network_exception.dart';
+import 'package:android_guru/models/question_model.dart';
 import 'package:android_guru/models/test_model.dart';
 import 'package:android_guru/network/network_info.dart';
 import 'package:android_guru/repositories/user_repository.dart';
@@ -54,7 +57,11 @@ class TestRepository {
       }
       result.add(TestModel(
         id: key,
-        questions: value['questions'],
+        questions: value['questions'] == null
+            ? null
+            : (value['questions'])
+            .map<QuestionModel>((i) => QuestionModel.fromJson(i))
+            .toList() as List<QuestionModel>,
         studentsPassed: value['students_passed'],
         averageScore: value['average_score'],
         totalPoints: value['total_points'],

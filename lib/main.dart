@@ -5,7 +5,6 @@ import 'app_localizations.dart';
 import 'injection_container.dart';
 import 'ui/widgets/home_wrapper.dart';
 import 'package:android_guru/blocs/theme/theme_bloc.dart';
-import 'package:android_guru/ui/screens/question_screen.dart';
 import 'package:android_guru/ui/screens/main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +42,6 @@ class MyApp extends StatelessWidget {
             theme: themeState.themeData,
             routes: {
               HomeWrapper.routeName: (context) => HomeWrapper(),
-              QuestionScreen.routeName: (context) => QuestionScreen(),
               MainScreen.routeName: (context) => MainScreen(),
             },
             supportedLocales: [

@@ -1,5 +1,6 @@
 import 'package:android_guru/blocs/lang/lang_bloc.dart';
 import 'package:android_guru/blocs/login/login_bloc.dart';
+import 'package:android_guru/cubits/question/question_cubit.dart';
 import 'package:android_guru/cubits/rating/rating_cubit.dart';
 import 'package:android_guru/cubits/test/test_cubit.dart';
 import 'package:android_guru/network/network_info.dart';
@@ -24,6 +25,7 @@ void init() {
   sl.registerFactory(() => TestCubit(repository: sl()));
   sl.registerFactory(() => RatingCubit(repository: sl()));
   sl.registerFactory(() => UserCubit(repository: sl()));
+  sl.registerFactory(() => QuestionCubit(repository: sl()));
 
   //repository
   sl.registerLazySingleton<UserRepository>(

@@ -1,4 +1,5 @@
 import 'package:android_guru/cubits/test/test_cubit.dart';
+import 'package:android_guru/models/test_model.dart';
 import 'package:android_guru/ui/screens/question_screen.dart';
 import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/ui/widgets/tab_refresh_button.dart';
 import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/ui/widgets/test.dart';
@@ -49,7 +50,9 @@ class TestsTab extends StatelessWidget {
                 );
               } else if (state.status == TestStatus.started) {
                 Navigator.of(context)
-                .pushReplacementNamed(QuestionScreen.routeName, arguments: state.test);
+                .pushReplacement(MaterialPageRoute(
+                  builder: (context) => QuestionScreen(test: state.test)
+                ));
               }
             },
         )
