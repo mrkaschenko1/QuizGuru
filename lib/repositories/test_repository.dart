@@ -8,7 +8,7 @@ import 'package:android_guru/network/network_info.dart';
 import 'package:android_guru/repositories/user_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 class TestRepository {
   final NetworkInfo networkInfo;
@@ -41,6 +41,10 @@ class TestRepository {
         .child('tests_passed')
         .once();
 
+//    print(userTestsPassedInfo.value);
+//    var users = await _firebaseDatabase.reference().child('users').once();
+//    print(users.value);
+
     final List<TestModel> result = [];
 
     await tests.value.forEach((key, value) {
@@ -48,9 +52,7 @@ class TestRepository {
       var userTries = 0;
       var bestScore = 0;
       try {
-        var userExperience = userTestsPassedInfo.value.firstWhere((elem) {
-          return elem.keys.first == testId;
-        })[testId];
+        var userExperience = userTestsPassedInfo.value[testId];
         userTries = userExperience['user_tries'];
         bestScore = userExperience['best_score'];
       } catch (e) {
@@ -85,43 +87,46 @@ class TestRepository {
     if (!isConnected) {
       return Left(NetworkException('No internet connection'));
     }
-    final transactionResult = await _firebaseDatabase.reference().runTransaction((userTest) async {
-      if (userTest == null) {
+    try {
+      final transactionResult = await _firebaseDatabase
+          .reference()
+          .child('users')
+          .child(_userRepository.user.uid)
+          .runTransaction((userTest) async {
+        if (userTest == null) {
+          return userTest;
+        }
+        if (userTest.value == null) {
+          return userTest;
+        }
+        if (!userTest.value.containsKey('tests_passed')) {
+          print('making tests_passed list');
+          userTest.value['tests_passed'] = Map<dynamic, dynamic>();
+        }
+        if (!userTest.value['tests_passed'].containsKey(testId)) {
+          print('we don\'t have our test in user list');
+          var testsPassed = userTest.value['tests_passed'];
+          testsPassed[testId] = {
+              'user_tries': 1,
+              'best_score': 0,
+          };
+          userTest.value['tests_passed'] = testsPassed;
+        } else {
+          print('we have our test in list');
+          isTestPassed = true;
+
+          await userTest.value['tests_passed'][testId]
+          ['user_tries']++;
+        }
         return userTest;
-      }
-      if (userTest.value == null) {
-        return userTest;
-      }
-      if (!userTest.value.containsKey('tests_passed')) {
-        print('making tests_passed list');
-        userTest.value['tests_passed'] = List<dynamic>();
-      }
-      if (!userTest.value['tests_passed']
-          .any((e) => e.keys.contains(testId) ? true : false)) {
-        print('we don\'t have our test in user list');
-        var testsPassed =
-        List.of(userTest.value['tests_passed'], growable: true);
-        testsPassed.add({
-          testId: {
-            'user_tries': 1,
-            'best_score': 0,
-          }
-        });
-        userTest.value['tests_passed'] = testsPassed;
-      } else {
-        print('we have our test in list');
-        isTestPassed = true;
-        var index = userTest.value['tests_passed']
-            .indexWhere((e) => e.keys.contains(testId) ? true : false);
-        await userTest.value['tests_passed'][index][testId]
-        ['user_tries']++;
-      }
-      return userTest;
-    });
-    return Right({
-      'transaction_result': transactionResult,
-      'is_test_passed': isTestPassed
-    });
+      });
+      return Right({
+        'transaction_result': transactionResult,
+        'is_test_passed': isTestPassed
+      });
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   Future<Either<BaseException, TransactionResult>> runTestIncrementTransactionOnTest({
@@ -138,6 +143,9 @@ class TestRepository {
         .child(testId)
         .runTransaction((test) async {
       if (test == null) {
+        return test;
+      }
+      if (test.value == null) {
         return test;
       }
       await test.value['total_tries']++;
