@@ -8,11 +8,11 @@ class OptionModel {
 
   OptionModel.fromJson(Map<dynamic, dynamic> json)
       : text = json['text'] as String,
-        isRight = json['isRight'] as bool;
+        isRight = json['right'] as bool;
 
   Map<String, dynamic> toJson() =>
       {
         'text': text,
-        'isRight': isRight,
+        'right': isRight,
       };
 }

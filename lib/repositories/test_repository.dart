@@ -175,13 +175,13 @@ class TestRepository {
       if (user.value == null) {
         return user;
       }
-      var test = user.value['tests_passed'].firstWhere((test) => test.keys.contains(testId) ? true : false);
-      print(test.values.first['best_score']);
-      var prevBestScore = test.values.first['best_score'];
+      var test = await user.value['tests_passed'][testId];
+      print(test['best_score']);
+      var prevBestScore = test['best_score'];
       if (currentScore > prevBestScore) {
         diff = currentScore - prevBestScore;
         user.value['points'] += diff;
-        test.values.first['best_score'] = currentScore;
+        test['best_score'] = currentScore;
       }
 
       return user;
