@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:android_guru/exceptions/base_exception.dart';
 import 'package:android_guru/exceptions/network_exception.dart';
 import 'package:android_guru/models/question_model.dart';
@@ -40,10 +38,6 @@ class TestRepository {
         .child(_userRepository.user.uid)
         .child('tests_passed')
         .once();
-
-//    print(userTestsPassedInfo.value);
-//    var users = await _firebaseDatabase.reference().child('users').once();
-//    print(users.value);
 
     final List<TestModel> result = [];
 

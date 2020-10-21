@@ -9,6 +9,7 @@ import 'package:android_guru/repositories/user_repository.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -52,5 +53,6 @@ void init() {
   sl.registerLazySingleton(() => GoogleSignIn());
   sl.registerSingleton(FirebaseDatabase.instance);
   sl.registerSingleton(FirebaseAuth.instance);
+  sl.registerLazySingleton(() => FirebaseMessaging());
   sl.registerLazySingleton(() => DataConnectionChecker());
 }
