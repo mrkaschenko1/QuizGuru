@@ -21,6 +21,7 @@ void main() async {
   await Firebase.initializeApp();
   di.init();
   final _firebaseMessaging = sl.get<FirebaseMessaging>();
+  await _firebaseMessaging.subscribeToTopic('tests');
   _firebaseMessaging.configure(
     onMessage: (Map<String, dynamic> message) async {
       print("onMessage: $message");
