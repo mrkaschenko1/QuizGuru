@@ -20,12 +20,16 @@ class StatisticsInfoCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            value.toString(),
-            style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 30,
-                color: Theme.of(context).colorScheme.onSurface
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              value.toString(),
+              maxLines: 1,
+              style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 30,
+                  color: Theme.of(context).colorScheme.onSurface
+              ),
             ),
           ),
           Flexible(

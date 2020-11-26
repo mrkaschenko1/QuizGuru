@@ -69,6 +69,7 @@ class UserRepository {
         "email": email,
         "points": 0,
         "tests_passed": [],
+        "lang": "en"
       });
       return Right(signUpResult);
     } catch (e) {
@@ -110,6 +111,7 @@ class UserRepository {
             "email": currentUser.email,
             "points": 0,
             "tests_passed": [],
+            "lang": "en"
           });
         }
       }

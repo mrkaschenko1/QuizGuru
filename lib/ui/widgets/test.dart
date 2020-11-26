@@ -1,9 +1,11 @@
 import 'package:android_guru/app_localizations.dart';
 import 'package:android_guru/cubits/test/test_cubit.dart';
+import 'package:flutter/cupertino.dart';
 import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/ui/widgets/custom_expansion_tile.dart';
 import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/ui/widgets/statistics_info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:charcode/html_entity.dart';
 
 class Test extends StatefulWidget {
   final key;
@@ -33,11 +35,12 @@ class _TestState extends State<Test> {
             padding: const EdgeInsets.only(bottom: 0.0),
             child: CustomExpansionTile(
               title: Text(
-                widget.test.title,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                textAlign: TextAlign.justify,
-              ),
+                  widget.test.title,
+                  maxLines: 2,
+                  style:
+                      const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  textAlign: TextAlign.center,
+                ),
               children: [
                 Container(
                     color: Theme.of(context).backgroundColor,
@@ -77,7 +80,8 @@ class _TestState extends State<Test> {
                               title: AppLocalizations.of(context)
                                   .translate('user_tries')
                                   .toString(),
-                              value: widget.test.userTries),
+                              value: '${widget.test.userTries}/${widget.test.tries ?? String.fromCharCode($infin)}'
+                          ),
                           StatisticsInfoCard(
                               title: AppLocalizations.of(context)
                                   .translate('best_score')
@@ -102,18 +106,27 @@ class _TestState extends State<Test> {
                       backgroundColor:
                           Theme.of(context).colorScheme.primaryVariant,
                     )
-                  : Text(
-                      AppLocalizations.of(context)
-                          .translate('start_quiz_btn')
-                          .toString()
-                          .toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 8,
+                  : FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(widget.test.userTries >= (widget.test.tries ?? double.infinity)
+                      ? AppLocalizations.of(context)
+                            .translate('no_more_attempts')
+                            .toString()
+                            .toUpperCase()
+                      : AppLocalizations.of(context)
+                            .translate('start_quiz_btn')
+                            .toString()
+                            .toUpperCase(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 8,
+                        ),
                       ),
-                    ),
-              onPressed: widget.test.isStarting ?
+                  ),
+              onPressed: (widget.test.isStarting || widget.test.userTries >= (widget.test.tries ?? double.infinity)) ?
                   () {} :
                   () => BlocProvider.of<TestCubit>(context).startTest(widget.test.id),
             ),

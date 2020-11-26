@@ -7,6 +7,7 @@ import 'package:android_guru/repositories/user_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
+import 'dart:core';
 
 class TestRepository {
   final NetworkInfo networkInfo;
@@ -42,6 +43,7 @@ class TestRepository {
     final List<TestModel> result = [];
 
     await tests.value.forEach((key, value) {
+      print(value['tries']);
       final testId = key;
       var userTries = 0;
       var bestScore = 0;
@@ -63,6 +65,7 @@ class TestRepository {
         totalPoints: value['total_points'],
         title: value['title'],
         userTries: userTries,
+        tries: value['tries'] ?? null,
         userBestScore: bestScore,
       )
       );
@@ -103,6 +106,7 @@ class TestRepository {
           testsPassed[testId] = {
               'user_tries': 1,
               'best_score': 0,
+              'attempts': { "0" : "useless thing" }
           };
           userTest.value['tests_passed'] = testsPassed;
         } else {
@@ -114,6 +118,16 @@ class TestRepository {
         }
         return userTest;
       });
+
+      int currentAttempt = await _firebaseDatabase.reference().child('users').child(_userRepository.user.uid)
+          .child('tests_passed/$testId/user_tries').once().then((value) => value.value);
+      print('current attempt $currentAttempt');
+      await _firebaseDatabase.reference()
+          .child('users')
+          .child(_userRepository.user.uid)
+          .child('tests_passed/$testId/attempts')
+          .update({currentAttempt.toString() : {"start_time": DateTime.now().toIso8601String()}});
+
       return Right({
         'transaction_result': transactionResult,
         'is_test_passed': isTestPassed
@@ -180,6 +194,16 @@ class TestRepository {
 
       return user;
     });
+
+    int currentAttempt = await _firebaseDatabase.reference().child('users').child(_userRepository.user.uid)
+        .child('tests_passed/$testId/user_tries').once().then((value) => value.value);
+    print('current attempt $currentAttempt');
+    await _firebaseDatabase.reference()
+        .child('users')
+        .child(_userRepository.user.uid)
+        .child('tests_passed/$testId/attempts/${currentAttempt.toString()}')
+        .update({'end_time': DateTime.now().toIso8601String()});
+
     return Right({
       'transaction_result': transaction,
       'diff': diff

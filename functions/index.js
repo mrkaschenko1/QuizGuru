@@ -3,10 +3,10 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 
-exports.sendToTopic = functions.database.ref('/tests/{testId}')
+exports.sendToEnTopic = functions.database.ref('/tests/{testId}')
     .onCreate((snapshot, context) => {
+       functions.logger.log("Hello from info. Here's an object:", context);
        const test = snapshot.val();
-
        payload = {
              notification: {
                title: 'New Test!',

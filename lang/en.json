@@ -42,5 +42,6 @@
   "test_interrupt_dialog_finish": "Yes, stop now",
   "user_tries": "times tried",
   "best_score": "best score",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "no_more_attempts": "No more attempts"
 }

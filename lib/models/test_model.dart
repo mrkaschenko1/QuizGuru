@@ -9,6 +9,7 @@ class TestModel {
   final averageScore;
   final totalPoints;
   final userTries;
+  final tries;
   final userBestScore;
   final bool isStarting;
 
@@ -18,6 +19,7 @@ class TestModel {
     @required this.studentsPassed,
     @required this.averageScore,
     @required this.userTries,
+    @required this.tries,
     @required this.userBestScore,
     @required this.totalPoints,
     @required this.title,
@@ -30,6 +32,7 @@ class TestModel {
     int studentsPassed,
     double averageScore,
     int userTries,
+    int tries,
     int userBestScore,
     int totalPoints,
     String title,
@@ -41,6 +44,7 @@ class TestModel {
       studentsPassed: studentsPassed ?? this.studentsPassed,
       averageScore: averageScore ?? this.averageScore,
       userTries: userTries ?? this.userTries,
+      tries: tries ?? this.tries,
       userBestScore: userBestScore ?? this.userBestScore,
       totalPoints: totalPoints ?? this.totalPoints,
       title: title ?? this.title,

@@ -40,7 +40,7 @@ class _AuthFormState extends State<AuthForm> {
   @override
   Widget build(BuildContext context) {
     Widget loginForm({@required bool isLogin, bool isLoading = false}) => Container(
-                  margin: const EdgeInsets.only(top: 0,),
+                  margin: const EdgeInsets.only(top: 10,),
                   child: SingleChildScrollView(
                     child: Form(
                       key: _formKey,

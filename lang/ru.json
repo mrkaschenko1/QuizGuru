@@ -42,5 +42,6 @@
   "test_interrupt_dialog_finish": "Завершить тест",
   "user_tries": "ваши попытки",
   "best_score": "лучший результат",
-  "loading": "Подождите..."
+  "loading": "Подождите...",
+  "no_more_attempts": "Попыток больше нет"
 }
