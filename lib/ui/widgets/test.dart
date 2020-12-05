@@ -108,7 +108,7 @@ class _TestState extends State<Test> {
                     )
                   : FittedBox(
                     fit: BoxFit.scaleDown,
-                    child: Text(widget.test.userTries >= (widget.test.tries ?? double.infinity)
+                    child: Text((widget.test.userTries ?? 0) >= (widget.test.tries ?? double.infinity)
                       ? AppLocalizations.of(context)
                             .translate('no_more_attempts')
                             .toString()
@@ -126,7 +126,7 @@ class _TestState extends State<Test> {
                         ),
                       ),
                   ),
-              onPressed: (widget.test.isStarting || widget.test.userTries >= (widget.test.tries ?? double.infinity)) ?
+              onPressed: (widget.test.isStarting || (widget.test.userTries ?? 0) >= (widget.test.tries ?? double.infinity)) ?
                   () {} :
                   () => BlocProvider.of<TestCubit>(context).startTest(widget.test.id),
             ),

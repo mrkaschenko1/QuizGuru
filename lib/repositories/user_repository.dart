@@ -110,8 +110,7 @@ class UserRepository {
             "username": currentUser.displayName,
             "email": currentUser.email,
             "points": 0,
-            "tests_passed": [],
-            "lang": "en"
+            "tests_passed": []
           });
         }
       }

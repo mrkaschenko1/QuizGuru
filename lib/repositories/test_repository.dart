@@ -106,7 +106,7 @@ class TestRepository {
           testsPassed[testId] = {
               'user_tries': 1,
               'best_score': 0,
-              'attempts': { "0" : "useless thing" }
+              'attempts': { "1" : "not yet" }
           };
           userTest.value['tests_passed'] = testsPassed;
         } else {
@@ -202,7 +202,10 @@ class TestRepository {
         .child('users')
         .child(_userRepository.user.uid)
         .child('tests_passed/$testId/attempts/${currentAttempt.toString()}')
-        .update({'end_time': DateTime.now().toIso8601String()});
+        .update({
+          'end_time': DateTime.now().toIso8601String(),
+          'score': currentScore
+        });
 
     return Right({
       'transaction_result': transaction,

@@ -50,6 +50,12 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.7.0
+
+flutter_icons:
+  image_path: "assets/icon.png"
+  android: true
+  ios: true
 #  build_runner:
 #  json_serializable: ^3.5.0
 
