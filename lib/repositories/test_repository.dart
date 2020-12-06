@@ -9,6 +9,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:core';
 
+import 'package:timezone/timezone.dart';
+
 class TestRepository {
   final NetworkInfo networkInfo;
   final UserRepository _userRepository;
@@ -124,7 +126,7 @@ class TestRepository {
           .child('tests_passed/$testId/attempts')
           .update({
         currentAttempt.toString(): {
-          "start_time": DateTime.now().toIso8601String()
+          "start_time": TZDateTime.now(local).toIso8601String()
         }
       });
 
@@ -206,7 +208,7 @@ class TestRepository {
         .child(_userRepository.user.uid)
         .child('tests_passed/$testId/attempts/${currentAttempt.toString()}')
         .update({
-      'end_time': DateTime.now().toIso8601String(),
+      'end_time': TZDateTime.now(local).toIso8601String(),
       'score': currentScore
     });
 

@@ -1,6 +1,7 @@
 import 'package:android_guru/blocs/lang/lang_bloc.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:timezone/timezone.dart';
 
 import 'app_localizations.dart';
 import 'injection_container.dart';
@@ -13,10 +14,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'injection_container.dart' as di;
-
+import 'package:timezone/data/latest.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  tz.initializeTimeZones();
+  setLocalLocation(getLocation('Europe/Moscow'));
   HydratedBloc.storage = await HydratedStorage.build();
   await Firebase.initializeApp();
   di.init();
@@ -49,27 +52,27 @@ class MyApp extends StatelessWidget {
         builder: _buildWithTheme,
       ),
     );
-    }
+  }
 
   Widget _buildWithTheme(BuildContext context, ThemeState themeState) =>
-        BlocBuilder<LangBloc, LangState> (
-          builder: (ctx, langState) => MaterialApp(
-            title: 'Android Guru App',
-            theme: themeState.themeData,
-            routes: {
-              HomeWrapper.routeName: (context) => HomeWrapper(),
-              MainScreen.routeName: (context) => MainScreen(),
-            },
-            supportedLocales: [
-              Locale('en', 'US'),
-              Locale('ru', 'RU'),
-            ],
-            localizationsDelegates: [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-            ],
-            locale: langState.langData,
-          ),
-        );
+      BlocBuilder<LangBloc, LangState>(
+        builder: (ctx, langState) => MaterialApp(
+          title: 'Android Guru App',
+          theme: themeState.themeData,
+          routes: {
+            HomeWrapper.routeName: (context) => HomeWrapper(),
+            MainScreen.routeName: (context) => MainScreen(),
+          },
+          supportedLocales: [
+            Locale('en', 'US'),
+            Locale('ru', 'RU'),
+          ],
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          locale: langState.langData,
+        ),
+      );
 }
