@@ -45,5 +45,6 @@
   "loading": "Loading...",
   "no_more_attempts": "No more attempts",
   "you_are_new": "You are new?",
-  "have_account": "Have account?"
+  "have_account": "Have account?",
+  "hello": "Hello,"
 }

@@ -1,4 +1,5 @@
 import 'package:android_guru/app_localizations.dart';
+import 'package:android_guru/cubits/user/user_cubit.dart';
 import 'package:android_guru/repositories/user_repository.dart';
 import 'package:android_guru/ui/screens/settings_screen.dart';
 import 'package:android_guru/ui/tabs/ratingTab.dart';
@@ -6,14 +7,12 @@ import 'package:android_guru/ui/tabs/testsTab.dart';
 import 'package:android_guru/ui/tabs/userTab.dart';
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../injection_container.dart';
 
-enum Tabs {
-  TESTS,
-  RATING,
-  USER
-}
+enum Tabs { TESTS, RATING, USER }
 
 class MainScreen extends StatefulWidget {
   static const routeName = '/main';
@@ -22,90 +21,70 @@ class MainScreen extends StatefulWidget {
   _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen>{
+class _MainScreenState extends State<MainScreen> {
   var _pageController;
   Tabs _currentIndex;
   var _userRepository;
 
   @override
   void initState() {
-      _pageController = PageController(keepPage: true);
-      _currentIndex = Tabs.TESTS;
-      _userRepository = sl.get<UserRepository>();
-      super.initState();
+    _pageController = PageController(keepPage: true);
+    _currentIndex = Tabs.TESTS;
+    _userRepository = sl.get<UserRepository>();
+    super.initState();
   }
 
   @override
   void dispose() {
-      _pageController.dispose();
-      super.dispose();
-  }
-
-  void _showSnackBarError(BuildContext ctx, String message) {
-    Scaffold.of(ctx).removeCurrentSnackBar();
-    Scaffold.of(ctx).showSnackBar(
-        SnackBar(
-          content: Text(message),
-          backgroundColor: Colors.red,
-        ),
-    );
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
-  Widget build(BuildContext context)  {
+  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: Text(AppLocalizations.of(context).translate('app_name').toString()),
-        actions: <Widget>[
-          IconButton(icon: Icon(Icons.settings), onPressed: () async {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (ctx) => SettingsScreen(),
-              maintainState: true,
-            ));
-          },),
-          Builder(builder: (ctx) =>
-              IconButton(icon: Icon(Icons.exit_to_app), onPressed: () async {
-                var result = await _userRepository.logout();
-                result.fold(
-                  (l) => _showSnackBarError(ctx, l.message),
-                  (r) => print("logged out"),
-                );
-              },),
-          ),
-        ],
-      ),
+      backgroundColor: Colors.white,
       body: PageView(
           controller: _pageController,
           onPageChanged: (newPage) {
-            setState((){
+            setState(() {
               _currentIndex = Tabs.values[newPage];
             });
           },
-          children: [TestsTab(), RatingTab(), UserTab()]
-      ),
-      bottomNavigationBar: BottomNavigationBar(items: [
-        BottomNavigationBarItem(
-            icon: Icon(Icons.check_box),
-            title: Text(StringUtils.capitalize(AppLocalizations.of(context).translate('quizzes_tab')).toString())
-        ),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.star),
-            title: Text(StringUtils.capitalize(AppLocalizations.of(context).translate('rating_tab')).toString())
-        ),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text(StringUtils.capitalize(AppLocalizations.of(context).translate('profile_tab')).toString())
-        ),
-      ],
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        selectedItemColor: Theme.of(context).colorScheme.background,
-        unselectedItemColor: Theme.of(context).unselectedWidgetColor,
+          children: [TestsTab(), RatingTab(), UserTab()]),
+      bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: [
+          const BottomNavigationBarItem(
+            icon: Icon(
+              FeatherIcons.checkSquare,
+              size: 26,
+            ),
+            title: Text(''),
+          ),
+          const BottomNavigationBarItem(
+              icon: Icon(
+                FeatherIcons.star,
+                size: 26,
+              ),
+              title: Text('')),
+          const BottomNavigationBarItem(
+              icon: Icon(
+                FeatherIcons.user,
+                size: 26,
+              ),
+              title: Text('')),
+        ],
+        backgroundColor: Colors.white,
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.grey,
         currentIndex: _currentIndex.index,
         onTap: (index) {
           setState(() {
-            _pageController.animateToPage(index, duration: const Duration(milliseconds: 300),curve: Curves.easeIn);
+            _pageController.animateToPage(index,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeIn);
           });
         },
       ),
@@ -205,6 +184,5 @@ class _MainScreenState extends State<MainScreen>{
 //          });
 //        },
 //      ),
-    }
   }
-
+}

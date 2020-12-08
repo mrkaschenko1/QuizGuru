@@ -1,16 +1,18 @@
 import 'package:android_guru/cubits/test/test_cubit.dart';
+import 'package:android_guru/cubits/user/user_cubit.dart';
 import 'package:android_guru/models/test_model.dart';
 import 'package:android_guru/repositories/user_repository.dart';
 import 'package:android_guru/ui/screens/question_screen.dart';
-import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/ui/widgets/tab_refresh_button.dart';
-import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/ui/widgets/test.dart';
+import 'package:android_guru/ui/widgets/test_card.dart';
+import 'package:android_guru/ui/widgets/main_app_bar.dart';
+import 'package:android_guru/ui/widgets/tab_refresh_button.dart';
+import 'package:android_guru/ui/widgets/test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../injection_container.dart';
 
 class TestsTab extends StatelessWidget {
-
   void refreshTab(BuildContext context) async {
     await BlocProvider.of<TestCubit>(context).fetchTests();
   }
@@ -18,45 +20,61 @@ class TestsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (_) =>
-        sl.get<TestCubit>()
-          ..fetchTests(),
+        create: (_) => sl.get<TestCubit>()..fetchTests(),
         child: BlocConsumer<TestCubit, TestState>(
-            builder: (context, state) {
-              if (state.status == TestStatus.loading) {
-                  return const Center(child: CircularProgressIndicator());
-              } else {
-                  if (state.tests.isNotEmpty) {
-                    return ListView(
-                      children: <Widget>[
-                        ...state.tests.map((test) {
-                          return Test(
-                            key: ValueKey(test.id),
-                            test: test,
-                          );
-                        }
-                        ).toList()
-                      ],
-                    );
-                  } else {
-                    return TabRefreshButton(refreshTab: () => refreshTab(context),);
-                  }
-              }
-            },
-            listener: (context, state) {
-              if (state.status == TestStatus.failure) {
-                Scaffold.of(context).removeCurrentSnackBar();
-                Scaffold.of(context).showSnackBar(
-                    SnackBar(backgroundColor: Colors.red, content: Text(state.message),)
+          builder: (context, state) {
+            if (state.status == TestStatus.loading) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              if (state.tests.isNotEmpty) {
+                return Container(
+                  margin: EdgeInsets.only(left: 15, right: 15),
+                  child: Column(
+                    children: <Widget>[
+                      MainAppBar(
+                        userName: state.user.username,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          TestCard(test: state.tests[0]),
+                          TestCard(test: state.tests[0])
+                        ],
+                      ),
+                      Expanded(
+                        child: ListView(
+                          children: <Widget>[
+                            ...state.tests.map((test) {
+                              return Test(
+                                key: ValueKey(test.id),
+                                test: test,
+                              );
+                            }).toList()
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 );
-              } else if (state.status == TestStatus.started) {
-                Navigator.of(context)
-                .pushReplacement(MaterialPageRoute(
-                  builder: (context) => QuestionScreen(test: state.test)
-                ));
+              } else {
+                return TabRefreshButton(
+                  refreshTab: () => refreshTab(context),
+                );
               }
-            },
-        )
-    );
+            }
+          },
+          listener: (context, state) {
+            if (state.status == TestStatus.failure) {
+              Scaffold.of(context).removeCurrentSnackBar();
+              Scaffold.of(context).showSnackBar(SnackBar(
+                backgroundColor: Colors.red,
+                content: Text(state.message),
+              ));
+            } else if (state.status == TestStatus.started) {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => QuestionScreen(test: state.test)));
+            }
+          },
+        ));
   }
 }

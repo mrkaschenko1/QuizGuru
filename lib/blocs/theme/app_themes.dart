@@ -47,7 +47,7 @@ Function getBlueGrayTheme = () {
       primary: Color(0xff6F7C7C),
       primaryVariant: Color(0xffebd7ca),
       onPrimary: Color(0xff40514E),
-      secondary: Color(0xff29C5AF),
+      secondary: Colors.black,
       secondaryVariant: Color(0xffebd7ca),
       onSecondary: Colors.black,
       background: Color(0xffE0E0E0),
