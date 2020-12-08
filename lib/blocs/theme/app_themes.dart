@@ -5,7 +5,6 @@ enum AppTheme {
   BlueGray,
 }
 
-
 final appThemeData = {
   AppTheme.OrangeBrown: getOrangeBrownTheme(),
   AppTheme.BlueGray: getBlueGrayTheme(),
@@ -25,9 +24,9 @@ Function getOrangeBrownTheme = () {
       onSurface: Colors.blue,
       error: Colors.red,
       onError: Colors.white,
-      brightness: Brightness.dark
-  );
+      brightness: Brightness.dark);
   return ThemeData(
+    fontFamily: 'Montserrat',
     colorScheme: colorScheme,
     primaryColor: colorScheme.primary,
     primaryColorLight: colorScheme.primaryVariant,
@@ -37,10 +36,7 @@ Function getOrangeBrownTheme = () {
     backgroundColor: Color(0xffb8b5ad),
     unselectedWidgetColor: Color(0x8840514E),
     textTheme: TextTheme(
-      caption: TextStyle(
-          fontWeight: FontWeight.w500,
-          fontSize: 15
-      ),
+      caption: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
     ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
@@ -60,23 +56,19 @@ Function getBlueGrayTheme = () {
       onSurface: Colors.blue,
       error: Colors.red,
       onError: Colors.white,
-      brightness: Brightness.dark
-  );
+      brightness: Brightness.dark);
   return ThemeData(
+    fontFamily: 'Montserrat',
     colorScheme: colorScheme,
     primaryColor: colorScheme.primary,
     primaryColorLight: colorScheme.primaryVariant,
     accentColor: colorScheme.secondary,
     scaffoldBackgroundColor: colorScheme.background,
-
     cardColor: Color(0xffE4E4E4),
     backgroundColor: Color(0xffb8b5ad),
     unselectedWidgetColor: Color(0x8840514E),
     textTheme: TextTheme(
-      caption: TextStyle(
-          fontWeight: FontWeight.w500,
-          fontSize: 15
-      ),
+      caption: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
     ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );

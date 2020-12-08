@@ -13,7 +13,7 @@ class AuthScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Stack(children: [
           Positioned(
-            top: 85,
+            top: 75,
             left: -25,
             child: Image.asset(
               'assets/images/greeting_person.png',
@@ -22,8 +22,7 @@ class AuthScreen extends StatelessWidget {
           ),
           LayoutBuilder(
             builder: (context, constraints) => Container(
-                height: MediaQuery.of(context).size.height,
-                margin: EdgeInsets.only(top: 240),
+                margin: EdgeInsets.only(top: 230),
                 child: BlocProvider<LoginBloc>(
                     create: (context) => sl.get<LoginBloc>(),
                     child: AuthForm())),

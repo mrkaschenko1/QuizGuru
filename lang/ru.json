@@ -31,7 +31,7 @@
   "or": "или",
   "sign_in_with_google_btn": "Войти через google аккаунт",
   "invalid_email_address": "Пожалуйста, проверьте ваш адрес эл. почты",
-  "username": "логин",
+  "username": "Логин",
   "invalid_username": "Логин должен содержать минимум 5 символов",
   "invalid_password": "Пароль должен содержать минимум 8 символов",
   "register_btn": "Регистрация",
@@ -43,5 +43,7 @@
   "user_tries": "ваши попытки",
   "best_score": "лучший результат",
   "loading": "Подождите...",
-  "no_more_attempts": "Попыток больше нет"
+  "no_more_attempts": "Попыток больше нет",
+  "you_are_new": "Тут впервые?",
+  "have_account": "Уже есть аккаунт?"
 }

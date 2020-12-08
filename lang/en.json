@@ -26,12 +26,12 @@
   "back_to_tests_btn": "back to tests",
   "email_address": "Email address",
   "password": "Password",
-  "login_btn": "login",
-  "create_new_account_btn": "Create new Account",
+  "login_btn": "Sign in",
+  "create_new_account_btn": "Create new",
   "or": "or",
-  "sign_in_with_google_btn": "Sign-in with google",
+  "sign_in_with_google_btn": "Sign in via google",
   "invalid_email_address": "Please enter valid email address",
-  "username": "username",
+  "username": "Username",
   "invalid_username": "Username should be at least 5 characters length",
   "invalid_password": "Password should be at least 8 characters length",
   "register_btn": "register",
@@ -43,5 +43,7 @@
   "user_tries": "times tried",
   "best_score": "best score",
   "loading": "Loading...",
-  "no_more_attempts": "No more attempts"
+  "no_more_attempts": "No more attempts",
+  "you_are_new": "You are new?",
+  "have_account": "Have account?"
 }
