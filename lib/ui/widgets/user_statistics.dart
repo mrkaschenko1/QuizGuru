@@ -22,7 +22,7 @@ class UserStatistics extends StatelessWidget {
             endAngle: 270,
             showLabels: false,
             showTicks: false,
-            radiusFactor: 0.93,
+            radiusFactor: 1.0,
             axisLineStyle: AxisLineStyle(
                 cornerStyle: CornerStyle.bothFlat,
                 color: Colors.black12,
@@ -50,14 +50,14 @@ class UserStatistics extends StatelessWidget {
                                   '%'
                               : '$current/$total',
                           style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 22,
                               fontWeight: FontWeight.w800,
                               color: Colors.black)),
                       Text(
                         annotation,
                         style: TextStyle(
                             fontSize: 14,
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.w500,
                             color: Colors.black),
                       )
                     ],

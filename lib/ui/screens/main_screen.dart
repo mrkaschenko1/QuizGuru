@@ -1,16 +1,11 @@
-import 'package:android_guru/app_localizations.dart';
-import 'package:android_guru/cubits/user/user_cubit.dart';
-import 'package:android_guru/repositories/user_repository.dart';
-import 'package:android_guru/ui/screens/settings_screen.dart';
 import 'package:android_guru/ui/tabs/ratingTab.dart';
 import 'package:android_guru/ui/tabs/testsTab.dart';
 import 'package:android_guru/ui/tabs/userTab.dart';
-import 'package:basic_utils/basic_utils.dart';
+import 'package:android_guru/ui/widgets/main_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../../injection_container.dart';
+import '../../app_localizations.dart';
 
 enum Tabs { TESTS, RATING, USER }
 
@@ -41,15 +36,50 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: SliverAppBar(
+      //   flexibleSpace: FlexibleSpaceBar(
+      //     title: Column(
+      //       crossAxisAlignment: CrossAxisAlignment.start,
+      //       children: <Widget>[
+      //         Text(
+      //           AppLocalizations.of(context).translate('hello').toString(),
+      //           style: TextStyle(
+      //               color: Colors.black,
+      //               fontSize: 30,
+      //               fontWeight: FontWeight.w900),
+      //         ),
+      //         Text(
+      //           'Andrey',
+      //           style: TextStyle(
+      //               color: Colors.black,
+      //               fontSize: 30,
+      //               fontWeight: FontWeight.w900),
+      //         )
+      //       ],
+      //     ),
+      //   ),
+      // ),
       backgroundColor: Colors.white,
-      body: PageView(
-          controller: _pageController,
-          onPageChanged: (newPage) {
-            setState(() {
-              _currentIndex = Tabs.values[newPage];
-            });
-          },
-          children: [TestsTab(), RatingTab(), UserTab()]),
+      body: Container(
+        height: double.infinity,
+        child: Column(
+          children: <Widget>[
+            MainAppBar(
+              userName: 'Andrey',
+            ),
+            Expanded(
+              child: PageView(
+                  controller: _pageController,
+                  onPageChanged: (newPage) {
+                    setState(() {
+                      _currentIndex = Tabs.values[newPage];
+                    });
+                  },
+                  children: [TestsTab(), RatingTab(), UserTab()]),
+            ),
+          ],
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,

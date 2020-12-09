@@ -6,7 +6,6 @@ import 'package:android_guru/ui/widgets/tab_refresh_button.dart';
 import 'package:android_guru/ui/widgets/user_statistics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 import '../../app_localizations.dart';
 import '../../injection_container.dart';
@@ -28,17 +27,15 @@ class TestsTab extends StatelessWidget {
             } else {
               if (state.tests.isNotEmpty) {
                 return Container(
-                  margin: EdgeInsets.only(left: 15, right: 15),
+                  margin: EdgeInsets.only(left: 5, right: 5, top: 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      MainAppBar(
-                        userName: state.user.username,
-                      ),
                       Container(
+                        padding: EdgeInsets.only(top: 10, bottom: 10),
                         width: double.infinity,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             Container(
                               height: _gaugeSize,
@@ -92,18 +89,23 @@ class TestsTab extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                        child: GridView.count(
-                          padding: EdgeInsets.only(top: 10),
-                          crossAxisSpacing: 15,
-                          mainAxisSpacing: 15,
-                          crossAxisCount: 2,
-                          children: <Widget>[
-                            ...state.tests.map((test) {
-                              return TestCard(
-                                test: test,
-                              );
-                            }).toList()
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5, right: 5),
+                          child: GridView.count(
+                            physics: BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.only(top: 10, bottom: 20),
+                            crossAxisSpacing: 15,
+                            mainAxisSpacing: 15,
+                            crossAxisCount: 1,
+                            children: <Widget>[
+                              ...state.tests.map((test) {
+                                return TestCard(
+                                  test: test,
+                                );
+                              }).toList()
+                            ],
+                          ),
                         ),
                       ),
                       // Expanded(

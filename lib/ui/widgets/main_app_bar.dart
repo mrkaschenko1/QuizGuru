@@ -14,7 +14,7 @@ class MainAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 30, left: 5, bottom: 5),
+      padding: const EdgeInsets.only(top: 30, left: 10, bottom: 5),
       width: double.infinity,
       color: Colors.white,
       child: Row(

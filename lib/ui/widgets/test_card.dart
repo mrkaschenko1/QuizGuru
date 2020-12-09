@@ -17,6 +17,7 @@ class TestCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final _mediaQueary = MediaQuery.of(context);
     final _size = _mediaQueary.size.width / 2 * 0.88;
+    final _iconSize = 55.0;
     final String _attempts =
         AppLocalizations.of(context).translate('user_tries').toString() +
             ': ' +
@@ -32,7 +33,7 @@ class TestCard extends StatelessWidget {
         front: Container(
           height: _size,
           width: _size,
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(20)),
               border: Border.all(
@@ -45,37 +46,41 @@ class TestCard extends StatelessWidget {
             children: <Widget>[
               Text(
                 test.title,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
-                maxLines: 2,
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+                maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
                 '${test.questions.length} questions',
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: 20),
               ),
               Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  IconButton(
-                    onPressed: () => cardKey.currentState.toggleCard(),
-                    icon: Icon(
-                      FeatherIcons.info,
-                      size: 40,
-                      color: Colors.grey,
+                  Container(
+                    height: _iconSize,
+                    width: _iconSize,
+                    child: GestureDetector(
+                      onTap: () => cardKey.currentState.toggleCard(),
+                      child: Icon(
+                        FeatherIcons.info,
+                        size: _iconSize,
+                        color: Colors.grey,
+                      ),
                     ),
-                    padding: EdgeInsets.only(bottom: 15),
-                    constraints: BoxConstraints(maxWidth: 40, minWidth: 40),
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      FeatherIcons.playCircle,
-                      size: 40,
-                      color: Colors.black,
+                  Container(
+                    height: _iconSize,
+                    width: _iconSize,
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Icon(
+                        FeatherIcons.playCircle,
+                        size: _iconSize,
+                        color: Colors.black,
+                      ),
                     ),
-                    padding: EdgeInsets.only(bottom: 15),
-                    constraints: BoxConstraints(maxWidth: 40, minWidth: 40),
                   )
                 ],
               )
@@ -85,7 +90,7 @@ class TestCard extends StatelessWidget {
         back: Container(
           height: _size,
           width: _size,
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(20)),
               border: Border.all(
@@ -98,39 +103,41 @@ class TestCard extends StatelessWidget {
             children: <Widget>[
               Text(
                 test.title,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 maxLines: 4,
                 overflow: TextOverflow.ellipsis,
               ),
               SizedBox(
-                height: 5,
+                height: 10,
               ),
               Text(
                 _attempts,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 20,
                 ),
               ),
               Text(
                 _bestScore,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 20,
                 ),
               ),
               Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  IconButton(
-                    onPressed: () => cardKey.currentState.toggleCard(),
-                    icon: Icon(
-                      FeatherIcons.arrowLeftCircle,
-                      size: 40,
-                      color: Colors.black,
+                  Container(
+                    height: _iconSize,
+                    width: _iconSize,
+                    child: GestureDetector(
+                      onTap: () => cardKey.currentState.toggleCard(),
+                      child: Icon(
+                        FeatherIcons.arrowLeftCircle,
+                        size: _iconSize,
+                        color: Colors.black,
+                      ),
                     ),
-                    padding: EdgeInsets.only(bottom: 15),
-                    constraints: BoxConstraints(maxWidth: 40, minWidth: 40),
-                  )
+                  ),
                 ],
               )
             ],
