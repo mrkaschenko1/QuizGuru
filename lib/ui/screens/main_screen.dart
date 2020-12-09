@@ -5,8 +5,6 @@ import 'package:android_guru/ui/widgets/main_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-import '../../app_localizations.dart';
-
 enum Tabs { TESTS, RATING, USER }
 
 class MainScreen extends StatefulWidget {

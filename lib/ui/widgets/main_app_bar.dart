@@ -80,13 +80,13 @@ class MainAppBar extends StatelessWidget {
     );
   }
 
-  void _showSnackBarError(BuildContext ctx, String message) {
-    Scaffold.of(ctx).removeCurrentSnackBar();
-    Scaffold.of(ctx).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: Colors.red,
-      ),
-    );
-  }
+  // void _showSnackBarError(BuildContext ctx, String message) {
+  //   Scaffold.of(ctx).removeCurrentSnackBar();
+  //   Scaffold.of(ctx).showSnackBar(
+  //     SnackBar(
+  //       content: Text(message),
+  //       backgroundColor: Colors.red,
+  //     ),
+  //   );
+  // }
 }

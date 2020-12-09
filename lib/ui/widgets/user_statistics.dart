@@ -63,6 +63,20 @@ class UserStatistics extends StatelessWidget {
                     ],
                   ))
             ]),
+        RadialAxis(
+          centerY: 0.49,
+          minimum: 0,
+          maximum: total.toDouble(),
+          startAngle: 0,
+          endAngle: 360,
+          showLabels: false,
+          showTicks: false,
+          radiusFactor: 1.01,
+          axisLineStyle: AxisLineStyle(
+              cornerStyle: CornerStyle.bothFlat,
+              color: Colors.black12,
+              thickness: 2),
+        )
       ],
       enableLoadingAnimation: true,
       animationDuration: 1500,

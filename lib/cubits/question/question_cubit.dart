@@ -1,6 +1,5 @@
 import 'package:android_guru/exceptions/network_exception.dart';
 import 'package:android_guru/models/option_model.dart';
-import 'package:android_guru/models/question_model.dart';
 import 'package:android_guru/models/test_model.dart';
 import 'package:android_guru/repositories/test_repository.dart';
 import 'package:bloc/bloc.dart';

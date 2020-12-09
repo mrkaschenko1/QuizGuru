@@ -1,6 +1,8 @@
+import 'package:android_guru/cubits/test/test_cubit.dart';
 import 'package:android_guru/models/test_model.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:charcode/html_entity.dart';
 
@@ -18,6 +20,7 @@ class TestCard extends StatelessWidget {
     final _mediaQueary = MediaQuery.of(context);
     final _size = _mediaQueary.size.width / 2 * 0.88;
     final _iconSize = 55.0;
+    final _iconContainerSize = _iconSize + 3;
     final String _attempts =
         AppLocalizations.of(context).translate('user_tries').toString() +
             ': ' +
@@ -35,12 +38,14 @@ class TestCard extends StatelessWidget {
           width: _size,
           padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              border: Border.all(
-                color: Colors.black,
-                width: 2,
-              ),
-              color: Colors.white),
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            border: Border.all(
+              color: Colors.black,
+              width: 2,
+            ),
+            color: Colors.white,
+            boxShadow: [BoxShadow(color: Colors.black, offset: Offset(0, 2))],
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -55,35 +60,66 @@ class TestCard extends StatelessWidget {
                 style: TextStyle(fontSize: 20),
               ),
               Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Container(
-                    height: _iconSize,
-                    width: _iconSize,
-                    child: GestureDetector(
-                      onTap: () => cardKey.currentState.toggleCard(),
-                      child: Icon(
-                        FeatherIcons.info,
-                        size: _iconSize,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: _iconSize,
-                    width: _iconSize,
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Icon(
-                        FeatherIcons.playCircle,
-                        size: _iconSize,
-                        color: Colors.black,
-                      ),
-                    ),
-                  )
-                ],
-              )
+              test.isStarting
+                  ? LinearProgressIndicator(
+                      backgroundColor: Colors.white,
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Container(
+                          height: _iconContainerSize,
+                          width: _iconContainerSize,
+                          child: GestureDetector(
+                            onTap: () => cardKey.currentState.toggleCard(),
+                            child: Stack(
+                              children: <Widget>[
+                                Positioned(
+                                  top: 3,
+                                  child: Icon(
+                                    FeatherIcons.info,
+                                    size: _iconSize,
+                                    color: Colors.black12,
+                                  ),
+                                ),
+                                Icon(
+                                  FeatherIcons.info,
+                                  size: _iconSize,
+                                  color: Colors.grey,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: _iconContainerSize,
+                          width: _iconContainerSize,
+                          child: GestureDetector(
+                            onTap: () {
+                              BlocProvider.of<TestCubit>(context)
+                                  .startTest(test.id);
+                            },
+                            child: Stack(
+                              children: <Widget>[
+                                Positioned(
+                                  top: 3,
+                                  child: Icon(
+                                    FeatherIcons.playCircle,
+                                    size: _iconSize,
+                                    color: Colors.black12,
+                                  ),
+                                ),
+                                Icon(
+                                  FeatherIcons.playCircle,
+                                  size: _iconSize,
+                                  color: Colors.black,
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    )
             ],
           ),
         ),
@@ -92,12 +128,14 @@ class TestCard extends StatelessWidget {
           width: _size,
           padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              border: Border.all(
-                color: Colors.black,
-                width: 2,
-              ),
-              color: Colors.white),
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            border: Border.all(
+              color: Colors.black,
+              width: 2,
+            ),
+            color: Colors.white,
+            boxShadow: [BoxShadow(color: Colors.black, offset: Offset(0, 2))],
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -127,14 +165,26 @@ class TestCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Container(
-                    height: _iconSize,
-                    width: _iconSize,
+                    height: _iconContainerSize,
+                    width: _iconContainerSize,
                     child: GestureDetector(
                       onTap: () => cardKey.currentState.toggleCard(),
-                      child: Icon(
-                        FeatherIcons.arrowLeftCircle,
-                        size: _iconSize,
-                        color: Colors.black,
+                      child: Stack(
+                        children: <Widget>[
+                          Positioned(
+                            top: 3,
+                            child: Icon(
+                              FeatherIcons.arrowLeftCircle,
+                              size: _iconSize,
+                              color: Colors.black12,
+                            ),
+                          ),
+                          Icon(
+                            FeatherIcons.arrowLeftCircle,
+                            size: _iconSize,
+                            color: Colors.black,
+                          ),
+                        ],
                       ),
                     ),
                   ),

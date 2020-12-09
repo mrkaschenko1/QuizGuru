@@ -22,7 +22,7 @@ class UserRepository {
       {@required FirebaseAuth firebaseAuth,
       @required GoogleSignIn googleSignIn,
       @required FirebaseDatabase firebaseDatabase,
-      @required NetworkInfo this.networkInfo})
+      @required this.networkInfo})
       : _googleSignIn = googleSignIn ?? GoogleSignIn(),
         _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
         _firebaseDatabase = firebaseDatabase ?? FirebaseDatabase.instance;

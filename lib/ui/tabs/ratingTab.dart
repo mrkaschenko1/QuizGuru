@@ -1,7 +1,6 @@
 import 'package:android_guru/app_localizations.dart';
 import 'package:android_guru/cubits/rating/rating_cubit.dart';
-import 'package:android_guru/ui/widgets/main_app_bar.dart';
-import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/ui/widgets/tab_refresh_button.dart';
+import 'package:android_guru/ui/widgets/tab_refresh_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
