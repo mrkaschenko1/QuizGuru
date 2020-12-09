@@ -63,7 +63,7 @@ class _MainScreenState extends State<MainScreen> {
         child: Column(
           children: <Widget>[
             MainAppBar(
-              userName: 'Andrey',
+              userName: 'Have fun',
             ),
             Expanded(
               child: PageView(

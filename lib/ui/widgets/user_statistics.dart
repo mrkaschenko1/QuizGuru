@@ -64,7 +64,6 @@ class UserStatistics extends StatelessWidget {
                   ))
             ]),
         RadialAxis(
-          centerY: 0.49,
           minimum: 0,
           maximum: total.toDouble(),
           startAngle: 0,

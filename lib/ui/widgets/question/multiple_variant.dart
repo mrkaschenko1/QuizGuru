@@ -11,38 +11,81 @@ class MultipleVariant extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CheckboxGroup(
-      orientation: GroupedButtonsOrientation.VERTICAL,
-      margin: const EdgeInsets.only(left: 12.0),
-      onSelected: (List selected) => {
-        BlocProvider.of<QuestionCubit>(context)
-            .showSelectedChoice(selected.map((e) => int.parse(e)).toList())
-      },
-      labels: List<String>.generate(
-          question.options.length, (index) => index.toString()),
-      checked:
-          BlocProvider.of<QuestionCubit>(context).state.currentChoice == null
-              ? "0"
-              : BlocProvider.of<QuestionCubit>(context)
-                  .state
-                  .currentChoice
-                  .map((e) => e.toString())
-                  .toList(),
-      itemBuilder: (Checkbox cb, Text txt, int i) {
-        return Container(
-          margin: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
-          decoration: BoxDecoration(
-              color: Theme.of(context).cardColor.withOpacity(0.6),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey, offset: Offset(0, 0), blurRadius: 0)
-              ]),
-          child: ListTile(
-            leading: cb,
-            title: Text(question.options[i].text),
-          ),
-        );
-      },
+    return SingleChildScrollView(
+      child: CheckboxGroup(
+        // checkColor: Color(0xFFFE9D81),
+        checkColor: Colors.black,
+        activeColor: Color(0xFFFE9D81),
+
+        orientation: GroupedButtonsOrientation.VERTICAL,
+        onSelected: (List selected) => {
+          BlocProvider.of<QuestionCubit>(context)
+              .showSelectedChoice(selected.map((e) => int.parse(e)).toList())
+        },
+        labels: List<String>.generate(
+            question.options.length, (index) => index.toString()),
+        checked:
+            BlocProvider.of<QuestionCubit>(context).state.currentChoice == null
+                ? "0"
+                : BlocProvider.of<QuestionCubit>(context)
+                    .state
+                    .currentChoice
+                    .map((e) => e.toString())
+                    .toList(),
+        itemBuilder: (Checkbox cb, Text txt, int i) {
+          return GestureDetector(
+            onTap: () =>
+                BlocProvider.of<QuestionCubit>(context).addOrRemoveToChoice(i),
+            child: Container(
+              margin: const EdgeInsets.only(top: 8, bottom: 8),
+              child: Row(
+                children: <Widget>[
+                  ClipRRect(
+                    clipBehavior: Clip.hardEdge,
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    child: Container(
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(8),
+                          )),
+                      child: ClipRRect(
+                        clipBehavior: Clip.hardEdge,
+                        borderRadius: BorderRadius.all(Radius.circular(6)),
+                        child: Transform.scale(
+                          child: Theme(
+                            child: cb,
+                            data: ThemeData(
+                                unselectedWidgetColor: Colors.transparent),
+                          ),
+                          scale: 1.6,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                    child: Text(
+                      question.options[i].text,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

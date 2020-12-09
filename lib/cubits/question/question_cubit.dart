@@ -51,6 +51,21 @@ class QuestionCubit extends Cubit<QuestionState> {
         test: state.test));
   }
 
+  void addOrRemoveToChoice(int value) {
+    List<int> newChoiceList = List<int>()..addAll(state.currentChoice);
+    if (state.currentChoice.contains(value)) {
+      newChoiceList.remove(value);
+    } else {
+      newChoiceList.add(value);
+    }
+    print('selected choice $newChoiceList');
+    emit(QuestionState.changedChoice(
+        currentQuestionInd: state.currentQuestionInd,
+        currentScore: state.currentScore,
+        currentChoice: newChoiceList,
+        test: state.test));
+  }
+
   void finishTest(List<OptionModel> selectedOptions) async {
     final test = state.test;
     final questionId = state.currentQuestionInd;

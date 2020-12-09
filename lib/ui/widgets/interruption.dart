@@ -13,7 +13,7 @@ class Interruption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 30, right: 10, left: 10),
+      padding: EdgeInsets.only(top: 30),
       height: 80,
       width: double.infinity,
       child: Row(
@@ -38,51 +38,100 @@ class Interruption extends StatelessWidget {
                     showDialog(
                       context: context,
                       child: Dialog(
-                        elevation: 4,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(15),
-                              child: Text(AppLocalizations.of(context)
-                                  .translate('test_interrupt_dialog_question')
-                                  .toString()),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                FlatButton(
-                                  child: Text(
-                                    AppLocalizations.of(context)
-                                        .translate(
-                                            'test_interrupt_dialog_continue')
-                                        .toString(),
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
+                        shape: RoundedRectangleBorder(
+                            side: BorderSide(color: Colors.black, width: 2),
+                            borderRadius: BorderRadius.all(Radius.circular(8))),
+                        child: Container(
+                          padding: EdgeInsets.all(20),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: Text(
+                                  'Are you sure?',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w900),
                                 ),
-                                FlatButton(
-                                  child: Text(
-                                    AppLocalizations.of(context)
-                                        .translate(
-                                            'test_interrupt_dialog_finish')
-                                        .toString(),
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .error),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    BlocProvider.of<QuestionCubit>(context)
-                                        .finishTest(null);
-                                  },
+                              ),
+                              Text(
+                                AppLocalizations.of(context)
+                                    .translate('test_interrupt_dialog_question')
+                                    .toString(),
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.black, width: 2),
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(8),
+                                          ),
+                                        ),
+                                        child: FlatButton(
+                                          child: Text(
+                                            AppLocalizations.of(context)
+                                                .translate(
+                                                    'test_interrupt_dialog_continue')
+                                                .toString(),
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w900),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.black,
+                                          border: Border.all(
+                                              color: Colors.black, width: 2),
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(8),
+                                          ),
+                                        ),
+                                        child: FlatButton(
+                                          child: Text(
+                                            AppLocalizations.of(context)
+                                                .translate(
+                                                    'test_interrupt_dialog_finish')
+                                                .toString(),
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w900),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            BlocProvider.of<QuestionCubit>(
+                                                    context)
+                                                .finishTest(null);
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            )
-                          ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     );

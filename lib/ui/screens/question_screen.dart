@@ -44,121 +44,129 @@ class QuestionScreen extends StatelessWidget {
           BlocBuilder<QuestionCubit, QuestionState>(builder: (context, state) {
         return Scaffold(
           backgroundColor: Colors.white,
-          body: Column(
-            children: <Widget>[
-              Interruption(
-                state: state,
-              ),
-              Expanded(
-                child: BlocListener<QuestionCubit, QuestionState>(
-                  listener: (ctx, state) {
-                    if (state.status == QuestionStatus.finished) {
-                      Navigator.of(ctx).pushReplacement(MaterialPageRoute(
-                          builder: (BuildContext context) => TestResultScreen(
-                              questionsLength: state.test.questions.length,
-                              totalScore: state.currentScore)));
-                    } else if (state.status == QuestionStatus.failure) {
-                      Scaffold.of(ctx).removeCurrentSnackBar();
-                      Scaffold.of(ctx).showSnackBar(SnackBar(
-                        backgroundColor: Colors.red,
-                        content: Text(state.message),
-                      ));
-                    }
-                  },
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      // Container(
-                      //   color: Theme.of(context).colorScheme.secondary,
-                      //   child: AnimatedContainer(
-                      //     duration: Duration(milliseconds: 200),
-                      //     width:
-                      //         widthForQuestion * state.currentQuestionInd + 1,
-                      //     height: 10,
-                      //   ),
-                      // ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Theme.of(context).cardColor.withOpacity(0.6),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey,
-                                  offset: Offset(0, 0),
-                                  blurRadius: 2)
-                            ]),
-                        padding: EdgeInsets.all(20),
-                        margin: EdgeInsets.only(
-                            right: 20, left: 20, top: 20, bottom: 40),
-                        child: Center(
-                            child: Text(
-                          state.test.questions[state.currentQuestionInd].text,
-                          style: TextStyle(fontSize: 18),
-                        )),
-                      ),
-                      Expanded(
-                        child: _getVariantsWidget(state),
-                      ),
-                      Container(
-                        height: Theme.of(context).buttonTheme.height,
-                        width: double.infinity,
-                        child: FlatButton(
-                          color: Colors.black,
-                          textColor: Theme.of(context).colorScheme.onSecondary,
-                          child: state.status == QuestionStatus.loading
-                              ? Center(
-                                  child: LinearProgressIndicator(
-                                    backgroundColor: Theme.of(context)
-                                        .colorScheme
-                                        .primaryVariant,
-                                  ),
+          body: Container(
+            padding: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 15),
+            child: Column(
+              children: <Widget>[
+                Interruption(
+                  state: state,
+                ),
+                Expanded(
+                  child: BlocListener<QuestionCubit, QuestionState>(
+                    listener: (ctx, state) {
+                      if (state.status == QuestionStatus.finished) {
+                        Navigator.of(ctx).pushReplacement(MaterialPageRoute(
+                            builder: (BuildContext context) => TestResultScreen(
+                                questionsLength: state.test.questions.length,
+                                totalScore: state.currentScore)));
+                      } else if (state.status == QuestionStatus.failure) {
+                        Scaffold.of(ctx).removeCurrentSnackBar();
+                        Scaffold.of(ctx).showSnackBar(SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text(state.message),
+                        ));
+                      }
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        // Container(
+                        //   color: Theme.of(context).colorScheme.secondary,
+                        //   child: AnimatedContainer(
+                        //     duration: Duration(milliseconds: 200),
+                        //     width:
+                        //         widthForQuestion * state.currentQuestionInd + 1,
+                        //     height: 10,
+                        //   ),
+                        // ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16)),
+                              border: Border.all(width: 2, color: Colors.black),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black,
+                                  offset: Offset(0, 2),
                                 )
-                              : Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      state.test.questions.length >
-                                              state.currentQuestionInd + 1
-                                          ? AppLocalizations.of(context)
-                                              .translate('next_btn')
-                                              .toString()
-                                          : AppLocalizations.of(context)
-                                              .translate('finish_quiz_btn')
-                                              .toString(),
-                                      style: TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.white),
-                                    ),
-                                    Icon(
-                                      FeatherIcons.chevronRight,
-                                      color: Colors.white,
-                                    )
-                                  ],
-                                ),
-                          onPressed: () {
-                            QuestionModel currentQuestion =
-                                state.test.questions[state.currentQuestionInd];
-                            List<OptionModel> choices = [];
-                            for (int choice in state.currentChoice) {
-                              choices.add(currentQuestion.options[choice]);
-                            }
-
-                            if (state.test.questions.length >
-                                state.currentQuestionInd + 1) {
-                              BlocProvider.of<QuestionCubit>(context)
-                                  .getNextQuestion(choices);
-                            } else {
-                              BlocProvider.of<QuestionCubit>(context)
-                                  .finishTest(choices);
-                            }
-                          },
+                              ]),
+                          padding: EdgeInsets.all(25),
+                          margin: EdgeInsets.only(top: 20, bottom: 20),
+                          child: Center(
+                              child: Text(
+                            state.test.questions[state.currentQuestionInd].text,
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w700),
+                          )),
                         ),
-                      ),
-                    ],
+                        Expanded(
+                          child: _getVariantsWidget(state),
+                        ),
+                        Container(
+                          width: double.infinity,
+                          child: FlatButton(
+                            color: Colors.black,
+                            padding: const EdgeInsets.all(20),
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(16))),
+                            child: state.status == QuestionStatus.loading
+                                ? Center(
+                                    child: LinearProgressIndicator(
+                                      backgroundColor: Theme.of(context)
+                                          .colorScheme
+                                          .primaryVariant,
+                                    ),
+                                  )
+                                : Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        state.test.questions.length >
+                                                state.currentQuestionInd + 1
+                                            ? AppLocalizations.of(context)
+                                                .translate('next_btn')
+                                                .toString()
+                                            : AppLocalizations.of(context)
+                                                .translate('finish_quiz_btn')
+                                                .toString(),
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w900,
+                                            color: Colors.white),
+                                      ),
+                                      Icon(
+                                        FeatherIcons.chevronRight,
+                                        color: Colors.white,
+                                      )
+                                    ],
+                                  ),
+                            onPressed: () {
+                              QuestionModel currentQuestion = state
+                                  .test.questions[state.currentQuestionInd];
+                              List<OptionModel> choices = [];
+                              for (int choice in state.currentChoice) {
+                                choices.add(currentQuestion.options[choice]);
+                              }
+
+                              if (state.test.questions.length >
+                                  state.currentQuestionInd + 1) {
+                                BlocProvider.of<QuestionCubit>(context)
+                                    .getNextQuestion(choices);
+                              } else {
+                                BlocProvider.of<QuestionCubit>(context)
+                                    .finishTest(choices);
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       }),
