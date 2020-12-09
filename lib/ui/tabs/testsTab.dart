@@ -1,15 +1,14 @@
 import 'package:android_guru/cubits/test/test_cubit.dart';
-import 'package:android_guru/cubits/user/user_cubit.dart';
-import 'package:android_guru/models/test_model.dart';
-import 'package:android_guru/repositories/user_repository.dart';
 import 'package:android_guru/ui/screens/question_screen.dart';
 import 'package:android_guru/ui/widgets/test_card.dart';
 import 'package:android_guru/ui/widgets/main_app_bar.dart';
 import 'package:android_guru/ui/widgets/tab_refresh_button.dart';
-import 'package:android_guru/ui/widgets/test.dart';
+import 'package:android_guru/ui/widgets/user_statistics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
+import '../../app_localizations.dart';
 import '../../injection_container.dart';
 
 class TestsTab extends StatelessWidget {
@@ -19,6 +18,7 @@ class TestsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _gaugeSize = MediaQuery.of(context).size.width / 3 * 0.90;
     return BlocProvider(
         create: (_) => sl.get<TestCubit>()..fetchTests(),
         child: BlocConsumer<TestCubit, TestState>(
@@ -30,29 +30,94 @@ class TestsTab extends StatelessWidget {
                 return Container(
                   margin: EdgeInsets.only(left: 15, right: 15),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       MainAppBar(
                         userName: state.user.username,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          TestCard(test: state.tests[0]),
-                          TestCard(test: state.tests[0])
-                        ],
+                      Container(
+                        width: double.infinity,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              height: _gaugeSize,
+                              width: _gaugeSize,
+                              child: UserStatistics(
+                                total: state.tests
+                                    .map((test) => test.questions.length)
+                                    .toList()
+                                    .fold(
+                                        0,
+                                        (previousValue, element) =>
+                                            previousValue + element),
+                                current: state.user.points,
+                                annotation: 'points',
+                                isPercent: false,
+                              ),
+                            ),
+                            Container(
+                              height: _gaugeSize,
+                              width: _gaugeSize,
+                              child: UserStatistics(
+                                total: state.tests.length,
+                                current: state.user.testsPassedCount,
+                                annotation: 'tests',
+                                isPercent: false,
+                              ),
+                            ),
+                            Container(
+                              height: _gaugeSize,
+                              width: _gaugeSize,
+                              child: UserStatistics(
+                                total: 100,
+                                current: 26,
+                                annotation: 'accuracy',
+                                isPercent: true,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5),
+                        child: Text(
+                          AppLocalizations.of(context)
+                              .translate('quizzes_tab')
+                              .toString(),
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 30,
+                              fontWeight: FontWeight.w900),
+                        ),
                       ),
                       Expanded(
-                        child: ListView(
+                        child: GridView.count(
+                          padding: EdgeInsets.only(top: 10),
+                          crossAxisSpacing: 15,
+                          mainAxisSpacing: 15,
+                          crossAxisCount: 2,
                           children: <Widget>[
                             ...state.tests.map((test) {
-                              return Test(
-                                key: ValueKey(test.id),
+                              return TestCard(
                                 test: test,
                               );
                             }).toList()
                           ],
                         ),
                       ),
+                      // Expanded(
+                      //   child: ListView(
+                      //     children: <Widget>[
+                      //       ...state.tests.map((test) {
+                      //         return Test(
+                      //           key: ValueKey(test.id),
+                      //           test: test,
+                      //         );
+                      //       }).toList()
+                      //     ],
+                      //   ),
+                      // ),
                     ],
                   ),
                 );

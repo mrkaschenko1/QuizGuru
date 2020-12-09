@@ -14,11 +14,12 @@ class MainAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 30, left: 5),
+      padding: const EdgeInsets.only(top: 30, left: 5, bottom: 5),
       width: double.infinity,
       color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
             child: Column(
@@ -57,21 +58,21 @@ class MainAppBar extends StatelessWidget {
                   ));
                 },
               ),
-              Builder(
-                builder: (ctx) => IconButton(
-                  icon: Icon(
-                    Icons.exit_to_app,
-                    color: Colors.black,
-                  ),
-                  onPressed: () async {
-                    var result = await userRepository.logout();
-                    result.fold(
-                      (l) => _showSnackBarError(ctx, l.message),
-                      (r) => print("logged out"),
-                    );
-                  },
-                ),
-              )
+              // Builder(
+              //   builder: (ctx) => IconButton(
+              //     icon: Icon(
+              //       Icons.exit_to_app,
+              //       color: Colors.black,
+              //     ),
+              //     onPressed: () async {
+              //       var result = await userRepository.logout();
+              //       result.fold(
+              //         (l) => _showSnackBarError(ctx, l.message),
+              //         (r) => print("logged out"),
+              //       );
+              //     },
+              //   ),
+              // )
             ],
           ),
         ],

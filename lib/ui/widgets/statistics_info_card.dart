@@ -13,9 +13,8 @@ class StatisticsInfoCard extends StatelessWidget {
       width: 80,
       height: 80,
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(5)),
-        color: Theme.of(context).cardColor
-    ),
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
+          color: Theme.of(context).cardColor),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -28,8 +27,7 @@ class StatisticsInfoCard extends StatelessWidget {
               style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 30,
-                  color: Theme.of(context).colorScheme.onSurface
-              ),
+                  color: Theme.of(context).colorScheme.onSurface),
             ),
           ),
           Flexible(

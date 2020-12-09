@@ -24,13 +24,11 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   var _pageController;
   Tabs _currentIndex;
-  var _userRepository;
 
   @override
   void initState() {
     _pageController = PageController(keepPage: true);
     _currentIndex = Tabs.TESTS;
-    _userRepository = sl.get<UserRepository>();
     super.initState();
   }
 
@@ -55,24 +53,23 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
+        selectedIconTheme: IconThemeData(size: 24),
+        unselectedIconTheme: IconThemeData(size: 20),
         items: [
           const BottomNavigationBarItem(
             icon: Icon(
               FeatherIcons.checkSquare,
-              size: 26,
             ),
             title: Text(''),
           ),
           const BottomNavigationBarItem(
               icon: Icon(
                 FeatherIcons.star,
-                size: 26,
               ),
               title: Text('')),
           const BottomNavigationBarItem(
               icon: Icon(
                 FeatherIcons.user,
-                size: 26,
               ),
               title: Text('')),
         ],
