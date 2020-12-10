@@ -11,9 +11,10 @@ class OneVariant extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return RadioButtonGroup(
+      activeColor: Color(0xFFFE9D81),
       orientation: GroupedButtonsOrientation.VERTICAL,
-      margin: const EdgeInsets.only(left: 12.0),
       onSelected: (String selected) => {
         BlocProvider.of<QuestionCubit>(context)
             .showSelectedChoice([int.parse(selected)])
@@ -28,17 +29,49 @@ class OneVariant extends StatelessWidget {
                   .currentChoice[0]
                   .toString(),
       itemBuilder: (Radio rb, Text txt, int i) {
-        return Container(
-          margin: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
-          decoration: BoxDecoration(
-              color: Theme.of(context).cardColor.withOpacity(0.6),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey, offset: Offset(0, 0), blurRadius: 0)
-              ]),
-          child: ListTile(
-            leading: rb,
-            title: Text(question.options[i].text),
+        return GestureDetector(
+          onTap: () => BlocProvider.of<QuestionCubit>(context)
+              .showSelectedChoice([int.parse(i.toString())]),
+          child: Container(
+            margin: const EdgeInsets.only(top: 8, bottom: 8),
+            child: Row(
+              children: <Widget>[
+                Container(
+                  height: 28,
+                  width: 28,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: theme.accentColor,
+                      width: 2,
+                    ),
+                    shape: BoxShape.circle,
+                  ),
+                  child: ClipOval(
+                    clipBehavior: Clip.hardEdge,
+                    child: Transform.scale(
+                      scale: 1.7,
+                      child: Theme(
+                        child: rb,
+                        data: ThemeData(
+                            unselectedWidgetColor: Colors.transparent),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Expanded(
+                  child: Text(
+                    question.options[i].text,
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: theme.accentColor),
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },

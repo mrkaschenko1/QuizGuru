@@ -1,20 +1,21 @@
 import 'package:android_guru/app_localizations.dart';
 import 'package:android_guru/cubits/user/user_cubit.dart';
-import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/ui/widgets/statistics_info_card.dart';
-import 'file:///C:/Users/AndreyKas/AndroidStudioProjects/android_guru/lib/ui/widgets/tab_refresh_button.dart';
+import 'package:android_guru/ui/widgets/statistics_info_card.dart';
+import 'package:android_guru/ui/widgets/tab_refresh_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../injection_container.dart';
 
 class UserTab extends StatelessWidget {
-
   void refreshTab(BuildContext context) async {
     await BlocProvider.of<UserCubit>(context).fetchUser();
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocProvider(
       create: (_) => sl.get<UserCubit>()..fetchUser(),
       child: BlocConsumer<UserCubit, UserState>(
@@ -24,95 +25,75 @@ class UserTab extends StatelessWidget {
           } else {
             if (state.user != null) {
               return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Container(
+                    clipBehavior: Clip.hardEdge,
                     decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-                        color: Theme.of(context).cardColor.withOpacity(0.5),
-                        boxShadow: [const BoxShadow(color: Colors.grey)]
+                      shape: BoxShape.circle,
                     ),
-                    margin: const EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.only(top: 5, bottom: 5),
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(15)),
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                          child: Text(
-                            AppLocalizations.of(context).translate('profile_info').toString(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 24,
-                                color: Theme.of(context).colorScheme.onBackground,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).cardColor,
-                            ),
-                            margin: const EdgeInsets.only(top: 15, bottom: 5, left: 15, right: 15),
-                            padding: const EdgeInsets.only(top: 10, bottom: 10, left: 15),
-                            child: Text(
-                                '${AppLocalizations.of(context).translate('login').toString()}: ${state.user.username}',
-                                style: const TextStyle(fontSize: 18, color: Colors.black87)
-                            )
-                        ),
-                        Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).cardColor,
-                            ),
-                            margin: const EdgeInsets.only(top: 15, bottom: 15, left: 15, right: 15),
-                            padding: const EdgeInsets.only(top: 10, bottom: 10, left: 15),
-                            child: Text(
-                                '${AppLocalizations.of(context).translate('email').toString()}: ${state.user.email}',
-                                style: const TextStyle(fontSize: 18, color: Colors.black87)
-                            )
-                        ),
-                      ],
+                    child: SvgPicture.asset(
+                      'assets/images/doodles/avatar.svg',
+                      fit: BoxFit.cover,
                     ),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    state.user.username,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 32,
+                        color: theme.accentColor),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    state.user.email,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        color: theme.accentColor),
+                  ),
                   Container(
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-                      color: Theme.of(context).cardColor.withOpacity(0.5),
-                      boxShadow: [const BoxShadow(color: Colors.grey)],
-                    ),
-                    margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                    margin: const EdgeInsets.only(
+                        left: 10, right: 10, bottom: 10, top: 15),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.only(top: 5, bottom: 5),
-                          decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(15)),
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                          child: Text(
-                            AppLocalizations.of(context).translate('statistics').toString(),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 24,
-                                color: Theme.of(context).colorScheme.onBackground,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ),
                         Padding(
                           padding: const EdgeInsets.all(10),
-                          child: Row(children: <Widget>[
-                            StatisticsInfoCard(title: AppLocalizations.of(context).translate('points').toString(), value: state.user.points,),
-                            StatisticsInfoCard(title: AppLocalizations.of(context).translate('tests_passed').toString(), value: state.user.testsPassedCount,),
-                            StatisticsInfoCard(title: AppLocalizations.of(context).translate('position').toString(), value: state.user.ratingPosition,),
-                          ],
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  StatisticsInfoCard(
+                                    title: AppLocalizations.of(context)
+                                        .translate('points')
+                                        .toString(),
+                                    value: state.user.points,
+                                  ),
+                                  StatisticsInfoCard(
+                                    title: AppLocalizations.of(context)
+                                        .translate('tests_passed')
+                                        .toString(),
+                                    value: state.user.testsPassedCount,
+                                  ),
+                                ],
+                                mainAxisAlignment: MainAxisAlignment.center,
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              StatisticsInfoCard(
+                                title: AppLocalizations.of(context)
+                                    .translate('position')
+                                    .toString(),
+                                value: state.user.ratingPosition,
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -121,16 +102,19 @@ class UserTab extends StatelessWidget {
                 ],
               );
             } else {
-              return TabRefreshButton(refreshTab: () => refreshTab(context),);
+              return TabRefreshButton(
+                refreshTab: () => refreshTab(context),
+              );
             }
           }
         },
         listener: (context, state) {
           if (state.status == UserStatus.failure) {
             Scaffold.of(context).removeCurrentSnackBar();
-            Scaffold.of(context).showSnackBar(
-                SnackBar(backgroundColor: Colors.red, content: Text(state.message),)
-            );
+            Scaffold.of(context).showSnackBar(SnackBar(
+              backgroundColor: Colors.red,
+              content: Text(state.message),
+            ));
           }
         },
       ),

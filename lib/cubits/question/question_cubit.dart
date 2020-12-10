@@ -1,6 +1,5 @@
 import 'package:android_guru/exceptions/network_exception.dart';
 import 'package:android_guru/models/option_model.dart';
-import 'package:android_guru/models/question_model.dart';
 import 'package:android_guru/models/test_model.dart';
 import 'package:android_guru/repositories/test_repository.dart';
 import 'package:bloc/bloc.dart';
@@ -49,6 +48,21 @@ class QuestionCubit extends Cubit<QuestionState> {
         currentQuestionInd: state.currentQuestionInd,
         currentScore: state.currentScore,
         currentChoice: value,
+        test: state.test));
+  }
+
+  void addOrRemoveToChoice(int value) {
+    List<int> newChoiceList = List<int>()..addAll(state.currentChoice);
+    if (state.currentChoice.contains(value)) {
+      newChoiceList.remove(value);
+    } else {
+      newChoiceList.add(value);
+    }
+    print('selected choice $newChoiceList');
+    emit(QuestionState.changedChoice(
+        currentQuestionInd: state.currentQuestionInd,
+        currentScore: state.currentScore,
+        currentChoice: newChoiceList,
         test: state.test));
   }
 

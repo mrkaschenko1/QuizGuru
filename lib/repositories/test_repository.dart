@@ -19,7 +19,7 @@ class TestRepository {
   TestRepository(
       {@required UserRepository userRepository,
       @required FirebaseDatabase firebaseDatabase,
-      @required NetworkInfo this.networkInfo})
+      @required this.networkInfo})
       : _userRepository = userRepository,
         _firebaseDatabase = firebaseDatabase;
 

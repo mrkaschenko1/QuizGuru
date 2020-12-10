@@ -23,20 +23,19 @@ void init() {
   sl.registerFactory(() => LoginBloc(userRepository: sl()));
   sl.registerFactory(() => ThemeBloc());
   sl.registerFactory(() => LangBloc());
-  sl.registerFactory(() => TestCubit(repository: sl()));
+  sl.registerFactory(
+      () => TestCubit(testRepository: sl(), userRepository: sl()));
   sl.registerFactory(() => RatingCubit(repository: sl()));
   sl.registerFactory(() => UserCubit(repository: sl()));
   sl.registerFactory(() => QuestionCubit(repository: sl()));
 
   //repository
-  sl.registerLazySingleton<UserRepository>(
-    () => UserRepository(
-      firebaseDatabase: sl(),
-      firebaseAuth: sl(),
-      googleSignIn: sl(),
-      networkInfo: sl(),
-    )
-  );
+  sl.registerLazySingleton<UserRepository>(() => UserRepository(
+        firebaseDatabase: sl(),
+        firebaseAuth: sl(),
+        googleSignIn: sl(),
+        networkInfo: sl(),
+      ));
 
   sl.registerLazySingleton<TestRepository>(
     () => TestRepository(

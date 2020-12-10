@@ -9,19 +9,18 @@ part 'theme_event.dart';
 part 'theme_state.dart';
 
 class ThemeBloc extends HydratedBloc<ThemeEvent, ThemeState> {
-  ThemeBloc() : super(
-      ThemeState(
-        themeName: AppTheme.OrangeBrown,
-        themeData: appThemeData[AppTheme.OrangeBrown]
-      )
-  );
+  ThemeBloc()
+      : super(ThemeState(
+            themeName: AppTheme.Light,
+            themeData: appThemeData[AppTheme.Light]));
 
   @override
   Stream<ThemeState> mapEventToState(
     ThemeEvent event,
   ) async* {
     if (event is ThemeChanged) {
-      yield ThemeState(themeName: event.theme, themeData: appThemeData[event.theme]);
+      yield ThemeState(
+          themeName: event.theme, themeData: appThemeData[event.theme]);
     }
   }
 
