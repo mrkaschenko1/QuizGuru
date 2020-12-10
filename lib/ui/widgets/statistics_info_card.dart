@@ -11,8 +11,8 @@ class StatisticsInfoCard extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
     return Container(
       margin: const EdgeInsets.only(left: 10, right: 10),
-      width: mediaQuery.size.width / 2 * 0.7,
-      height: 100,
+      height: 65,
+      width: mediaQuery.size.width / 2 * 0.65,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         color: Colors.white,

@@ -21,8 +21,9 @@ class PodiumItem extends StatelessWidget {
         children: <Widget>[
           Text(
             userName ?? '',
-            maxLines: 1,
+            maxLines: 2,
             overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w800,
@@ -56,7 +57,7 @@ class PodiumItem extends StatelessWidget {
                 place.toString(),
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 28,
+                    fontSize: 30,
                     fontWeight: FontWeight.w900),
               ),
             ),
