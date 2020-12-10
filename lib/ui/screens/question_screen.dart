@@ -35,12 +35,13 @@ class QuestionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocProvider(
       create: (_) => sl.get<QuestionCubit>()..fetchTest(test),
       child:
           BlocBuilder<QuestionCubit, QuestionState>(builder: (context, state) {
         return Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: theme.scaffoldBackgroundColor,
           body: Container(
             padding: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 15),
             child: Column(
@@ -78,13 +79,14 @@ class QuestionScreen extends StatelessWidget {
                         // ),
                         Container(
                           decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: theme.cardColor,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(16)),
-                              border: Border.all(width: 2, color: Colors.black),
+                              border: Border.all(
+                                  width: 2, color: theme.accentColor),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black,
+                                  color: theme.accentColor,
                                   offset: Offset(0, 2),
                                 )
                               ]),
@@ -94,7 +96,9 @@ class QuestionScreen extends StatelessWidget {
                               child: Text(
                             state.test.questions[state.currentQuestionInd].text,
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w700),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                color: theme.accentColor),
                           )),
                         ),
                         Expanded(
@@ -103,7 +107,7 @@ class QuestionScreen extends StatelessWidget {
                         Container(
                           width: double.infinity,
                           child: FlatButton(
-                            color: Colors.black,
+                            color: theme.accentColor,
                             padding: const EdgeInsets.all(20),
                             shape: RoundedRectangleBorder(
                                 borderRadius:
@@ -131,11 +135,11 @@ class QuestionScreen extends StatelessWidget {
                                         style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w900,
-                                            color: Colors.white),
+                                            color: theme.primaryColor),
                                       ),
                                       Icon(
                                         FeatherIcons.chevronRight,
-                                        color: Colors.white,
+                                        color: theme.primaryColor,
                                       )
                                     ],
                                   ),

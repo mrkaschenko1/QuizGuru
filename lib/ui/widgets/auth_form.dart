@@ -38,12 +38,16 @@ class _AuthFormState extends State<AuthForm> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     Widget loginForm({@required bool isLogin, bool isLoading = false}) =>
         Column(crossAxisAlignment: CrossAxisAlignment.center, children: <
             Widget>[
           Text(
             isLogin ? 'Login' : 'Sign up',
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
+            style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w900,
+                color: theme.accentColor),
           ),
           Container(
             margin: const EdgeInsets.only(
@@ -58,7 +62,7 @@ class _AuthFormState extends State<AuthForm> {
                     Container(
                       height: 60,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: theme.cardColor,
                         border: Border.all(width: 2),
                         borderRadius: BorderRadius.all(Radius.circular(16)),
                       ),
@@ -67,9 +71,9 @@ class _AuthFormState extends State<AuthForm> {
                       child: TextFormField(
                         key: const ValueKey('username'),
                         keyboardType: TextInputType.text,
-                        cursorColor: Theme.of(context).unselectedWidgetColor,
+                        cursorColor: theme.unselectedWidgetColor,
                         style: TextStyle(
-                            color: Colors.black,
+                            color: theme.accentColor,
                             fontSize: 20,
                             fontFamily: 'Monserrat',
                             fontWeight: FontWeight.w600),
@@ -77,7 +81,7 @@ class _AuthFormState extends State<AuthForm> {
                           prefixIcon: Icon(
                             FeatherIcons.user,
                             size: 24,
-                            color: Colors.black,
+                            color: theme.accentColor,
                           ),
                           prefixIconConstraints: BoxConstraints(
                               maxHeight: 24, maxWidth: 50, minWidth: 50),
@@ -89,7 +93,7 @@ class _AuthFormState extends State<AuthForm> {
                               .translate('username')
                               .toString(),
                           hintStyle: TextStyle(
-                              color: Colors.grey,
+                              color: theme.unselectedWidgetColor,
                               fontSize: 20,
                               fontFamily: 'Monserrat',
                               fontWeight: FontWeight.w600),
@@ -111,8 +115,8 @@ class _AuthFormState extends State<AuthForm> {
                   Container(
                     height: 60,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(width: 2),
+                      color: theme.cardColor,
+                      border: Border.all(width: 2, color: theme.accentColor),
                       borderRadius: BorderRadius.all(Radius.circular(16)),
                     ),
                     margin: const EdgeInsets.only(bottom: 10),
@@ -122,7 +126,7 @@ class _AuthFormState extends State<AuthForm> {
                       keyboardType: TextInputType.emailAddress,
                       cursorColor: Theme.of(context).unselectedWidgetColor,
                       style: TextStyle(
-                          color: Colors.black,
+                          color: theme.accentColor,
                           fontSize: 20,
                           fontFamily: 'Monserrat',
                           fontWeight: FontWeight.w600),
@@ -130,7 +134,7 @@ class _AuthFormState extends State<AuthForm> {
                         prefixIcon: Icon(
                           FeatherIcons.mail,
                           size: 24,
-                          color: Colors.black,
+                          color: theme.accentColor,
                         ),
                         prefixIconConstraints: BoxConstraints(
                             maxHeight: 24, maxWidth: 50, minWidth: 50),
@@ -142,7 +146,7 @@ class _AuthFormState extends State<AuthForm> {
                             .translate('email_address')
                             .toString(),
                         hintStyle: TextStyle(
-                            color: Colors.grey,
+                            color: theme.unselectedWidgetColor,
                             fontSize: 20,
                             fontFamily: 'Monserrat',
                             fontWeight: FontWeight.w600),
@@ -164,8 +168,8 @@ class _AuthFormState extends State<AuthForm> {
                   Container(
                     height: 60,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(width: 2),
+                      color: theme.cardColor,
+                      border: Border.all(width: 2, color: theme.accentColor),
                       borderRadius: BorderRadius.all(Radius.circular(16)),
                     ),
                     margin: const EdgeInsets.only(bottom: 10),
@@ -175,7 +179,7 @@ class _AuthFormState extends State<AuthForm> {
                       obscureText: true,
                       cursorColor: Theme.of(context).unselectedWidgetColor,
                       style: TextStyle(
-                          color: Colors.black,
+                          color: theme.accentColor,
                           fontSize: 20,
                           fontFamily: 'Monserrat',
                           fontWeight: FontWeight.w600),
@@ -183,7 +187,7 @@ class _AuthFormState extends State<AuthForm> {
                         prefixIcon: Icon(
                           FeatherIcons.lock,
                           size: 24,
-                          color: Colors.black,
+                          color: theme.accentColor,
                         ),
                         prefixIconConstraints: BoxConstraints(
                             maxHeight: 24, maxWidth: 50, minWidth: 50),
@@ -195,7 +199,7 @@ class _AuthFormState extends State<AuthForm> {
                             .translate('password')
                             .toString(),
                         hintStyle: TextStyle(
-                            color: Colors.grey,
+                            color: theme.unselectedWidgetColor,
                             fontSize: 20,
                             fontFamily: 'Monserrat',
                             fontWeight: FontWeight.w600),
@@ -244,14 +248,15 @@ class _AuthFormState extends State<AuthForm> {
                                         style: TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w900,
-                                            color: Colors.white)),
+                                            color: theme.primaryColor)),
                                     Icon(
                                       FeatherIcons.chevronRight,
                                       size: 26,
+                                      color: theme.primaryColor,
                                     )
                                   ]),
                               onPressed: () => trySubmit(isLogin),
-                              color: Colors.black,
+                              color: theme.accentColor,
                             )),
                       if (!isLoading)
                         Container(
@@ -261,7 +266,7 @@ class _AuthFormState extends State<AuthForm> {
                                 .translate('or')
                                 .toString(),
                             style: TextStyle(
-                                color: Colors.black,
+                                color: theme.accentColor,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w900),
                           ),
@@ -271,7 +276,7 @@ class _AuthFormState extends State<AuthForm> {
                           width: double.infinity,
                           child: FlatButton(
                               padding: const EdgeInsets.all(20),
-                              color: Color(0xFFFE9D81),
+                              color: theme.colorScheme.surface,
                               shape: RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(16))),
@@ -284,7 +289,7 @@ class _AuthFormState extends State<AuthForm> {
                                     .toString()
                                     .toUpperCase(),
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: theme.colorScheme.onSurface,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w900,
                                 ),
@@ -305,7 +310,7 @@ class _AuthFormState extends State<AuthForm> {
                                         .translate('have_account')
                                         .toString(),
                                 style: TextStyle(
-                                    color: Colors.black,
+                                    color: theme.accentColor,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600),
                               ),
@@ -320,7 +325,7 @@ class _AuthFormState extends State<AuthForm> {
                                           .translate('switch_to_login_btn')
                                           .toString(),
                                   style: TextStyle(
-                                      color: Color(0xFFFE9D81),
+                                      color: theme.colorScheme.surface,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w800),
                                 ),

@@ -21,6 +21,7 @@ class TestCard extends StatelessWidget {
     final _size = _mediaQueary.size.width / 2 * 0.88;
     final _iconSize = 55.0;
     final _iconContainerSize = _iconSize + 3;
+    final theme = Theme.of(context);
     final String _attempts =
         AppLocalizations.of(context).translate('user_tries').toString() +
             ': ' +
@@ -40,29 +41,34 @@ class TestCard extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20)),
             border: Border.all(
-              color: Colors.black,
+              color: theme.accentColor,
               width: 2,
             ),
-            color: Colors.white,
-            boxShadow: [BoxShadow(color: Colors.black, offset: Offset(0, 2))],
+            color: theme.cardColor,
+            boxShadow: [
+              BoxShadow(color: theme.accentColor, offset: Offset(0, 2))
+            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
                 test.title,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                    color: theme.accentColor),
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
                 '${test.questions.length} questions',
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 20, color: theme.accentColor),
               ),
               Spacer(),
               test.isStarting
                   ? LinearProgressIndicator(
-                      backgroundColor: Colors.white,
+                      backgroundColor: theme.backgroundColor,
                     )
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,7 +91,7 @@ class TestCard extends StatelessWidget {
                                 Icon(
                                   FeatherIcons.info,
                                   size: _iconSize,
-                                  color: Colors.grey,
+                                  color: theme.unselectedWidgetColor,
                                 ),
                               ],
                             ),
@@ -112,7 +118,7 @@ class TestCard extends StatelessWidget {
                                 Icon(
                                   FeatherIcons.playCircle,
                                   size: _iconSize,
-                                  color: Colors.black,
+                                  color: theme.accentColor,
                                 ),
                               ],
                             ),
@@ -130,18 +136,24 @@ class TestCard extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20)),
             border: Border.all(
-              color: Colors.black,
+              color: theme.accentColor,
               width: 2,
             ),
-            color: Colors.white,
-            boxShadow: [BoxShadow(color: Colors.black, offset: Offset(0, 2))],
+            color: theme.cardColor,
+            boxShadow: [
+              BoxShadow(color: theme.accentColor, offset: Offset(0, 2))
+            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
                 test.title,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: theme.accentColor,
+                ),
                 maxLines: 4,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -150,15 +162,11 @@ class TestCard extends StatelessWidget {
               ),
               Text(
                 _attempts,
-                style: TextStyle(
-                  fontSize: 20,
-                ),
+                style: TextStyle(fontSize: 20, color: theme.accentColor),
               ),
               Text(
                 _bestScore,
-                style: TextStyle(
-                  fontSize: 20,
-                ),
+                style: TextStyle(fontSize: 20, color: theme.accentColor),
               ),
               Spacer(),
               Row(
@@ -182,7 +190,7 @@ class TestCard extends StatelessWidget {
                           Icon(
                             FeatherIcons.arrowLeftCircle,
                             size: _iconSize,
-                            color: Colors.black,
+                            color: theme.accentColor,
                           ),
                         ],
                       ),

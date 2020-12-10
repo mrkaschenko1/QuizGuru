@@ -16,6 +16,7 @@ class TestsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final _gaugeSize = MediaQuery.of(context).size.width / 3 * 0.90;
     return BlocProvider(
         create: (_) => sl.get<TestCubit>()..fetchTests(),
@@ -82,7 +83,7 @@ class TestsTab extends StatelessWidget {
                               .translate('quizzes_tab')
                               .toString(),
                           style: TextStyle(
-                              color: Colors.black,
+                              color: theme.accentColor,
                               fontSize: 30,
                               fontWeight: FontWeight.w900),
                         ),

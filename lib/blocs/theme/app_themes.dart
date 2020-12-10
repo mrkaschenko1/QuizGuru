@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 
 enum AppTheme {
-  OrangeBrown,
-  BlueGray,
+  Light,
+  Dark,
 }
 
 final appThemeData = {
-  AppTheme.OrangeBrown: getOrangeBrownTheme(),
-  AppTheme.BlueGray: getBlueGrayTheme(),
+  AppTheme.Light: getLightTheme(),
+  AppTheme.Dark: getDarkTheme(),
 };
 
-Function getOrangeBrownTheme = () {
+Function getLightTheme = () {
   final colorScheme = ColorScheme(
-      primary: Color(0xffc9a185),
+      primary: Colors.white,
       primaryVariant: Color(0xffebd7ca),
-      onPrimary: Color(0xff40514E),
-      secondary: Color(0xffFFA45C),
-      secondaryVariant: Color(0xffebd7ca),
-      onSecondary: Colors.black,
-      background: Color(0xff40514E),
-      onBackground: Colors.white,
-      surface: Colors.white,
-      onSurface: Colors.blue,
+      onPrimary: Color(0xff18191F),
+      secondary: Color(0xff18191F),
+      secondaryVariant: Color(0xff18191F),
+      onSecondary: Colors.white,
+      background: Colors.white,
+      onBackground: Color(0xff18191F),
+      surface: Color(0xFFFE9D81),
+      onSurface: Colors.white,
       error: Colors.red,
       onError: Colors.white,
-      brightness: Brightness.dark);
+      brightness: Brightness.light);
   return ThemeData(
     fontFamily: 'Montserrat',
     colorScheme: colorScheme,
@@ -32,9 +32,9 @@ Function getOrangeBrownTheme = () {
     primaryColorLight: colorScheme.primaryVariant,
     accentColor: colorScheme.secondary,
     scaffoldBackgroundColor: colorScheme.background,
-    cardColor: Color(0xffd4d1c9),
-    backgroundColor: Color(0xffb8b5ad),
-    unselectedWidgetColor: Color(0x8840514E),
+    cardColor: Colors.white,
+    backgroundColor: colorScheme.background,
+    unselectedWidgetColor: Color(0xFF656565),
     textTheme: TextTheme(
       caption: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
     ),
@@ -42,18 +42,18 @@ Function getOrangeBrownTheme = () {
   );
 };
 
-Function getBlueGrayTheme = () {
+Function getDarkTheme = () {
   final colorScheme = ColorScheme(
-      primary: Color(0xff6F7C7C),
-      primaryVariant: Color(0xffebd7ca),
-      onPrimary: Color(0xff40514E),
-      secondary: Colors.black,
-      secondaryVariant: Color(0xffebd7ca),
-      onSecondary: Colors.black,
-      background: Color(0xffE0E0E0),
-      onBackground: Colors.black,
-      surface: Colors.white,
-      onSurface: Colors.blue,
+      primary: Color(0xff18191F),
+      primaryVariant: Color(0xff18191F),
+      onPrimary: Colors.white,
+      secondary: Color(0xffe6e3e3),
+      secondaryVariant: Colors.white,
+      onSecondary: Color(0xff18191F),
+      background: Color(0xff18191F),
+      onBackground: Colors.white,
+      surface: Color(0xFFFE9D81),
+      onSurface: Colors.white,
       error: Colors.red,
       onError: Colors.white,
       brightness: Brightness.dark);
@@ -64,9 +64,9 @@ Function getBlueGrayTheme = () {
     primaryColorLight: colorScheme.primaryVariant,
     accentColor: colorScheme.secondary,
     scaffoldBackgroundColor: colorScheme.background,
-    cardColor: Color(0xffE4E4E4),
-    backgroundColor: Color(0xffb8b5ad),
-    unselectedWidgetColor: Color(0x8840514E),
+    cardColor: Color(0xff202129),
+    backgroundColor: colorScheme.background,
+    unselectedWidgetColor: Color(0xFF656565),
     textTheme: TextTheme(
       caption: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
     ),

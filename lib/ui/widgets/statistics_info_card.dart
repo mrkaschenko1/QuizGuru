@@ -8,6 +8,7 @@ class StatisticsInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final mediaQuery = MediaQuery.of(context);
     return Container(
       margin: const EdgeInsets.only(left: 10, right: 10),
@@ -15,10 +16,10 @@ class StatisticsInfoCard extends StatelessWidget {
       width: mediaQuery.size.width / 2 * 0.65,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(8)),
-        color: Colors.white,
-        border: Border.all(color: Colors.black, width: 2),
+        color: theme.cardColor,
+        border: Border.all(color: theme.accentColor, width: 2),
         boxShadow: [
-          BoxShadow(color: Colors.black, offset: Offset(0, 2)),
+          BoxShadow(color: theme.accentColor, offset: Offset(0, 2)),
         ],
       ),
       child: Column(
@@ -33,7 +34,7 @@ class StatisticsInfoCard extends StatelessWidget {
               style: TextStyle(
                   fontWeight: FontWeight.w900,
                   fontSize: 30,
-                  color: Colors.black),
+                  color: theme.accentColor),
             ),
           ),
           Flexible(
@@ -43,7 +44,7 @@ class StatisticsInfoCard extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 16,
-                color: Colors.black,
+                color: theme.accentColor,
               ),
             ),
           ),

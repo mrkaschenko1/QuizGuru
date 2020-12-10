@@ -34,30 +34,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: SliverAppBar(
-      //   flexibleSpace: FlexibleSpaceBar(
-      //     title: Column(
-      //       crossAxisAlignment: CrossAxisAlignment.start,
-      //       children: <Widget>[
-      //         Text(
-      //           AppLocalizations.of(context).translate('hello').toString(),
-      //           style: TextStyle(
-      //               color: Colors.black,
-      //               fontSize: 30,
-      //               fontWeight: FontWeight.w900),
-      //         ),
-      //         Text(
-      //           'Andrey',
-      //           style: TextStyle(
-      //               color: Colors.black,
-      //               fontSize: 30,
-      //               fontWeight: FontWeight.w900),
-      //         )
-      //       ],
-      //     ),
-      //   ),
-      // ),
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         height: double.infinity,
         child: Column(
@@ -82,8 +59,10 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        selectedIconTheme: IconThemeData(size: 24),
-        unselectedIconTheme: IconThemeData(size: 20),
+        selectedIconTheme:
+            IconThemeData(size: 24, color: Theme.of(context).accentColor),
+        unselectedIconTheme: IconThemeData(
+            size: 20, color: Theme.of(context).unselectedWidgetColor),
         items: [
           const BottomNavigationBarItem(
             icon: Icon(
@@ -102,9 +81,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
               title: Text('')),
         ],
-        backgroundColor: Colors.white,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey,
+        backgroundColor: Theme.of(context).backgroundColor,
         currentIndex: _currentIndex.index,
         onTap: (index) {
           setState(() {
@@ -115,100 +92,5 @@ class _MainScreenState extends State<MainScreen> {
         },
       ),
     );
-//      floatingActionButton: FloatingActionButton(
-//        child: Icon(Icons.add),
-//        onPressed: () async {
-//          var key = FirebaseDatabase.instance.reference().child('users').push();
-//          await key.set({
-//            "username": "top",
-//            "points": 10
-//          });
-//        }
-//        onPressed: () async {
-//          await FirebaseDatabase.instance.reference().child('counter').runTransaction((mutableData) async {
-//            if (mutableData.value == null) {
-//              print("null happened");
-//              return mutableData;
-//            } else {
-//              mutableData.value++;
-//            }
-//            return mutableData;
-//          }
-//            );
-//      }
-//          await FirebaseDatabase.instance.reference().child('tests').push().set({
-//            'title': 'Android simple quiz',
-//            'total_points': 0,
-//            'students_passed': 0,
-//            'total_tries': 0,
-//            'questions': [
-//              {
-//                'text': 'Is it easy?',
-//                'options': [
-//                  {
-//                    'text': 'yes',
-//                    'right': true
-//                  },
-//                  {
-//                  'text': 'no',
-//                  'right': false
-//                  },
-//                  {
-//                    'text': 'may be',
-//                    'right': false
-//                  },
-//                ]
-//              },
-//              {
-//                'text': 'Is it good?',
-//                'options': [
-//                  {
-//                    'text': 'yes',
-//                    'right': true
-//                  },
-//                  {
-//                    'text': 'may be',
-//                    'right': false
-//                  },
-//                ]
-//              },
-//              {
-//                'text': 'Are you sure?',
-//                'options': [
-//                  {
-//                    'text': 'yes',
-//                    'right': true
-//                  },
-//                  {
-//                    'text': 'no',
-//                    'right': false
-//                  },
-//                ]
-//              },
-//              {
-//                'text': 'Come on?',
-//                'options': [
-//                  {
-//                    'text': 'yes',
-//                    'right': true
-//                  },
-//                  {
-//                    'text': 'may be',
-//                    'right': false
-//                  },
-//                  {
-//                    'text': 'no',
-//                    'right': false
-//                  },
-//                  {
-//                    'text': 'hell no',
-//                    'right': false
-//                  },
-//                ]
-//              },
-//            ],
-//          });
-//        },
-//      ),
   }
 }

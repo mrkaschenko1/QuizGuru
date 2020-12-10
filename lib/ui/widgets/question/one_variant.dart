@@ -11,6 +11,7 @@ class OneVariant extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return RadioButtonGroup(
       activeColor: Color(0xFFFE9D81),
       orientation: GroupedButtonsOrientation.VERTICAL,
@@ -40,7 +41,7 @@ class OneVariant extends StatelessWidget {
                   width: 28,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Colors.black,
+                      color: theme.accentColor,
                       width: 2,
                     ),
                     shape: BoxShape.circle,
@@ -64,9 +65,9 @@ class OneVariant extends StatelessWidget {
                   child: Text(
                     question.options[i].text,
                     style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: theme.accentColor),
                   ),
                 ),
               ],

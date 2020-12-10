@@ -13,6 +13,7 @@ class UserStatistics extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SfRadialGauge(
       axes: <RadialAxis>[
         RadialAxis(
@@ -33,7 +34,7 @@ class UserStatistics extends StatelessWidget {
                 cornerStyle: CornerStyle.bothCurve,
                 width: 16,
                 sizeUnit: GaugeSizeUnit.logicalPixel,
-                color: Color(0xFFFE9D81),
+                color: theme.colorScheme.surface,
               ),
             ],
             annotations: [
@@ -52,13 +53,13 @@ class UserStatistics extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.w800,
-                              color: Colors.black)),
+                              color: theme.accentColor)),
                       Text(
                         annotation,
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
-                            color: Colors.black),
+                            color: theme.accentColor),
                       )
                     ],
                   ))

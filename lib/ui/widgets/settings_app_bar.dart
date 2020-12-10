@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 class SettingsAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       padding: EdgeInsets.only(top: 30),
       height: 80,
@@ -30,7 +31,9 @@ class SettingsAppBar extends StatelessWidget {
           Text(
             'Settings',
             style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.w900, fontSize: 30),
+                color: theme.accentColor,
+                fontWeight: FontWeight.w900,
+                fontSize: 30),
           ),
           SizedBox(
             height: 48,

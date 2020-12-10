@@ -13,6 +13,7 @@ class PodiumItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final String pointsString = points == null
         ? ''
         : '$points ${AppLocalizations.of(context).translate('points')}';
@@ -27,7 +28,7 @@ class PodiumItem extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w800,
-              color: Colors.black,
+              color: theme.accentColor,
             ),
           ),
           SizedBox(
@@ -40,7 +41,7 @@ class PodiumItem extends StatelessWidget {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w400,
-              color: Colors.black,
+              color: theme.accentColor,
             ),
           ),
           SizedBox(
@@ -51,12 +52,12 @@ class PodiumItem extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 1),
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.black, width: 2),
-                color: Colors.black),
+                color: theme.accentColor),
             child: Center(
               child: Text(
                 place.toString(),
                 style: TextStyle(
-                    color: Colors.white,
+                    color: theme.primaryColor,
                     fontSize: 30,
                     fontWeight: FontWeight.w900),
               ),

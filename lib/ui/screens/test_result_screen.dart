@@ -21,9 +21,10 @@ class TestResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final double result = totalScore / questionsLength;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.primaryColor,
       body: Container(
         padding: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 15),
         child: Column(
@@ -37,12 +38,12 @@ class TestResultScreen extends StatelessWidget {
               padding: EdgeInsets.all(40),
               margin: EdgeInsets.only(left: 40, right: 40),
               decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: theme.cardColor,
                   borderRadius: BorderRadius.all(Radius.circular(16)),
-                  border: Border.all(width: 2, color: Colors.black),
+                  border: Border.all(width: 2, color: theme.accentColor),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black,
+                      color: theme.accentColor,
                       offset: Offset(0, 2),
                     )
                   ]),
@@ -53,7 +54,7 @@ class TestResultScreen extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 50,
-                      color: Colors.black,
+                      color: theme.accentColor,
                     ),
                   ),
                   Text(
@@ -64,7 +65,7 @@ class TestResultScreen extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 20,
-                      color: Colors.black,
+                      color: theme.accentColor,
                     ),
                   ),
                 ],
@@ -87,7 +88,7 @@ class TestResultScreen extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   child: FlatButton(
-                    color: Colors.black,
+                    color: theme.accentColor,
                     padding: const EdgeInsets.all(20),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(16))),
@@ -98,7 +99,7 @@ class TestResultScreen extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w900,
-                          color: Colors.white),
+                          color: theme.primaryColor),
                     ),
                     onPressed: () {
                       Navigator.of(context)

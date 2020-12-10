@@ -15,6 +15,7 @@ class UserTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocProvider(
       create: (_) => sl.get<UserCubit>()..fetchUser(),
       child: BlocConsumer<UserCubit, UserState>(
@@ -41,14 +42,20 @@ class UserTab extends StatelessWidget {
                   ),
                   Text(
                     state.user.username,
-                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 32),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 32,
+                        color: theme.accentColor),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   Text(
                     state.user.email,
-                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18,
+                        color: theme.accentColor),
                   ),
                   Container(
                     margin: const EdgeInsets.only(

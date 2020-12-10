@@ -12,6 +12,7 @@ class Interruption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       padding: EdgeInsets.only(top: 30),
       height: 80,
@@ -38,8 +39,10 @@ class Interruption extends StatelessWidget {
                     showDialog(
                       context: context,
                       child: Dialog(
+                        backgroundColor: theme.primaryColor,
                         shape: RoundedRectangleBorder(
-                            side: BorderSide(color: Colors.black, width: 2),
+                            side:
+                                BorderSide(color: theme.accentColor, width: 2),
                             borderRadius: BorderRadius.all(Radius.circular(8))),
                         child: Container(
                           padding: EdgeInsets.all(20),
@@ -53,7 +56,8 @@ class Interruption extends StatelessWidget {
                                   'Are you sure?',
                                   style: TextStyle(
                                       fontSize: 20,
-                                      fontWeight: FontWeight.w900),
+                                      fontWeight: FontWeight.w900,
+                                      color: theme.accentColor),
                                 ),
                               ),
                               Text(
@@ -61,7 +65,9 @@ class Interruption extends StatelessWidget {
                                     .translate('test_interrupt_dialog_question')
                                     .toString(),
                                 style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: theme.accentColor),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 15),
@@ -74,7 +80,8 @@ class Interruption extends StatelessWidget {
                                       child: Container(
                                         decoration: BoxDecoration(
                                           border: Border.all(
-                                              color: Colors.black, width: 2),
+                                              color: theme.accentColor,
+                                              width: 2),
                                           borderRadius: BorderRadius.all(
                                             Radius.circular(8),
                                           ),
@@ -86,7 +93,7 @@ class Interruption extends StatelessWidget {
                                                     'test_interrupt_dialog_continue')
                                                 .toString(),
                                             style: TextStyle(
-                                                color: Colors.black,
+                                                color: theme.accentColor,
                                                 fontWeight: FontWeight.w900),
                                           ),
                                           onPressed: () {
@@ -101,9 +108,10 @@ class Interruption extends StatelessWidget {
                                     Expanded(
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          color: Colors.black,
+                                          color: theme.accentColor,
                                           border: Border.all(
-                                              color: Colors.black, width: 2),
+                                              color: theme.accentColor,
+                                              width: 2),
                                           borderRadius: BorderRadius.all(
                                             Radius.circular(8),
                                           ),
@@ -115,7 +123,7 @@ class Interruption extends StatelessWidget {
                                                     'test_interrupt_dialog_finish')
                                                 .toString(),
                                             style: TextStyle(
-                                                color: Colors.white,
+                                                color: theme.primaryColor,
                                                 fontWeight: FontWeight.w900),
                                           ),
                                           onPressed: () {

@@ -39,8 +39,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: theme.scaffoldBackgroundColor,
         body: Container(
           padding: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 15),
           child: Column(
@@ -62,9 +63,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(16)),
                       border: Border.all(width: 2, color: Colors.black),
-                      color: Colors.white,
+                      color: theme.cardColor,
                       boxShadow: [
-                        BoxShadow(color: Colors.black, offset: Offset(0, 2))
+                        BoxShadow(
+                            color: theme.accentColor, offset: Offset(0, 2))
                       ]),
                   margin: const EdgeInsets.only(top: 10),
                   padding:
@@ -82,7 +84,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             dense: true,
                             leading: Icon(
                               FeatherIcons.globe,
-                              color: Colors.black,
+                              color: theme.accentColor,
                               size: 30,
                             ),
                             title: Text(
@@ -91,9 +93,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       .translate('language')
                                       .toString()),
                               style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: theme.accentColor),
                             ),
                             trailing: DropdownButton(
+                              dropdownColor: theme.primaryColor,
                               value: _langValue,
                               items: [
                                 DropdownMenuItem(
@@ -101,10 +106,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   child: Text(
                                     'English',
                                     style: TextStyle(
-                                        fontSize: 18,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSurface),
+                                        fontSize: 18, color: theme.accentColor),
                                   ),
                                 ),
                                 DropdownMenuItem(
@@ -112,10 +114,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   child: Text(
                                     'Русский',
                                     style: TextStyle(
-                                        fontSize: 18,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSurface),
+                                        fontSize: 18, color: theme.accentColor),
                                   ),
                                 )
                               ],
@@ -139,15 +138,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           dense: true,
                           leading: _themeValue == 0
                               ? Icon(FeatherIcons.sun,
-                                  size: 30, color: Colors.black)
+                                  size: 30, color: theme.accentColor)
                               : Icon(FeatherIcons.moon,
-                                  size: 30, color: Colors.black),
+                                  size: 30, color: Colors.yellowAccent),
                           title: Text(
                             StringUtils.capitalize(AppLocalizations.of(context)
                                 .translate('theme')
                                 .toString()),
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: theme.accentColor),
                           ),
                           trailing: Switch(
                             value: _themeValue == 1 ? true : false,
@@ -161,8 +162,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 );
                               });
                             },
-                            activeColor: Colors.black,
-                            activeTrackColor: Color(0xFFFE9D81),
+                            activeColor: theme.unselectedWidgetColor,
+                            activeTrackColor: theme.colorScheme.surface,
                             inactiveThumbColor: Colors.white,
                             inactiveTrackColor: Colors.grey,
                           ),

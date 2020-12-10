@@ -61,6 +61,7 @@ class Rating extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final bool isEmpty = rating.sublist(3).isEmpty;
     return Container(
       margin: EdgeInsets.only(left: 25, right: 25, top: 15),
@@ -74,7 +75,7 @@ class Rating extends StatelessWidget {
             height: 20,
           ),
           Container(
-            color: Colors.black,
+            color: theme.accentColor,
             height: 1,
           ),
           !isEmpty
@@ -94,16 +95,16 @@ class Rating extends StatelessWidget {
                                 child: Text(
                                   (rating.indexOf(elem) + 1).toString(),
                                   style: TextStyle(
-                                      color: Colors.black,
+                                      color: theme.accentColor,
                                       fontWeight: FontWeight.w900,
                                       fontSize: 24),
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: theme.cardColor,
                                 border: Border.all(
                                   width: 2,
-                                  color: Colors.black,
+                                  color: theme.accentColor,
                                 ),
                                 borderRadius: BorderRadius.circular(12),
                                 // boxShadow: [
@@ -114,8 +115,8 @@ class Rating extends StatelessWidget {
                             ),
                             title: Text(
                               elem['username'],
-                              style: const TextStyle(
-                                  color: Colors.black,
+                              style: TextStyle(
+                                  color: theme.accentColor,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 24,
                                   letterSpacing: 0.5),
@@ -126,20 +127,20 @@ class Rating extends StatelessWidget {
                               child: Container(
                                 margin: EdgeInsets.only(right: 2),
                                 decoration: BoxDecoration(
-                                    color: Color(0xFFFE9D81),
+                                    color: theme.colorScheme.surface,
                                     border: Border.all(
-                                        width: 2, color: Colors.black),
+                                        width: 2, color: theme.accentColor),
                                     borderRadius: BorderRadius.circular(12),
                                     boxShadow: [
                                       BoxShadow(
-                                          color: Colors.black,
+                                          color: theme.accentColor,
                                           offset: Offset(0, 1))
                                     ]),
                                 child: Center(
                                   child: Text(
                                     elem['points'].toString(),
                                     style: TextStyle(
-                                        color: Colors.black,
+                                        color: Colors.white,
                                         fontSize: 20,
                                         fontWeight: FontWeight.w700),
                                   ),
@@ -149,12 +150,14 @@ class Rating extends StatelessWidget {
                           ),
                           margin: const EdgeInsets.only(bottom: 2),
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black, width: 2),
+                            border:
+                                Border.all(color: theme.accentColor, width: 2),
                             borderRadius: BorderRadius.circular(16),
-                            color: Colors.white,
+                            color: theme.primaryColor,
                             boxShadow: [
                               BoxShadow(
-                                  color: Colors.black, offset: Offset(0, 2))
+                                  color: theme.accentColor,
+                                  offset: Offset(0, 2))
                             ],
                           ),
                         );
@@ -172,7 +175,9 @@ class Rating extends StatelessWidget {
                       Text(
                         'Hey! We need more players!',
                         style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w800),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800,
+                            color: theme.accentColor),
                       ),
                       Expanded(
                         child: Image.asset(

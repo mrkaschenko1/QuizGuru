@@ -14,10 +14,11 @@ class MainAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.only(top: 30, left: 10, bottom: 5),
       width: double.infinity,
-      color: Colors.white,
+      color: theme.scaffoldBackgroundColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +31,7 @@ class MainAppBar extends StatelessWidget {
                   Text(
                     AppLocalizations.of(context).translate('hello').toString(),
                     style: TextStyle(
-                        color: Colors.black,
+                        color: theme.accentColor,
                         fontSize: 30,
                         fontWeight: FontWeight.w900),
                   ),
@@ -38,7 +39,7 @@ class MainAppBar extends StatelessWidget {
                   Text(
                     userName,
                     style: TextStyle(
-                        color: Colors.black,
+                        color: theme.accentColor,
                         fontSize: 30,
                         fontWeight: FontWeight.w900),
                   )
@@ -51,7 +52,7 @@ class MainAppBar extends StatelessWidget {
               IconButton(
                 icon: Icon(
                   FeatherIcons.settings,
-                  color: Colors.black,
+                  color: theme.accentColor,
                   size: 30,
                 ),
                 onPressed: () async {

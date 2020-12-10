@@ -11,12 +11,11 @@ class MultipleVariant extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return SingleChildScrollView(
       child: CheckboxGroup(
-        // checkColor: Color(0xFFFE9D81),
         checkColor: Colors.black,
-        activeColor: Color(0xFFFE9D81),
-
+        activeColor: theme.colorScheme.surface,
         orientation: GroupedButtonsOrientation.VERTICAL,
         onSelected: (List selected) => {
           BlocProvider.of<QuestionCubit>(context)
@@ -48,7 +47,7 @@ class MultipleVariant extends StatelessWidget {
                       width: 30,
                       decoration: BoxDecoration(
                           border: Border.all(
-                            color: Colors.black,
+                            color: theme.accentColor,
                             width: 2,
                           ),
                           borderRadius: BorderRadius.all(
@@ -75,9 +74,9 @@ class MultipleVariant extends StatelessWidget {
                     child: Text(
                       question.options[i].text,
                       style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: theme.accentColor),
                     ),
                   ),
                 ],
