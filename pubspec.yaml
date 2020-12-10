@@ -86,8 +86,11 @@ flutter:
      - assets/images/doodles/greeting_person.png
      - assets/images/doodles/sad_person.png
      - assets/images/doodles/happy_person.png
+     - assets/images/doodles/avatar.svg
      - assets/images/doodles/neutral_person.png
      - assets/images/doodles/error_person.png
+     - assets/images/doodles/curious_person.png
+
      - assets/images/icons/close_circle_icon.svg
      - assets/images/icons/play_circle_icon.svg
 

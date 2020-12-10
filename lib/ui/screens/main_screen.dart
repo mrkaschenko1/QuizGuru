@@ -64,6 +64,7 @@ class _MainScreenState extends State<MainScreen> {
           children: <Widget>[
             MainAppBar(
               userName: 'Have fun',
+              isUserTab: _currentIndex == Tabs.USER,
             ),
             Expanded(
               child: PageView(

@@ -4,67 +4,110 @@ import '../../ui/widgets/home_wrapper.dart';
 import 'package:flutter/material.dart';
 
 class TestResultScreen extends StatelessWidget {
-
   final questionsLength;
   final totalScore;
 
-  const TestResultScreen({@required this.questionsLength, @required this.totalScore});
+  const TestResultScreen(
+      {@required this.questionsLength, @required this.totalScore});
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
+      backgroundColor: Colors.white,
+      body: Container(
+        padding: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            // Container(
+            //   color: Theme.of(context).colorScheme.secondary,
+            //   child: ConstrainedBox(
+            //     constraints: BoxConstraints(minWidth: width, minHeight: 10),
+            //   ),
+            // ),
+            Expanded(
+              child: Container(),
+            ),
             Container(
-              color: Theme.of(context).colorScheme.secondary,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minWidth: width, minHeight: 10),
+              alignment: Alignment.center,
+              padding: EdgeInsets.all(40),
+              margin: EdgeInsets.only(left: 40, right: 40),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                  border: Border.all(width: 2, color: Colors.black),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black,
+                      offset: Offset(0, 2),
+                    )
+                  ]),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    '$totalScore/$questionsLength',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 50,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Text(
+                    AppLocalizations.of(context)
+                        .translate('your_score')
+                        .toString()
+                        .toUpperCase(),
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
               ),
             ),
-          Expanded(child: Container(),),
-          Container(
-            color: Theme.of(context).cardColor.withOpacity(0.3),
-            alignment: Alignment.center,
-            padding: EdgeInsets.all(40),
-            margin: EdgeInsets.all(40),
-            child: Column(
+            Container(
+              padding: EdgeInsets.zero,
+              height: 250,
+              child: Image.asset(
+                'assets/images/doodles/neutral_person.png',
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.topCenter,
+              ),
+            ),
+            Expanded(
+              child: Container(),
+            ),
+            Column(
               children: <Widget>[
-                Text('$totalScore/$questionsLength', style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 50,
-                    color: Theme.of(context).colorScheme.onSurface,
-                ),
-                ),
-                Text(
-                  AppLocalizations.of(context).translate('your_score').toString().toUpperCase(),
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20,
-                    color: Theme.of(context).colorScheme.onBackground,
-                ),
+                Container(
+                  width: double.infinity,
+                  child: FlatButton(
+                    color: Colors.black,
+                    padding: const EdgeInsets.all(20),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(16))),
+                    child: Text(
+                      AppLocalizations.of(context)
+                          .translate('back_to_tests_btn')
+                          .toString(),
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.white),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pushReplacementNamed(HomeWrapper.routeName);
+                    },
+                  ),
                 ),
               ],
             ),
-          ),
-          Expanded(child: Container(),),
-          Container(
-            height: Theme.of(context).buttonTheme.height,
-            width: double.infinity,
-            child: RaisedButton(
-              color: Theme.of(context).colorScheme.secondary,
-              textColor: Theme.of(context).colorScheme.onSecondary,
-              child: Text(AppLocalizations.of(context).translate('back_to_tests_btn').toString().toUpperCase(), style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400, letterSpacing: 8),),
-              onPressed: () {
-                Navigator.of(context).pushReplacementNamed(HomeWrapper.routeName);
-              },
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

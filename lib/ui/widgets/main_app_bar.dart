@@ -8,8 +8,9 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 class MainAppBar extends StatelessWidget {
   final userRepository = sl.get<UserRepository>();
   final String userName;
+  final bool isUserTab;
 
-  MainAppBar({Key key, this.userName}) : super(key: key);
+  MainAppBar({Key key, this.userName, this.isUserTab}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,20 +26,22 @@ class MainAppBar extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  AppLocalizations.of(context).translate('hello').toString(),
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w900),
-                ),
-                Text(
-                  userName,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w900),
-                )
+                if (!isUserTab)
+                  Text(
+                    AppLocalizations.of(context).translate('hello').toString(),
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w900),
+                  ),
+                if (!isUserTab)
+                  Text(
+                    userName,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w900),
+                  )
               ],
             ),
           ),
