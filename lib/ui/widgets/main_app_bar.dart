@@ -61,35 +61,10 @@ class MainAppBar extends StatelessWidget {
                   ));
                 },
               ),
-              // Builder(
-              //   builder: (ctx) => IconButton(
-              //     icon: Icon(
-              //       Icons.exit_to_app,
-              //       color: Colors.black,
-              //     ),
-              //     onPressed: () async {
-              //       var result = await userRepository.logout();
-              //       result.fold(
-              //         (l) => _showSnackBarError(ctx, l.message),
-              //         (r) => print("logged out"),
-              //       );
-              //     },
-              //   ),
-              // )
             ],
           ),
         ],
       ),
     );
   }
-
-  // void _showSnackBarError(BuildContext ctx, String message) {
-  //   Scaffold.of(ctx).removeCurrentSnackBar();
-  //   Scaffold.of(ctx).showSnackBar(
-  //     SnackBar(
-  //       content: Text(message),
-  //       backgroundColor: Colors.red,
-  //     ),
-  //   );
-  // }
 }

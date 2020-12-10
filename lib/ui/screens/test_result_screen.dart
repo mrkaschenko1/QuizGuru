@@ -10,10 +10,18 @@ class TestResultScreen extends StatelessWidget {
   const TestResultScreen(
       {@required this.questionsLength, @required this.totalScore});
 
+  String _getImageAsset(double result) {
+    if (result >= 0.85) {
+      return 'assets/images/doodles/happy_person.png';
+    } else if (result >= 0.70) {
+      return 'assets/images/doodles/neutral_person.png';
+    }
+    return 'assets/images/doodles/sad_person.png';
+  }
+
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-
+    final double result = totalScore / questionsLength;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -21,12 +29,6 @@ class TestResultScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            // Container(
-            //   color: Theme.of(context).colorScheme.secondary,
-            //   child: ConstrainedBox(
-            //     constraints: BoxConstraints(minWidth: width, minHeight: 10),
-            //   ),
-            // ),
             Expanded(
               child: Container(),
             ),
@@ -72,7 +74,7 @@ class TestResultScreen extends StatelessWidget {
               padding: EdgeInsets.zero,
               height: 250,
               child: Image.asset(
-                'assets/images/doodles/neutral_person.png',
+                _getImageAsset(result),
                 fit: BoxFit.scaleDown,
                 alignment: Alignment.topCenter,
               ),

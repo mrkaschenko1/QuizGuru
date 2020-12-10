@@ -92,6 +92,7 @@ flutter:
      - assets/images/doodles/curious_person.png
 
      - assets/images/icons/close_circle_icon.svg
+     - assets/images/icons/back_circle_icon.svg
      - assets/images/icons/play_circle_icon.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see

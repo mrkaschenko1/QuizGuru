@@ -35,9 +35,6 @@ class QuestionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final widthForQuestion =
-        test != null ? width / test.questions.length : width;
     return BlocProvider(
       create: (_) => sl.get<QuestionCubit>()..fetchTest(test),
       child:

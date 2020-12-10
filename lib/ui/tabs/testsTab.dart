@@ -118,18 +118,6 @@ class TestsTab extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // Expanded(
-                      //   child: ListView(
-                      //     children: <Widget>[
-                      //       ...state.tests.map((test) {
-                      //         return Test(
-                      //           key: ValueKey(test.id),
-                      //           test: test,
-                      //         );
-                      //       }).toList()
-                      //     ],
-                      //   ),
-                      // ),
                     ],
                   ),
                 );

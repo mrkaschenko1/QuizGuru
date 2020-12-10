@@ -100,17 +100,17 @@ class Rating extends StatelessWidget {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border.all(
-                                    width: 2,
-                                    color: Colors.black,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.black,
-                                        offset: Offset(0, 2))
-                                  ]),
+                                color: Colors.white,
+                                border: Border.all(
+                                  width: 2,
+                                  color: Colors.black,
+                                ),
+                                borderRadius: BorderRadius.circular(12),
+                                // boxShadow: [
+                                //   BoxShadow(
+                                //       color: Colors.black, offset: Offset(0, 2))
+                                // ],
+                              ),
                             ),
                             title: Text(
                               elem['username'],
@@ -149,13 +149,14 @@ class Rating extends StatelessWidget {
                           ),
                           margin: const EdgeInsets.only(bottom: 2),
                           decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black, width: 2),
-                              borderRadius: BorderRadius.circular(16),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Colors.black, offset: Offset(0, 2))
-                              ]),
+                            border: Border.all(color: Colors.black, width: 2),
+                            borderRadius: BorderRadius.circular(16),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black, offset: Offset(0, 2))
+                            ],
+                          ),
                         );
                       }))
                     ],

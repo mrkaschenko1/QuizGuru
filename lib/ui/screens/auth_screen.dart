@@ -16,7 +16,7 @@ class AuthScreen extends StatelessWidget {
             top: 75,
             left: -25,
             child: Image.asset(
-              'assets/images/greeting_person.png',
+              'assets/images/doodles/greeting_person.png',
               scale: 0.9,
             ),
           ),
