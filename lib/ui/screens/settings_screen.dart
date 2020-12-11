@@ -52,7 +52,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Padding(
                   padding: EdgeInsets.only(top: 20),
                   child: Text(
-                    'General',
+                    AppLocalizations.of(context)
+                        .translate('general')
+                        .toString(),
                     style: TextStyle(
                         fontSize: 21,
                         fontWeight: FontWeight.bold,
@@ -167,52 +169,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             inactiveThumbColor: Colors.white,
                             inactiveTrackColor: Colors.grey,
                           ),
-                          // trailing: DropdownButton(
-                          //   value: _themeValue,
-                          //   items: [
-                          //     ...appThemeData
-                          //         .map((key, value) => MapEntry(
-                          //             key,
-                          //             DropdownMenuItem(
-                          //               child: Container(
-                          //                   width: 60,
-                          //                   child: Row(
-                          //                     children: <Widget>[
-                          //                       Container(
-                          //                           color: value.primaryColor,
-                          //                           child: SizedBox(
-                          //                             width: 20,
-                          //                             height: 20,
-                          //                           )),
-                          //                       Container(
-                          //                           color: value.accentColor,
-                          //                           child: SizedBox(
-                          //                             width: 20,
-                          //                             height: 20,
-                          //                           )),
-                          //                       Container(
-                          //                           color: value
-                          //                               .scaffoldBackgroundColor,
-                          //                           child: SizedBox(
-                          //                             width: 20,
-                          //                             height: 20,
-                          //                           )),
-                          //                     ],
-                          //                   )),
-                          //               value: key.index,
-                          //             )))
-                          //         .values
-                          //         .toList()
-                          //   ],
-                          //   onChanged: (value) {
-                          //     setState(() {
-                          //       _themeValue = value;
-                          //       BlocProvider.of<ThemeBloc>(context).add(
-                          //           ThemeChanged(
-                          //               theme: AppTheme.values[value]));
-                          //     });
-                          //   },
-                          // ),
                         ),
                       ),
                     ],
@@ -221,7 +177,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Padding(
                   padding: EdgeInsets.only(top: 30),
                   child: Text(
-                    'Account',
+                    AppLocalizations.of(context)
+                        .translate('account')
+                        .toString(),
                     style: TextStyle(
                         fontSize: 21,
                         fontWeight: FontWeight.bold,

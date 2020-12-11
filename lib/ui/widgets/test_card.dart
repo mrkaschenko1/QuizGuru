@@ -62,7 +62,7 @@ class TestCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
-                '${test.questions.length} questions',
+                '${test.questions.length} ${AppLocalizations.of(context).translate("questions")}',
                 style: TextStyle(fontSize: 20, color: theme.accentColor),
               ),
               Spacer(),
@@ -101,10 +101,19 @@ class TestCard extends StatelessWidget {
                           height: _iconContainerSize,
                           width: _iconContainerSize,
                           child: GestureDetector(
-                            onTap: () {
-                              BlocProvider.of<TestCubit>(context)
-                                  .startTest(test.id);
-                            },
+                            onTap: (test.isStarting ||
+                                    (test.userTries ?? 0) >=
+                                        (test.tries ?? double.infinity))
+                                ? () {
+                                    Scaffold.of(context).hideCurrentSnackBar();
+                                    Scaffold.of(context).showSnackBar(SnackBar(
+                                        backgroundColor: theme.errorColor,
+                                        content: Text(AppLocalizations.of(
+                                                context)
+                                            .translate('no_more_attempts'))));
+                                  }
+                                : () => BlocProvider.of<TestCubit>(context)
+                                    .startTest(test.id),
                             child: Stack(
                               children: <Widget>[
                                 Positioned(

@@ -43,7 +43,13 @@ class _AuthFormState extends State<AuthForm> {
         Column(crossAxisAlignment: CrossAxisAlignment.center, children: <
             Widget>[
           Text(
-            isLogin ? 'Login' : 'Sign up',
+            isLogin
+                ? AppLocalizations.of(context)
+                    .translate('login_title')
+                    .toString()
+                : AppLocalizations.of(context)
+                    .translate('sign_up_title')
+                    .toString(),
             style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w900,

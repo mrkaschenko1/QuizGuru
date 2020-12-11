@@ -40,7 +40,6 @@ class _MainScreenState extends State<MainScreen> {
         child: Column(
           children: <Widget>[
             MainAppBar(
-              userName: 'Have fun',
               isUserTab: _currentIndex == Tabs.USER,
             ),
             Expanded(

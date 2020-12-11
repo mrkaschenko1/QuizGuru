@@ -53,7 +53,9 @@ class Interruption extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10),
                                 child: Text(
-                                  'Are you sure?',
+                                  AppLocalizations.of(context)
+                                      .translate('are_you_sure')
+                                      .toString(),
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w900,
