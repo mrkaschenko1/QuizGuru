@@ -159,11 +159,11 @@ class TestCard extends StatelessWidget {
               Text(
                 test.title,
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: theme.accentColor,
                 ),
-                maxLines: 4,
+                maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
               SizedBox(
@@ -171,11 +171,15 @@ class TestCard extends StatelessWidget {
               ),
               Text(
                 _attempts,
-                style: TextStyle(fontSize: 20, color: theme.accentColor),
+                style: TextStyle(fontSize: 18, color: theme.accentColor),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
               ),
               Text(
                 _bestScore,
-                style: TextStyle(fontSize: 20, color: theme.accentColor),
+                style: TextStyle(fontSize: 18, color: theme.accentColor),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
               ),
               Spacer(),
               Row(

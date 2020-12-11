@@ -1,7 +1,7 @@
 import 'package:android_guru/cubits/test/test_cubit.dart';
 import 'package:android_guru/ui/screens/question_screen.dart';
 import 'package:android_guru/ui/widgets/test_card.dart';
-import 'package:android_guru/ui/widgets/tab_refresh_button.dart';
+import 'package:android_guru/ui/widgets/error_tab.dart';
 import 'package:android_guru/ui/widgets/user_statistics.dart';
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
@@ -95,21 +95,6 @@ class TestsTab extends StatelessWidget {
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.only(left: 5, right: 5),
-                          // child: GridView.count(
-                          //   physics: BouncingScrollPhysics(),
-                          //   scrollDirection: Axis.horizontal,
-                          //   padding: const EdgeInsets.only(top: 10, bottom: 20),
-                          //   crossAxisSpacing: 15,
-                          //   mainAxisSpacing: 15,
-                          //   crossAxisCount: 1,
-                          //   children: <Widget>[
-                          //     ...state.tests.map((test) {
-                          //       return TestCard(
-                          //         test: test,
-                          //       );
-                          //     }).toList()
-                          //   ],
-                          // ),
                           child: ListView.builder(
                             itemCount: state.tests.length,
                             padding: const EdgeInsets.only(
@@ -127,7 +112,7 @@ class TestsTab extends StatelessWidget {
                   ),
                 );
               } else {
-                return TabRefreshButton(
+                return ErrorTab(
                   refreshTab: () => refreshTab(context),
                 );
               }

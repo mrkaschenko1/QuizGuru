@@ -69,7 +69,7 @@ class _AuthFormState extends State<AuthForm> {
                       height: 60,
                       decoration: BoxDecoration(
                         color: theme.cardColor,
-                        border: Border.all(width: 2),
+                        border: Border.all(width: 2, color: theme.accentColor),
                         borderRadius: BorderRadius.all(Radius.circular(16)),
                       ),
                       margin: const EdgeInsets.only(bottom: 10),

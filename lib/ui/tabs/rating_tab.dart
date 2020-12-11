@@ -1,8 +1,7 @@
 import 'package:android_guru/app_localizations.dart';
 import 'package:android_guru/cubits/rating/rating_cubit.dart';
 import 'package:android_guru/ui/widgets/podium.dart';
-import 'package:android_guru/ui/widgets/tab_refresh_button.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:android_guru/ui/widgets/error_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,7 +25,7 @@ class RatingTab extends StatelessWidget {
             if (state.rating.isNotEmpty) {
               return Rating(rating: state.rating);
             } else {
-              return TabRefreshButton(
+              return ErrorTab(
                 refreshTab: () => refreshTab(context),
               );
             }
@@ -62,15 +61,23 @@ class Rating extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(rating);
     final theme = Theme.of(context);
-    final bool isEmpty = rating.sublist(3).isEmpty;
+    bool isEmpty;
+    try {
+      isEmpty = rating[3] != null;
+    } catch (e) {
+      isEmpty = true;
+    }
     return Container(
       margin: EdgeInsets.only(left: 25, right: 25, top: 15),
       width: double.infinity,
       child: Column(
         children: <Widget>[
           Podium(
-            topUsers: rating.take(3).toList(),
+            topUsers: rating.length >= 3
+                ? rating.take(3).toList()
+                : rating.take(rating.length).toList(),
           ),
           SizedBox(
             height: 20,

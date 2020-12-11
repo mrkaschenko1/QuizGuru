@@ -1,7 +1,7 @@
 import 'package:android_guru/app_localizations.dart';
 import 'package:android_guru/cubits/user/user_cubit.dart';
 import 'package:android_guru/ui/widgets/statistics_info_card.dart';
-import 'package:android_guru/ui/widgets/tab_refresh_button.dart';
+import 'package:android_guru/ui/widgets/error_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -102,7 +102,7 @@ class UserTab extends StatelessWidget {
                 ],
               );
             } else {
-              return TabRefreshButton(
+              return ErrorTab(
                 refreshTab: () => refreshTab(context),
               );
             }
