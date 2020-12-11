@@ -1,3 +1,4 @@
+import 'package:android_guru/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -29,7 +30,7 @@ class SettingsAppBar extends StatelessWidget {
             },
           ),
           Text(
-            'Settings',
+            AppLocalizations.of(context).translate('settings').toString(),
             style: TextStyle(
                 color: theme.accentColor,
                 fontWeight: FontWeight.w900,

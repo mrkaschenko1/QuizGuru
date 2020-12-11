@@ -7,10 +7,9 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class MainAppBar extends StatelessWidget {
   final userRepository = sl.get<UserRepository>();
-  final String userName;
   final bool isUserTab;
 
-  MainAppBar({Key key, this.userName, this.isUserTab}) : super(key: key);
+  MainAppBar({Key key, this.isUserTab}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +36,9 @@ class MainAppBar extends StatelessWidget {
                   ),
                 if (!isUserTab)
                   Text(
-                    userName,
+                    AppLocalizations.of(context)
+                        .translate('app_bar_subtitle')
+                        .toString(),
                     style: TextStyle(
                         color: theme.accentColor,
                         fontSize: 30,

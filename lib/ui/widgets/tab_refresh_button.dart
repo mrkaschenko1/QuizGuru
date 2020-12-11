@@ -1,3 +1,4 @@
+import 'package:android_guru/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,18 +25,22 @@ class TabRefreshButton extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(16))),
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text('Try again ',
+                Text(
+                    AppLocalizations.of(context)
+                        .translate('try_again')
+                        .toString(),
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w900,
-                        color: Colors.white)),
+                        color: Theme.of(context).primaryColor)),
                 Icon(
                   FeatherIcons.refreshCw,
                   size: 26,
+                  color: Theme.of(context).primaryColor,
                 )
               ]),
               onPressed: refreshTab,
-              color: Colors.black,
+              color: Theme.of(context).accentColor,
             )),
       ],
     );

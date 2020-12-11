@@ -3,6 +3,7 @@ import 'package:android_guru/ui/screens/question_screen.dart';
 import 'package:android_guru/ui/widgets/test_card.dart';
 import 'package:android_guru/ui/widgets/tab_refresh_button.dart';
 import 'package:android_guru/ui/widgets/user_statistics.dart';
+import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -49,7 +50,8 @@ class TestsTab extends StatelessWidget {
                                         (previousValue, element) =>
                                             previousValue + element),
                                 current: state.user.points,
-                                annotation: 'points',
+                                annotation: AppLocalizations.of(context)
+                                    .translate('points'),
                                 isPercent: false,
                               ),
                             ),
@@ -59,7 +61,8 @@ class TestsTab extends StatelessWidget {
                               child: UserStatistics(
                                 total: state.tests.length,
                                 current: state.user.testsPassedCount,
-                                annotation: 'tests',
+                                annotation: AppLocalizations.of(context)
+                                    .translate('quizzes'),
                                 isPercent: false,
                               ),
                             ),
@@ -69,7 +72,8 @@ class TestsTab extends StatelessWidget {
                               child: UserStatistics(
                                 total: 100,
                                 current: 26,
-                                annotation: 'accuracy',
+                                annotation: AppLocalizations.of(context)
+                                    .translate('accuracy'),
                                 isPercent: true,
                               ),
                             ),
@@ -79,9 +83,9 @@ class TestsTab extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 5),
                         child: Text(
-                          AppLocalizations.of(context)
+                          StringUtils.capitalize(AppLocalizations.of(context)
                               .translate('quizzes_tab')
-                              .toString(),
+                              .toString()),
                           style: TextStyle(
                               color: theme.accentColor,
                               fontSize: 30,

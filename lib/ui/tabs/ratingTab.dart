@@ -1,3 +1,4 @@
+import 'package:android_guru/app_localizations.dart';
 import 'package:android_guru/cubits/rating/rating_cubit.dart';
 import 'package:android_guru/ui/widgets/podium.dart';
 import 'package:android_guru/ui/widgets/tab_refresh_button.dart';
@@ -107,10 +108,6 @@ class Rating extends StatelessWidget {
                                   color: theme.accentColor,
                                 ),
                                 borderRadius: BorderRadius.circular(12),
-                                // boxShadow: [
-                                //   BoxShadow(
-                                //       color: Colors.black, offset: Offset(0, 2))
-                                // ],
                               ),
                             ),
                             title: Text(
@@ -173,7 +170,9 @@ class Rating extends StatelessWidget {
                         height: 20,
                       ),
                       Text(
-                        'Hey! We need more players!',
+                        AppLocalizations.of(context)
+                            .translate('more_players_needed')
+                            .toString(),
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w800,
