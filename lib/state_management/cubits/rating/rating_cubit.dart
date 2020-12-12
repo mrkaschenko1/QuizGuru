@@ -5,6 +5,10 @@ import 'package:flutter/foundation.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+// Project imports:
+import '../../../exceptions/network_exception.dart';
+import '../../../repositories/user_repository.dart';
+
 part 'rating_state.dart';
 
 class RatingCubit extends Cubit<RatingState> {
@@ -16,10 +20,8 @@ class RatingCubit extends Cubit<RatingState> {
     emit(RatingState.loading());
     try {
       final rating = await repository.getRating();
-      rating.fold(
-              (l) => throw NetworkException("No internet connection"),
-              (r) => emit(RatingState.success(r))
-      );
+      rating.fold((l) => throw NetworkException("No internet connection"),
+          (r) => emit(RatingState.success(r)));
     } on NetworkException catch (e) {
       emit(RatingState.failure(e.message, rating: state.rating));
     }
@@ -29,14 +31,11 @@ class RatingCubit extends Cubit<RatingState> {
     try {
       final rating = await repository.getRating();
       var ratingList = [];
-      rating.fold(
-              (l) => throw NetworkException("No internet connection"),
-              (r) => {
-                ratingList = r
-              }
-      );
+      rating.fold((l) => throw NetworkException("No internet connection"),
+          (r) => {ratingList = r});
       emit(RatingState.success(ratingList));
-      emit(RatingState.refreshed("successfully refreshed rating", rating: ratingList));
+      emit(RatingState.refreshed("successfully refreshed rating",
+          rating: ratingList));
     } on NetworkException catch (e) {
       emit(RatingState.failure(e.message, rating: state.rating));
     }
