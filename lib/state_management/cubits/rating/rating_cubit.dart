@@ -1,8 +1,9 @@
-import 'package:android_guru/exceptions/network_exception.dart';
-import 'package:android_guru/repositories/user_repository.dart';
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+
+// Package imports:
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 
 part 'rating_state.dart';
 

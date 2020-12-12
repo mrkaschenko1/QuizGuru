@@ -1,16 +1,22 @@
+// Dart imports:
 import 'dart:async';
 
-import 'package:android_guru/exceptions/auth_exception.dart';
-import 'package:android_guru/exceptions/base_exception.dart';
-import 'package:android_guru/exceptions/network_exception.dart';
-import 'package:android_guru/models/user_model.dart';
-import 'package:android_guru/network/network_info.dart';
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+
+// Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:optional/optional.dart';
+
+// Project imports:
+import '../exceptions/auth_exception.dart';
+import '../exceptions/base_exception.dart';
+import '../exceptions/network_exception.dart';
+import '../models/user_model.dart';
+import '../network/network_info.dart';
 
 class UserRepository {
   final NetworkInfo networkInfo;

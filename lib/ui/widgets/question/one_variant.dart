@@ -1,8 +1,13 @@
-import 'package:android_guru/cubits/question/question_cubit.dart';
-import 'package:android_guru/models/question_model.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
+
+// Project imports:
+import '../../../models/question_model.dart';
+import '../../../state_management/cubits/question/question_cubit.dart';
 
 class OneVariant extends StatelessWidget {
   final QuestionModel question;

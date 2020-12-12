@@ -1,9 +1,13 @@
-import 'package:android_guru/cubits/question/question_cubit.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+// Project imports:
 import '../../app_localizations.dart';
+import '../../state_management/cubits/question/question_cubit.dart';
 
 class Interruption extends StatelessWidget {
   final state;

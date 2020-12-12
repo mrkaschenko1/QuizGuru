@@ -1,17 +1,21 @@
-import 'package:android_guru/app_localizations.dart';
-import 'package:android_guru/cubits/question/question_cubit.dart';
-import 'package:android_guru/models/option_model.dart';
-import 'package:android_guru/models/question_model.dart';
-import 'package:android_guru/models/test_model.dart';
-import 'package:android_guru/ui/screens/test_result_screen.dart';
-import 'package:android_guru/ui/widgets/interruption.dart';
-import 'package:android_guru/ui/widgets/question/multiple_variant.dart';
-import 'package:android_guru/ui/widgets/question/one_variant.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
+// Project imports:
+import '../../app_localizations.dart';
 import '../../injection_container.dart';
+import '../../models/option_model.dart';
+import '../../models/question_model.dart';
+import '../../models/test_model.dart';
+import '../../state_management/cubits/question/question_cubit.dart';
+import '../../ui/screens/test_result_screen.dart';
+import '../../ui/widgets/interruption.dart';
+import '../../ui/widgets/question/multiple_variant.dart';
+import '../../ui/widgets/question/one_variant.dart';
 
 class QuestionScreen extends StatelessWidget {
   final TestModel test;

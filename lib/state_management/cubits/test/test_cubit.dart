@@ -1,11 +1,16 @@
-import 'package:android_guru/exceptions/network_exception.dart';
-import 'package:android_guru/models/test_model.dart';
-import 'package:android_guru/models/user_model.dart';
-import 'package:android_guru/repositories/test_repository.dart';
-import 'package:android_guru/repositories/user_repository.dart';
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+
+// Package imports:
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
+
+// Project imports:
+import '../../../exceptions/network_exception.dart';
+import '../../../models/test_model.dart';
+import '../../../models/user_model.dart';
+import '../../../repositories/test_repository.dart';
+import '../../../repositories/user_repository.dart';
 
 part 'test_state.dart';
 

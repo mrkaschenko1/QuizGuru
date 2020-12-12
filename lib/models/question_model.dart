@@ -1,4 +1,5 @@
-import 'package:android_guru/models/option_model.dart';
+// Project imports:
+import 'option_model.dart';
 
 enum QuestionType { One, Multiple }
 

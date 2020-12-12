@@ -1,12 +1,16 @@
-import 'package:android_guru/app_localizations.dart';
-import 'package:android_guru/cubits/rating/rating_cubit.dart';
-import 'package:android_guru/ui/widgets/podium.dart';
-import 'package:android_guru/ui/widgets/error_tab.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// Project imports:
+import '../../app_localizations.dart';
 import '../../injection_container.dart';
+import '../../state_management/cubits/rating/rating_cubit.dart';
+import '../../ui/widgets/error_tab.dart';
+import '../../ui/widgets/podium.dart';
 
 class RatingTab extends StatelessWidget {
   void refreshTab(BuildContext context) async {

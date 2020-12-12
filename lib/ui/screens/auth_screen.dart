@@ -1,9 +1,13 @@
-import 'package:android_guru/blocs/login/login_bloc.dart';
-import 'package:android_guru/ui/widgets/auth_form.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// Project imports:
 import '../../injection_container.dart';
+import '../../state_management/blocs/login/login_bloc.dart';
+import '../../ui/widgets/auth_form.dart';
 
 class AuthScreen extends StatelessWidget {
   @override

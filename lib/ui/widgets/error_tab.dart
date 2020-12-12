@@ -1,11 +1,16 @@
-import 'package:android_guru/app_localizations.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-class TabRefreshButton extends StatelessWidget {
+// Project imports:
+import '../../app_localizations.dart';
+
+class ErrorTab extends StatelessWidget {
   final Function refreshTab;
 
-  const TabRefreshButton({
+  const ErrorTab({
     Key key,
     this.refreshTab,
   }) : super(key: key);

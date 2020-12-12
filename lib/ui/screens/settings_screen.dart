@@ -1,16 +1,20 @@
-import 'package:android_guru/app_localizations.dart';
-import 'package:android_guru/blocs/lang/app_langs.dart';
-import 'package:android_guru/blocs/lang/lang_bloc.dart';
-import 'package:android_guru/blocs/theme/app_themes.dart';
-import 'package:android_guru/blocs/theme/theme_bloc.dart';
-import 'package:android_guru/repositories/user_repository.dart';
-import 'package:android_guru/ui/widgets/settings_app_bar.dart';
-import 'package:basic_utils/basic_utils.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
+// Project imports:
+import '../../app_localizations.dart';
 import '../../injection_container.dart';
+import '../../repositories/user_repository.dart';
+import '../../state_management/blocs/lang/app_langs.dart';
+import '../../state_management/blocs/lang/lang_bloc.dart';
+import '../../state_management/blocs/theme/app_themes.dart';
+import '../../state_management/blocs/theme/theme_bloc.dart';
+import '../../ui/widgets/settings_app_bar.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override

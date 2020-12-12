@@ -1,20 +1,24 @@
-import 'package:android_guru/blocs/lang/lang_bloc.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:timezone/timezone.dart';
-
-import 'app_localizations.dart';
-import 'injection_container.dart';
-import 'ui/widgets/home_wrapper.dart';
-import 'package:android_guru/blocs/theme/theme_bloc.dart';
-import 'package:android_guru/ui/screens/main_screen.dart';
-import 'messaging/functions.dart' as MessagingFunctions;
-import 'package:firebase_core/firebase_core.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'injection_container.dart' as di;
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart';
+
+// Project imports:
+import 'app_localizations.dart';
+import 'injection_container.dart' as di;
+import 'injection_container.dart';
+import 'messaging/functions.dart' as MessagingFunctions;
+import 'state_management/blocs/lang/lang_bloc.dart';
+import 'state_management/blocs/theme/theme_bloc.dart';
+import 'ui/screens/main_screen.dart';
+import 'ui/widgets/home_wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

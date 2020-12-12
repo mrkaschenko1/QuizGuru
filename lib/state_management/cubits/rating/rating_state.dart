@@ -33,4 +33,3 @@ class RatingState extends Equatable {
   @override
   List<Object> get props => [status, rating, message];
 }
-

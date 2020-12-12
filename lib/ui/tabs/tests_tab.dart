@@ -1,14 +1,18 @@
-import 'package:android_guru/cubits/test/test_cubit.dart';
-import 'package:android_guru/ui/screens/question_screen.dart';
-import 'package:android_guru/ui/widgets/test_card.dart';
-import 'package:android_guru/ui/widgets/error_tab.dart';
-import 'package:android_guru/ui/widgets/user_statistics.dart';
-import 'package:basic_utils/basic_utils.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+// Project imports:
 import '../../app_localizations.dart';
 import '../../injection_container.dart';
+import '../../state_management/cubits/test/test_cubit.dart';
+import '../../ui/screens/question_screen.dart';
+import '../../ui/widgets/error_tab.dart';
+import '../../ui/widgets/test_card.dart';
+import '../../ui/widgets/user_statistics.dart';
 
 class TestsTab extends StatelessWidget {
   void refreshTab(BuildContext context) async {

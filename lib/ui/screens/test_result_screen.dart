@@ -1,7 +1,9 @@
-import 'package:android_guru/app_localizations.dart';
-
-import '../../ui/widgets/home_wrapper.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
+import '../../app_localizations.dart';
+import '../../ui/widgets/home_wrapper.dart';
 
 class TestResultScreen extends StatelessWidget {
   final questionsLength;

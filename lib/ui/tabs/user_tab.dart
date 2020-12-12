@@ -1,12 +1,16 @@
-import 'package:android_guru/app_localizations.dart';
-import 'package:android_guru/cubits/user/user_cubit.dart';
-import 'package:android_guru/ui/widgets/statistics_info_card.dart';
-import 'package:android_guru/ui/widgets/error_tab.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+// Project imports:
+import '../../app_localizations.dart';
 import '../../injection_container.dart';
+import '../../state_management/cubits/user/user_cubit.dart';
+import '../../ui/widgets/error_tab.dart';
+import '../../ui/widgets/statistics_info_card.dart';
 
 class UserTab extends StatelessWidget {
   void refreshTab(BuildContext context) async {

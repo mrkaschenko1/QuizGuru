@@ -1,10 +1,15 @@
-import 'package:android_guru/app_localizations.dart';
-import 'package:android_guru/blocs/login/login_bloc.dart';
-import 'package:email_validator/email_validator.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+
+// Package imports:
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+
+// Project imports:
+import '../../app_localizations.dart';
+import '../../state_management/blocs/login/login_bloc.dart';
 
 class AuthForm extends StatefulWidget {
   const AuthForm();

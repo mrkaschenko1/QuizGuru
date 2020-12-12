@@ -1,5 +1,8 @@
-import 'package:android_guru/models/question_model.dart';
+// Flutter imports:
 import 'package:flutter/foundation.dart';
+
+// Project imports:
+import 'question_model.dart';
 
 class TestModel {
   final id;
@@ -39,17 +42,16 @@ class TestModel {
     bool isStarting,
   }) {
     return TestModel(
-      id: id ?? this.id,
-      questions: questions ?? this.questions,
-      studentsPassed: studentsPassed ?? this.studentsPassed,
-      averageScore: averageScore ?? this.averageScore,
-      userTries: userTries ?? this.userTries,
-      tries: tries ?? this.tries,
-      userBestScore: userBestScore ?? this.userBestScore,
-      totalPoints: totalPoints ?? this.totalPoints,
-      title: title ?? this.title,
-      isStarting: isStarting ?? this.isStarting
-    );
+        id: id ?? this.id,
+        questions: questions ?? this.questions,
+        studentsPassed: studentsPassed ?? this.studentsPassed,
+        averageScore: averageScore ?? this.averageScore,
+        userTries: userTries ?? this.userTries,
+        tries: tries ?? this.tries,
+        userBestScore: userBestScore ?? this.userBestScore,
+        totalPoints: totalPoints ?? this.totalPoints,
+        title: title ?? this.title,
+        isStarting: isStarting ?? this.isStarting);
   }
 
 //  TestModel.fromJson(Map<String, dynamic> json)

@@ -1,6 +1,11 @@
-import 'package:android_guru/app_localizations.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_svg/svg.dart';
+
+// Project imports:
+import '../../app_localizations.dart';
 
 class SettingsAppBar extends StatelessWidget {
   @override

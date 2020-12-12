@@ -1,5 +1,8 @@
-import 'package:android_guru/ui/widgets/podium_item.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
+import '../../ui/widgets/podium_item.dart';
 
 extension SafeLookup on List {
   dynamic get(int index, String key) {

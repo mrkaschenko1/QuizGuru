@@ -1,12 +1,16 @@
-import 'package:android_guru/cubits/test/test_cubit.dart';
-import 'package:android_guru/models/test_model.dart';
-import 'package:flip_card/flip_card.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:charcode/html_entity.dart';
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:charcode/html_entity.dart';
 
+// Project imports:
 import '../../app_localizations.dart';
+import '../../models/test_model.dart';
+import '../../state_management/cubits/test/test_cubit.dart';
 
 class TestCard extends StatelessWidget {
   final TestModel test;

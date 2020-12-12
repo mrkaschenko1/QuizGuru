@@ -1,9 +1,14 @@
-import 'package:android_guru/app_localizations.dart';
-import 'package:android_guru/injection_container.dart';
-import 'package:android_guru/repositories/user_repository.dart';
-import 'package:android_guru/ui/screens/settings_screen.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+
+// Project imports:
+import '../../app_localizations.dart';
+import '../../injection_container.dart';
+import '../../repositories/user_repository.dart';
+import '../../ui/screens/settings_screen.dart';
 
 class MainAppBar extends StatelessWidget {
   final userRepository = sl.get<UserRepository>();

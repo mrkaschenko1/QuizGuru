@@ -1,5 +1,8 @@
-import 'package:android_guru/app_localizations.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
+import '../../app_localizations.dart';
 
 class PodiumItem extends StatelessWidget {
   final height;
