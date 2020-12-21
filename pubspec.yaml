@@ -37,7 +37,7 @@ dependencies:
   flip_card: ^0.4.4
   flutter_bloc: ^6.0.5
   flutter_feather_icons: ^1.0.3
-  flutter_svg: ^0.17.4
+  flutter_svg: ^0.18.0
   get_it: ^5.0.1
   google_sign_in: ^4.5.3
   grouped_buttons: ^1.0.4
@@ -47,6 +47,10 @@ dependencies:
   simple_animations: ^2.2.2
   syncfusion_flutter_gauges: ^18.2.55
   timezone: ^0.5.9
+
+# dependency_overrides:
+#   image: last_version
+#   xml: last_version
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +79,9 @@ flutter:
     - lang/en.json
     - lang/ru.json
     - assets/images/
+    - assets/images/doodles/
+    - assets/images/icons/
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

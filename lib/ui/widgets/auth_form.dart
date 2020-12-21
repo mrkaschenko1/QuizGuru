@@ -10,6 +10,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 // Project imports:
 import '../../app_localizations.dart';
 import '../../state_management/blocs/login/login_bloc.dart';
+import 'custom_auth_input.dart';
 
 class AuthForm extends StatefulWidget {
   const AuthForm();
@@ -21,24 +22,64 @@ class AuthForm extends StatefulWidget {
 class _AuthFormState extends State<AuthForm> {
   final _formKey = GlobalKey<FormState>();
 
-  var _userEmail = '';
-  var _userName = '';
-  var _userPass = '';
+  final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
 
-  void trySubmit(bool isLogin) {
-    final isValid = _formKey.currentState.validate();
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _trySubmit(bool isLogin) {
     FocusScope.of(context).unfocus();
+    final isValid = _formKey.currentState.validate();
 
     if (isValid) {
       _formKey.currentState.save();
       if (isLogin) {
-        BlocProvider.of<LoginBloc>(context)
-            .add(LoginButtonPressed(email: _userEmail, password: _userPass));
+        BlocProvider.of<LoginBloc>(context).add(LoginButtonPressed(
+          email: _usernameController.text,
+          password: _passwordController.text,
+        ));
       } else {
         BlocProvider.of<LoginBloc>(context).add(SignUpButtonPressed(
-            email: _userEmail, password: _userPass, username: _userName));
+          email: _emailController.text,
+          password: _passwordController.text,
+          username: _usernameController.text,
+        ));
       }
     }
+  }
+
+  String _usernameValidator(String value) {
+    if (value.isEmpty || value.length < 4) {
+      return AppLocalizations.of(context)
+          .translate('invalid_username')
+          .toString();
+    }
+    return null;
+  }
+
+  String _passwordValidator(String value) {
+    if (value.isEmpty || value.length < 8) {
+      return AppLocalizations.of(context)
+          .translate('invalid_password')
+          .toString();
+    }
+    return null;
+  }
+
+  String _emailValidator(String value) {
+    if (value.isEmpty || !EmailValidator.validate(value)) {
+      return AppLocalizations.of(context)
+          .translate('invalid_email_address')
+          .toString();
+    }
+    return null;
   }
 
   @override
@@ -70,164 +111,28 @@ class _AuthFormState extends State<AuthForm> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   if (!isLogin)
-                    Container(
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: theme.cardColor,
-                        border: Border.all(width: 2, color: theme.accentColor),
-                        borderRadius: BorderRadius.all(Radius.circular(16)),
-                      ),
-                      margin: const EdgeInsets.only(bottom: 10),
-                      padding: const EdgeInsets.only(left: 5, right: 5),
-                      child: TextFormField(
-                        key: const ValueKey('username'),
-                        keyboardType: TextInputType.text,
-                        cursorColor: theme.unselectedWidgetColor,
-                        style: TextStyle(
-                            color: theme.accentColor,
-                            fontSize: 20,
-                            fontFamily: 'Monserrat',
-                            fontWeight: FontWeight.w600),
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            FeatherIcons.user,
-                            size: 24,
-                            color: theme.accentColor,
-                          ),
-                          prefixIconConstraints: BoxConstraints(
-                              maxHeight: 24, maxWidth: 50, minWidth: 50),
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.only(
-                              left: 15, bottom: 15, top: 16, right: 10),
-                          floatingLabelBehavior: FloatingLabelBehavior.never,
-                          hintText: AppLocalizations.of(context)
-                              .translate('username')
-                              .toString(),
-                          hintStyle: TextStyle(
-                              color: theme.unselectedWidgetColor,
-                              fontSize: 20,
-                              fontFamily: 'Monserrat',
-                              fontWeight: FontWeight.w600),
-                          errorStyle: const TextStyle(fontSize: 0),
-                        ),
-                        validator: (value) {
-                          if (value.isEmpty || value.length < 4) {
-                            return AppLocalizations.of(context)
-                                .translate('invalid_username')
-                                .toString();
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _userName = value;
-                        },
-                      ),
+                    CustomAuthInput(
+                      inputTitle: 'username',
+                      theme: theme,
+                      controller: _usernameController,
+                      validator: _usernameValidator,
+                      icon: FeatherIcons.user,
                     ),
-                  Container(
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: theme.cardColor,
-                      border: Border.all(width: 2, color: theme.accentColor),
-                      borderRadius: BorderRadius.all(Radius.circular(16)),
-                    ),
-                    margin: const EdgeInsets.only(bottom: 10),
-                    padding: const EdgeInsets.only(left: 5, right: 5),
-                    child: TextFormField(
-                      key: const ValueKey('email'),
-                      keyboardType: TextInputType.emailAddress,
-                      cursorColor: Theme.of(context).unselectedWidgetColor,
-                      style: TextStyle(
-                          color: theme.accentColor,
-                          fontSize: 20,
-                          fontFamily: 'Monserrat',
-                          fontWeight: FontWeight.w600),
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          FeatherIcons.mail,
-                          size: 24,
-                          color: theme.accentColor,
-                        ),
-                        prefixIconConstraints: BoxConstraints(
-                            maxHeight: 24, maxWidth: 50, minWidth: 50),
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.only(
-                            left: 15, bottom: 15, top: 16, right: 10),
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        hintText: AppLocalizations.of(context)
-                            .translate('email_address')
-                            .toString(),
-                        hintStyle: TextStyle(
-                            color: theme.unselectedWidgetColor,
-                            fontSize: 20,
-                            fontFamily: 'Monserrat',
-                            fontWeight: FontWeight.w600),
-                        errorStyle: const TextStyle(fontSize: 0),
-                      ),
-                      validator: (value) {
-                        if (value.isEmpty || !EmailValidator.validate(value)) {
-                          return AppLocalizations.of(context)
-                              .translate('invalid_email_address')
-                              .toString();
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        _userEmail = value;
-                      },
-                    ),
+                  CustomAuthInput(
+                    inputTitle: 'email_address',
+                    theme: theme,
+                    controller: _emailController,
+                    validator: _emailValidator,
+                    icon: FeatherIcons.mail,
+                    keyboardType: TextInputType.emailAddress,
                   ),
-                  Container(
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: theme.cardColor,
-                      border: Border.all(width: 2, color: theme.accentColor),
-                      borderRadius: BorderRadius.all(Radius.circular(16)),
-                    ),
-                    margin: const EdgeInsets.only(bottom: 10),
-                    padding: const EdgeInsets.only(left: 5, right: 5),
-                    child: TextFormField(
-                      key: const ValueKey('password'),
-                      obscureText: true,
-                      cursorColor: Theme.of(context).unselectedWidgetColor,
-                      style: TextStyle(
-                          color: theme.accentColor,
-                          fontSize: 20,
-                          fontFamily: 'Monserrat',
-                          fontWeight: FontWeight.w600),
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          FeatherIcons.lock,
-                          size: 24,
-                          color: theme.accentColor,
-                        ),
-                        prefixIconConstraints: BoxConstraints(
-                            maxHeight: 24, maxWidth: 50, minWidth: 50),
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.only(
-                            left: 15, bottom: 15, top: 16, right: 10),
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        hintText: AppLocalizations.of(context)
-                            .translate('password')
-                            .toString(),
-                        hintStyle: TextStyle(
-                            color: theme.unselectedWidgetColor,
-                            fontSize: 20,
-                            fontFamily: 'Monserrat',
-                            fontWeight: FontWeight.w600),
-                        errorStyle: const TextStyle(fontSize: 0),
-                      ),
-                      validator: (value) {
-                        if (value.isEmpty || value.length < 8) {
-                          return AppLocalizations.of(context)
-                              .translate('invalid_password')
-                              .toString();
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        _userPass = value;
-                      },
-                    ),
+                  CustomAuthInput(
+                    inputTitle: 'password',
+                    theme: theme,
+                    controller: _passwordController,
+                    validator: _passwordValidator,
+                    icon: FeatherIcons.lock,
+                    obscureText: true,
                   ),
                   SizedBox(
                     height: 50,
@@ -266,7 +171,7 @@ class _AuthFormState extends State<AuthForm> {
                                       color: theme.primaryColor,
                                     )
                                   ]),
-                              onPressed: () => trySubmit(isLogin),
+                              onPressed: () => _trySubmit(isLogin),
                               color: theme.accentColor,
                             )),
                       if (!isLoading)

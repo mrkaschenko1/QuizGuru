@@ -72,18 +72,20 @@ class _MainScreenState extends State<MainScreen> {
             icon: Icon(
               FeatherIcons.checkSquare,
             ),
-            title: Text(''),
+            label: '',
           ),
           const BottomNavigationBarItem(
-              icon: Icon(
-                FeatherIcons.star,
-              ),
-              title: Text('')),
+            icon: Icon(
+              FeatherIcons.star,
+            ),
+            label: '',
+          ),
           const BottomNavigationBarItem(
-              icon: Icon(
-                FeatherIcons.user,
-              ),
-              title: Text('')),
+            icon: Icon(
+              FeatherIcons.user,
+            ),
+            label: '',
+          ),
         ],
         backgroundColor: Theme.of(context).backgroundColor,
         currentIndex: _currentIndex.index,
