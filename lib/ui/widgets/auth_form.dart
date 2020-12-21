@@ -110,14 +110,18 @@ class _AuthFormState extends State<AuthForm> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  if (!isLogin)
-                    CustomAuthInput(
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 300),
+                    height: isLogin ? 0 : 70,
+                    curve: Curves.easeInOut,
+                    child: CustomAuthInput(
                       inputTitle: 'username',
                       theme: theme,
                       controller: _usernameController,
                       validator: _usernameValidator,
                       icon: FeatherIcons.user,
                     ),
+                  ),
                   CustomAuthInput(
                     inputTitle: 'email_address',
                     theme: theme,
