@@ -1,10 +1,10 @@
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:firebase_auth/firebase_auth.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import '../../injection_container.dart';
 import '../../ui/screens/auth_screen.dart';
 import '../../ui/screens/main_screen.dart';

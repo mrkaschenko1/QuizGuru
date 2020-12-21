@@ -1,11 +1,11 @@
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/foundation.dart';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import '../../../exceptions/network_exception.dart';
 import '../../../models/test_model.dart';
 import '../../../models/user_model.dart';

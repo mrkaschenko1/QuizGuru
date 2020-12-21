@@ -1,12 +1,10 @@
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-// Project imports:
-import '../../app_localizations.dart';
+// 🌎 Project imports:
 import '../../injection_container.dart';
 import '../../models/option_model.dart';
 import '../../models/question_model.dart';
@@ -14,6 +12,7 @@ import '../../models/test_model.dart';
 import '../../state_management/cubits/question/question_cubit.dart';
 import '../../ui/screens/test_result_screen.dart';
 import '../../ui/widgets/interruption.dart';
+import '../../ui/widgets/next_question_button.dart';
 import '../../ui/widgets/question/multiple_variant.dart';
 import '../../ui/widgets/question/one_variant.dart';
 
@@ -72,15 +71,6 @@ class QuestionScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        // Container(
-                        //   color: Theme.of(context).colorScheme.secondary,
-                        //   child: AnimatedContainer(
-                        //     duration: Duration(milliseconds: 200),
-                        //     width:
-                        //         widthForQuestion * state.currentQuestionInd + 1,
-                        //     height: 10,
-                        //   ),
-                        // ),
                         Container(
                           decoration: BoxDecoration(
                               color: theme.cardColor,
@@ -108,63 +98,10 @@ class QuestionScreen extends StatelessWidget {
                         Expanded(
                           child: _getVariantsWidget(state),
                         ),
-                        Container(
-                          width: double.infinity,
-                          child: FlatButton(
-                            color: theme.accentColor,
-                            padding: const EdgeInsets.all(20),
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(16))),
-                            child: state.status == QuestionStatus.loading
-                                ? Center(
-                                    child: LinearProgressIndicator(
-                                      backgroundColor: Theme.of(context)
-                                          .colorScheme
-                                          .primaryVariant,
-                                    ),
-                                  )
-                                : Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text(
-                                        state.test.questions.length >
-                                                state.currentQuestionInd + 1
-                                            ? AppLocalizations.of(context)
-                                                .translate('next_btn')
-                                                .toString()
-                                            : AppLocalizations.of(context)
-                                                .translate('finish_quiz_btn')
-                                                .toString(),
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w900,
-                                            color: theme.primaryColor),
-                                      ),
-                                      Icon(
-                                        FeatherIcons.chevronRight,
-                                        color: theme.primaryColor,
-                                      )
-                                    ],
-                                  ),
-                            onPressed: () {
-                              QuestionModel currentQuestion = state
-                                  .test.questions[state.currentQuestionInd];
-                              List<OptionModel> choices = [];
-                              for (int choice in state.currentChoice) {
-                                choices.add(currentQuestion.options[choice]);
-                              }
-
-                              if (state.test.questions.length >
-                                  state.currentQuestionInd + 1) {
-                                BlocProvider.of<QuestionCubit>(context)
-                                    .getNextQuestion(choices);
-                              } else {
-                                BlocProvider.of<QuestionCubit>(context)
-                                    .finishTest(choices);
-                              }
-                            },
-                          ),
+                        NextQuestionButton(
+                          theme: theme,
+                          onPressedCallback: _onNextButtomPressed,
+                          state: state,
                         ),
                       ],
                     ),
@@ -176,5 +113,20 @@ class QuestionScreen extends StatelessWidget {
         );
       }),
     );
+  }
+
+  _onNextButtomPressed(QuestionState state, BuildContext context) {
+    QuestionModel currentQuestion =
+        state.test.questions[state.currentQuestionInd];
+    List<OptionModel> choices = [];
+    for (int choice in state.currentChoice) {
+      choices.add(currentQuestion.options[choice]);
+    }
+
+    if (state.test.questions.length > state.currentQuestionInd + 1) {
+      BlocProvider.of<QuestionCubit>(context).getNextQuestion(choices);
+    } else {
+      BlocProvider.of<QuestionCubit>(context).finishTest(choices);
+    }
   }
 }

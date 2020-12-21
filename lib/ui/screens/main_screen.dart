@@ -1,10 +1,10 @@
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import '../../ui/tabs/rating_tab.dart';
 import '../../ui/tabs/tests_tab.dart';
 import '../../ui/tabs/user_tab.dart';

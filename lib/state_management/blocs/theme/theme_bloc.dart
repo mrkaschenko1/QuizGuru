@@ -1,14 +1,14 @@
-// Dart imports:
+// 🎯 Dart imports:
 import 'dart:async';
 
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import './app_themes.dart';
 
 part 'theme_event.dart';

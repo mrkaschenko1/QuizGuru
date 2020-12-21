@@ -1,12 +1,12 @@
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import '../../app_localizations.dart';
 import '../../injection_container.dart';
 import '../../repositories/user_repository.dart';

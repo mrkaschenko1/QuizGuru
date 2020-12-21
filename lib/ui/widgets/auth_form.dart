@@ -1,13 +1,13 @@
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import '../../app_localizations.dart';
 import '../../state_management/blocs/login/login_bloc.dart';
 import 'custom_auth_input.dart';

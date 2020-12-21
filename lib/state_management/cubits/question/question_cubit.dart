@@ -1,12 +1,12 @@
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import '../../../exceptions/network_exception.dart';
 import '../../../models/option_model.dart';
 import '../../../models/test_model.dart';

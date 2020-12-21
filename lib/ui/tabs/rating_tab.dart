@@ -1,11 +1,11 @@
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import '../../app_localizations.dart';
 import '../../injection_container.dart';
 import '../../state_management/cubits/rating/rating_cubit.dart';

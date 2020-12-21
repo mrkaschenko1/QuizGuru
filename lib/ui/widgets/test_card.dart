@@ -1,13 +1,13 @@
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:charcode/html_entity.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import '../../app_localizations.dart';
 import '../../models/test_model.dart';
 import '../../state_management/cubits/test/test_cubit.dart';

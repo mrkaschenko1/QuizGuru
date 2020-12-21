@@ -1,13 +1,13 @@
-// Dart imports:
+// 🎯 Dart imports:
 import 'dart:async';
 import 'dart:ui';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:meta/meta.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import '../../../app_localizations.dart';
 import './app_langs.dart';
 

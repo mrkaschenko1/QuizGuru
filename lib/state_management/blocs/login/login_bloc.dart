@@ -1,14 +1,16 @@
-// Dart imports:
+// 🎯 Dart imports:
 import 'dart:async';
 
-// Flutter imports:
-import '../../../repositories/user_repository.dart';
+// 🐦 Flutter imports:
 import 'package:flutter/foundation.dart';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+// 🌎 Project imports:
+import '../../../repositories/user_repository.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';

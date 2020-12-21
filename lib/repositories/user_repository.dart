@@ -1,17 +1,17 @@
-// Dart imports:
+// 🎯 Dart imports:
 import 'dart:async';
 
-// Flutter imports:
+// 🐦 Flutter imports:
 import 'package:flutter/foundation.dart';
 
-// Package imports:
+// 📦 Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:optional/optional.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import '../exceptions/auth_exception.dart';
 import '../exceptions/base_exception.dart';
 import '../exceptions/network_exception.dart';

@@ -1,4 +1,4 @@
-// Package imports:
+// 📦 Package imports:
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -6,7 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-// Project imports:
+// 🌎 Project imports:
 import 'network/network_info.dart';
 import 'repositories/test_repository.dart';
 import 'repositories/user_repository.dart';
