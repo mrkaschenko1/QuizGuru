@@ -35,9 +35,10 @@ class TestRepository {
     if (!isConnected) {
       return Left(NetworkException('No internet connection'));
     }
+
     var tests = await _firebaseDatabase.reference().child('tests').once();
 
-    var userTestsPassedInfo = await _firebaseDatabase
+    var userTestsPassed = await _firebaseDatabase
         .reference()
         .child('users')
         .child(_userRepository.user.uid)
@@ -47,12 +48,11 @@ class TestRepository {
     final List<TestModel> result = [];
 
     await tests.value.forEach((key, value) {
-      print(value['tries']);
       final testId = key;
       var userTries = 0;
       var bestScore = 0;
       try {
-        var userExperience = userTestsPassedInfo.value[testId];
+        var userExperience = userTestsPassed.value[testId];
         userTries = userExperience['user_tries'];
         bestScore = userExperience['best_score'];
       } catch (e) {}

@@ -19,8 +19,8 @@ void main() async {
   tz.initializeTimeZones();
   setLocalLocation(getLocation('Europe/Moscow'));
   HydratedBloc.storage = await HydratedStorage.build();
-  di.init();
   await Firebase.initializeApp();
+  di.init();
   final _firebaseMessaging = sl.get<FirebaseMessaging>();
   await _firebaseMessaging.subscribeToTopic('tests');
   _configureFirebaseMessaging(_firebaseMessaging);

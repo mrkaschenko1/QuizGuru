@@ -8,8 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 // 🌎 Project imports:
-import '../../app_localizations.dart';
-import '../../state_management/blocs/login/login_bloc.dart';
+import '../../../app_localizations.dart';
+import '../../../state_management/blocs/login/login_bloc.dart';
 import 'custom_auth_input.dart';
 
 class AuthForm extends StatefulWidget {
@@ -39,6 +39,7 @@ class _AuthFormState extends State<AuthForm> {
     final isValid = _formKey.currentState.validate();
 
     if (isValid) {
+      print('form is valid');
       _formKey.currentState.save();
       if (isLogin) {
         BlocProvider.of<LoginBloc>(context).add(LoginButtonPressed(

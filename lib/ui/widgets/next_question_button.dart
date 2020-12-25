@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 // 🌎 Project imports:
-import 'package:Quiz_Guru/state_management/cubits/question/question_cubit.dart';
 import '../../app_localizations.dart';
+import '../../state_management/cubits/question/question_cubit.dart';
 
 class NextQuestionButton extends StatelessWidget {
   const NextQuestionButton({

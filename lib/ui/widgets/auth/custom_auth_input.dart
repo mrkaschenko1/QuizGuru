@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import '../../app_localizations.dart';
+import '../../../app_localizations.dart';
 
 class CustomAuthInput extends StatelessWidget {
   final ThemeData theme;

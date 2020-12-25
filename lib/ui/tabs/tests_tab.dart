@@ -53,7 +53,7 @@ class TestsTab extends StatelessWidget {
                                         0,
                                         (previousValue, element) =>
                                             previousValue + element),
-                                current: state.user.points,
+                                current: state.user?.points ?? 0,
                                 annotation: AppLocalizations.of(context)
                                     .translate('points'),
                                 isPercent: false,
@@ -64,7 +64,7 @@ class TestsTab extends StatelessWidget {
                               width: _gaugeSize,
                               child: UserStatistics(
                                 total: state.tests.length,
-                                current: state.user.testsPassedCount,
+                                current: state.user?.testsPassedCount ?? 0,
                                 annotation: AppLocalizations.of(context)
                                     .translate('quizzes'),
                                 isPercent: false,
