@@ -2,12 +2,12 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import '../../app_localizations.dart';
-import '../../ui/widgets/home_wrapper.dart';
+import 'package:Quiz_Guru/app_localizations.dart';
+import 'package:Quiz_Guru/ui/widgets/home_wrapper.dart';
 
 class TestResultScreen extends StatelessWidget {
-  final questionsLength;
-  final totalScore;
+  final int questionsLength;
+  final int totalScore;
 
   const TestResultScreen(
       {@required this.questionsLength, @required this.totalScore});
@@ -24,11 +24,12 @@ class TestResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final double result = totalScore / questionsLength;
+    final result = totalScore / questionsLength;
     return Scaffold(
       backgroundColor: theme.primaryColor,
       body: Container(
-        padding: EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 15),
+        padding:
+            const EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -37,16 +38,16 @@ class TestResultScreen extends StatelessWidget {
             ),
             Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.all(40),
-              margin: EdgeInsets.only(left: 40, right: 40),
+              padding: const EdgeInsets.all(40),
+              margin: const EdgeInsets.only(left: 40, right: 40),
               decoration: BoxDecoration(
                   color: theme.cardColor,
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                  borderRadius: const BorderRadius.all(Radius.circular(16)),
                   border: Border.all(width: 2, color: theme.accentColor),
                   boxShadow: [
                     BoxShadow(
                       color: theme.accentColor,
-                      offset: Offset(0, 2),
+                      offset: const Offset(0, 2),
                     )
                   ]),
               child: Column(
@@ -92,8 +93,12 @@ class TestResultScreen extends StatelessWidget {
                   child: FlatButton(
                     color: theme.accentColor,
                     padding: const EdgeInsets.all(20),
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(16))),
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pushReplacementNamed(HomeWrapper.routeName);
+                    },
                     child: Text(
                       AppLocalizations.of(context)
                           .translate('back_to_tests_btn')
@@ -103,10 +108,6 @@ class TestResultScreen extends StatelessWidget {
                           fontWeight: FontWeight.w900,
                           color: theme.primaryColor),
                     ),
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed(HomeWrapper.routeName);
-                    },
                   ),
                 ),
               ],

@@ -6,9 +6,9 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 // 🌎 Project imports:
-import '../../../exceptions/network_exception.dart';
-import '../../../models/user_model.dart';
-import '../../../repositories/user_repository.dart';
+import 'package:Quiz_Guru/exceptions/network_exception.dart';
+import 'package:Quiz_Guru/models/user_model.dart';
+import 'package:Quiz_Guru/repositories/user_repository.dart';
 
 part 'user_state.dart';
 
@@ -18,7 +18,7 @@ class UserCubit extends Cubit<UserState> {
   final UserRepository repository;
 
   Future<void> fetchUser() async {
-    emit(UserState.loading());
+    emit(const UserState.loading());
     try {
       final user = await repository.getUserInfo();
       user.fold((l) => throw NetworkException("No internet connection"),

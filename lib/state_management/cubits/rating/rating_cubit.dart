@@ -6,8 +6,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 // 🌎 Project imports:
-import '../../../exceptions/network_exception.dart';
-import '../../../repositories/user_repository.dart';
+import 'package:Quiz_Guru/exceptions/network_exception.dart';
+import 'package:Quiz_Guru/repositories/user_repository.dart';
 
 part 'rating_state.dart';
 
@@ -17,7 +17,7 @@ class RatingCubit extends Cubit<RatingState> {
   final UserRepository repository;
 
   Future<void> fetchRating() async {
-    emit(RatingState.loading());
+    emit(const RatingState.loading());
     try {
       final rating = await repository.getRating();
       rating.fold((l) => throw NetworkException("No internet connection"),
@@ -30,7 +30,7 @@ class RatingCubit extends Cubit<RatingState> {
   Future<void> refreshRating() async {
     try {
       final rating = await repository.getRating();
-      var ratingList = [];
+      var ratingList = <dynamic>[];
       rating.fold((l) => throw NetworkException("No internet connection"),
           (r) => {ratingList = r});
       emit(RatingState.success(ratingList));

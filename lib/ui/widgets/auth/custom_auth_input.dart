@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import '../../../app_localizations.dart';
+import 'package:Quiz_Guru/app_localizations.dart';
 
 class CustomAuthInput extends StatelessWidget {
   final ThemeData theme;
-  final Function validator;
+  final String Function(String value) validator;
   final IconData icon;
   final String inputTitle;
   final TextEditingController controller;
@@ -31,7 +31,7 @@ class CustomAuthInput extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.cardColor,
         border: Border.all(width: 2, color: theme.accentColor),
-        borderRadius: BorderRadius.all(Radius.circular(16)),
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
       ),
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.only(left: 5, right: 5),
@@ -52,10 +52,10 @@ class CustomAuthInput extends StatelessWidget {
               color: theme.accentColor,
             ),
             prefixIconConstraints:
-                BoxConstraints(maxHeight: 24, maxWidth: 50, minWidth: 50),
+                const BoxConstraints(maxHeight: 24, maxWidth: 50, minWidth: 50),
             border: InputBorder.none,
             contentPadding:
-                EdgeInsets.only(left: 15, bottom: 15, top: 16, right: 10),
+                const EdgeInsets.only(left: 15, bottom: 15, top: 16, right: 10),
             floatingLabelBehavior: FloatingLabelBehavior.never,
             hintText:
                 AppLocalizations.of(context).translate(inputTitle).toString(),

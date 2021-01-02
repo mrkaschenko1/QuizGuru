@@ -9,12 +9,12 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart';
 
 // 🌎 Project imports:
-import 'injection_container.dart' as di;
-import 'injection_container.dart';
-import 'messaging/functions.dart' as MessagingFunctions;
-import 'ui/widgets/app_config_wrapper.dart';
+import 'package:Quiz_Guru/injection_container.dart' as di;
+import 'package:Quiz_Guru/injection_container.dart';
+import 'package:Quiz_Guru/messaging/functions.dart' as messaging_functions;
+import 'package:Quiz_Guru/ui/widgets/app_config_wrapper.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   tz.initializeTimeZones();
   setLocalLocation(getLocation('Europe/Moscow'));
@@ -27,17 +27,17 @@ void main() async {
   runApp(AppConfigWrapper());
 }
 
-void _configureFirebaseMessaging(FirebaseMessaging messaging) async {
+Future<void> _configureFirebaseMessaging(FirebaseMessaging messaging) async {
   messaging.configure(
     onMessage: (Map<String, dynamic> message) async {
-      print("onMessage: $message");
+      // print("onMessage: $message");
     },
-    onBackgroundMessage: MessagingFunctions.myBackgroundMessageHandler,
+    onBackgroundMessage: messaging_functions.myBackgroundMessageHandler,
     onLaunch: (Map<String, dynamic> message) async {
-      print("onLaunch: $message");
+      // print("onLaunch: $message");
     },
     onResume: (Map<String, dynamic> message) async {
-      print("onResume: $message");
+      // print("onResume: $message");
     },
   );
   return;

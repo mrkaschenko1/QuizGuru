@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
 
 // 🌎 Project imports:
-import '../../../models/question_model.dart';
-import '../../../state_management/cubits/question/question_cubit.dart';
+import 'package:Quiz_Guru/models/question_model.dart';
+import 'package:Quiz_Guru/state_management/cubits/question/question_cubit.dart';
 
 class MultipleVariant extends StatelessWidget {
   final QuestionModel question;
@@ -21,16 +21,15 @@ class MultipleVariant extends StatelessWidget {
       child: CheckboxGroup(
         checkColor: Colors.black,
         activeColor: theme.colorScheme.surface,
-        orientation: GroupedButtonsOrientation.VERTICAL,
         onSelected: (List selected) => {
-          BlocProvider.of<QuestionCubit>(context)
-              .showSelectedChoice(selected.map((e) => int.parse(e)).toList())
+          BlocProvider.of<QuestionCubit>(context).showSelectedChoice(
+              selected.map((dynamic e) => int.parse(e as String)).toList())
         },
         labels: List<String>.generate(
             question.options.length, (index) => index.toString()),
         checked:
             BlocProvider.of<QuestionCubit>(context).state.currentChoice == null
-                ? "0"
+                ? ["0"]
                 : BlocProvider.of<QuestionCubit>(context)
                     .state
                     .currentChoice
@@ -46,7 +45,7 @@ class MultipleVariant extends StatelessWidget {
                 children: <Widget>[
                   ClipRRect(
                     clipBehavior: Clip.hardEdge,
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    borderRadius: const BorderRadius.all(Radius.circular(8)),
                     child: Container(
                       height: 30,
                       width: 30,
@@ -55,24 +54,26 @@ class MultipleVariant extends StatelessWidget {
                             color: theme.accentColor,
                             width: 2,
                           ),
-                          borderRadius: BorderRadius.all(
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(8),
                           )),
                       child: ClipRRect(
                         clipBehavior: Clip.hardEdge,
-                        borderRadius: BorderRadius.all(Radius.circular(6)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(6)),
                         child: Transform.scale(
-                          child: Theme(
-                            child: cb,
-                            data: ThemeData(
-                                unselectedWidgetColor: Colors.transparent),
-                          ),
                           scale: 1.6,
+                          child: Theme(
+                            data: ThemeData(
+                              unselectedWidgetColor: Colors.transparent,
+                            ),
+                            child: cb,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   Expanded(

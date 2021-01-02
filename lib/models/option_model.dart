@@ -11,8 +11,7 @@ class OptionModel {
       : text = json['text'] as String,
         isRight = json['right'] as bool;
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => <String, dynamic>{
         'text': text,
         'right': isRight,
       };

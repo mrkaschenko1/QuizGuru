@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 
 enum AppLang {
-  EN,
-  RU,
+  en,
+  ru,
 }
 
 const appLangData = {
-  AppLang.EN: Locale('en', 'US'),
-  AppLang.RU: Locale('ru', 'RU'),
+  AppLang.en: Locale('en', 'US'),
+  AppLang.ru: Locale('ru', 'RU'),
 };

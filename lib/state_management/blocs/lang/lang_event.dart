@@ -1,14 +1,14 @@
 part of 'lang_bloc.dart';
 
 abstract class LangEvent extends Equatable {
-  LangEvent([List props = const []]);
+  const LangEvent();
 }
 
 class LangChanged extends LangEvent {
   final AppLang lang;
 
-  LangChanged({@required this.lang});
+  const LangChanged({@required this.lang});
 
   @override
-  List<Object> get props => [this.lang];
+  List<Object> get props => [lang];
 }

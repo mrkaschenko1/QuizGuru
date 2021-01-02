@@ -10,7 +10,7 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 // 🌎 Project imports:
-import '../../../repositories/user_repository.dart';
+import 'package:Quiz_Guru/repositories/user_repository.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -31,7 +31,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } else if (event is ShowSignUpForm) {
       yield SignUpFormState();
     } else if (event is LoginButtonPressed) {
-      yield LoginLoading(isLogin: true);
+      yield const LoginLoading(isLogin: true);
 
       try {
         final userCredential = await userRepository.signInWithEmailAndPassword(
@@ -49,7 +49,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield LoginFormState();
       }
     } else if (event is SignUpButtonPressed) {
-      yield LoginLoading(isLogin: false);
+      yield const LoginLoading(isLogin: false);
 
       try {
         final userCredential = await userRepository.signUp(

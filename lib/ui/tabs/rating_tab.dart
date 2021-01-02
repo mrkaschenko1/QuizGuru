@@ -6,14 +6,14 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // 🌎 Project imports:
-import '../../app_localizations.dart';
-import '../../injection_container.dart';
-import '../../state_management/cubits/rating/rating_cubit.dart';
-import '../../ui/widgets/error_tab.dart';
-import '../../ui/widgets/podium.dart';
+import 'package:Quiz_Guru/app_localizations.dart';
+import 'package:Quiz_Guru/injection_container.dart';
+import 'package:Quiz_Guru/state_management/cubits/rating/rating_cubit.dart';
+import 'package:Quiz_Guru/ui/widgets/error_tab.dart';
+import 'package:Quiz_Guru/ui/widgets/podium.dart';
 
 class RatingTab extends StatelessWidget {
-  void refreshTab(BuildContext context) async {
+  Future<void> refreshTab(BuildContext context) async {
     await BlocProvider.of<RatingCubit>(context).fetchRating();
   }
 
@@ -56,7 +56,7 @@ class RatingTab extends StatelessWidget {
 }
 
 class Rating extends StatelessWidget {
-  final rating;
+  final List<dynamic> rating;
 
   const Rating({
     this.rating,
@@ -65,7 +65,7 @@ class Rating extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(rating);
+    // print(rating);
     final theme = Theme.of(context);
     bool isEmpty;
     try {
@@ -74,134 +74,133 @@ class Rating extends StatelessWidget {
       isEmpty = true;
     }
     return Container(
-      margin: EdgeInsets.only(left: 25, right: 25, top: 15),
+      margin: const EdgeInsets.only(left: 25, right: 25, top: 15),
       width: double.infinity,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Podium(
             topUsers: rating.length >= 3
                 ? rating.take(3).toList()
                 : rating.take(rating.length).toList(),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Container(
             color: theme.accentColor,
             height: 1,
           ),
-          !isEmpty
-              ? Expanded(
-                  child: ListView(
-                    children: <Widget>[
-                      ...(rating.sublist(3).map((elem) {
-                        return Container(
-                          child: ListTile(
-                            dense: true,
-                            contentPadding:
-                                const EdgeInsets.only(right: 0, left: 0),
-                            leading: Container(
-                              width: 60,
-                              height: 60,
-                              child: Center(
-                                child: Text(
-                                  (rating.indexOf(elem) + 1).toString(),
-                                  style: TextStyle(
-                                      color: theme.accentColor,
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 24),
-                                ),
-                              ),
-                              decoration: BoxDecoration(
-                                color: theme.cardColor,
-                                border: Border.all(
-                                  width: 2,
-                                  color: theme.accentColor,
-                                ),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
+          if (!isEmpty)
+            Expanded(
+              child: ListView(
+                children: <Widget>[
+                  ...rating.sublist(3).map((dynamic elem) {
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 2),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: theme.accentColor, width: 2),
+                        borderRadius: BorderRadius.circular(16),
+                        color: theme.primaryColor,
+                        boxShadow: [
+                          BoxShadow(
+                              color: theme.accentColor,
+                              offset: const Offset(0, 2))
+                        ],
+                      ),
+                      child: ListTile(
+                        dense: true,
+                        contentPadding: const EdgeInsets.only(),
+                        leading: Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: theme.cardColor,
+                            border: Border.all(
+                              width: 2,
+                              color: theme.accentColor,
                             ),
-                            title: Text(
-                              elem['username'],
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Center(
+                            child: Text(
+                              (rating.indexOf(elem) + 1).toString(),
                               style: TextStyle(
                                   color: theme.accentColor,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 24,
-                                  letterSpacing: 0.5),
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 24),
                             ),
-                            trailing: SizedBox(
-                              height: 45,
-                              width: 45,
-                              child: Container(
-                                margin: EdgeInsets.only(right: 2),
-                                decoration: BoxDecoration(
-                                    color: theme.colorScheme.surface,
-                                    border: Border.all(
-                                        width: 2, color: theme.accentColor),
-                                    borderRadius: BorderRadius.circular(12),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: theme.accentColor,
-                                          offset: Offset(0, 1))
-                                    ]),
-                                child: Center(
-                                  child: Text(
-                                    elem['points'].toString(),
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                ),
+                          ),
+                        ),
+                        title: Text(
+                          elem['username'] as String,
+                          style: TextStyle(
+                              color: theme.accentColor,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 24,
+                              letterSpacing: 0.5),
+                        ),
+                        trailing: SizedBox(
+                          height: 45,
+                          width: 45,
+                          child: Container(
+                            margin: const EdgeInsets.only(right: 2),
+                            decoration: BoxDecoration(
+                                color: theme.colorScheme.surface,
+                                border: Border.all(
+                                    width: 2, color: theme.accentColor),
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: theme.accentColor,
+                                      offset: const Offset(0, 1))
+                                ]),
+                            child: Center(
+                              child: Text(
+                                elem['points'].toString(),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700),
                               ),
                             ),
                           ),
-                          margin: const EdgeInsets.only(bottom: 2),
-                          decoration: BoxDecoration(
-                            border:
-                                Border.all(color: theme.accentColor, width: 2),
-                            borderRadius: BorderRadius.circular(16),
-                            color: theme.primaryColor,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: theme.accentColor,
-                                  offset: Offset(0, 2))
-                            ],
-                          ),
-                        );
-                      }))
-                    ],
-                  ),
-                )
-              : Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        AppLocalizations.of(context)
-                            .translate('more_players_needed')
-                            .toString(),
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w800,
-                            color: theme.accentColor),
-                      ),
-                      Expanded(
-                        child: Image.asset(
-                          'assets/images/doodles/curious_person.png',
-                          height: 300,
-                          fit: BoxFit.scaleDown,
-                          alignment: Alignment.bottomCenter,
                         ),
                       ),
-                    ],
+                    );
+                  })
+                ],
+              ),
+            )
+          else
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const SizedBox(
+                    height: 20,
                   ),
-                ),
+                  Text(
+                    AppLocalizations.of(context)
+                        .translate('more_players_needed')
+                        .toString(),
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                        color: theme.accentColor),
+                  ),
+                  Expanded(
+                    child: Image.asset(
+                      'assets/images/doodles/curious_person.png',
+                      height: 300,
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.bottomCenter,
+                    ),
+                  ),
+                ],
+              ),
+            ),
         ],
-        crossAxisAlignment: CrossAxisAlignment.stretch,
       ),
     );
   }

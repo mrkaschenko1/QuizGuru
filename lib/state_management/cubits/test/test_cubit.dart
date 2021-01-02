@@ -6,11 +6,11 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 // 🌎 Project imports:
-import '../../../exceptions/network_exception.dart';
-import '../../../models/test_model.dart';
-import '../../../models/user_model.dart';
-import '../../../repositories/test_repository.dart';
-import '../../../repositories/user_repository.dart';
+import 'package:Quiz_Guru/exceptions/network_exception.dart';
+import 'package:Quiz_Guru/models/test_model.dart';
+import 'package:Quiz_Guru/models/user_model.dart';
+import 'package:Quiz_Guru/repositories/test_repository.dart';
+import 'package:Quiz_Guru/repositories/user_repository.dart';
 
 part 'test_state.dart';
 
@@ -22,7 +22,7 @@ class TestCubit extends Cubit<TestState> {
   final UserRepository userRepository;
 
   Future<void> fetchTests() async {
-    emit(TestState.loading());
+    emit(const TestState.loading());
     try {
       final tests = await testRepository.getTestsWithStatistics();
       final user = await userRepository.getUserInfo();
@@ -47,14 +47,14 @@ class TestCubit extends Cubit<TestState> {
       emit(TestState.success(startInProgress, state.user));
 
       var isTestPassed = false;
-      var transactionMap = await testRepository.runTestsPassedTransactionOnTest(
-          isTestPassed: isTestPassed, testId: id);
+      final transactionMap =
+          await testRepository.runTestsPassedTransactionOnTest(testId: id);
 
       transactionMap.fold(
           (l) => throw NetworkException("No internet connection"),
-          (r) => isTestPassed = r['is_test_passed']);
+          (r) => isTestPassed = r['is_test_passed'] as bool);
 
-      var transactionResult =
+      final transactionResult =
           await testRepository.runTestIncrementTransactionOnTest(
               isTestPassed: isTestPassed, testId: id);
       transactionResult.fold(

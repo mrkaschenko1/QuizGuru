@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 // 🌎 Project imports:
-import '../../injection_container.dart';
-import '../../ui/screens/auth_screen.dart';
-import '../../ui/screens/main_screen.dart';
+import 'package:Quiz_Guru/injection_container.dart';
+import 'package:Quiz_Guru/ui/screens/auth_screen.dart';
+import 'package:Quiz_Guru/ui/screens/main_screen.dart';
 
 class HomeWrapper extends StatelessWidget {
   static const routeName = '/';
@@ -18,7 +18,7 @@ class HomeWrapper extends StatelessWidget {
       stream: sl.get<FirebaseAuth>().authStateChanges(),
       builder: (ctx, userSnapshot) {
         if (userSnapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         } else if (userSnapshot.hasData && userSnapshot.data != null) {
           return MainScreen();
         } else {

@@ -1,4 +1,5 @@
 // 🎯 Dart imports:
+import 'dart:async';
 import 'dart:core';
 
 // 🐦 Flutter imports:
@@ -10,12 +11,12 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:timezone/timezone.dart';
 
 // 🌎 Project imports:
-import '../exceptions/base_exception.dart';
-import '../exceptions/network_exception.dart';
-import '../models/question_model.dart';
-import '../models/test_model.dart';
-import '../network/network_info.dart';
-import '../repositories/user_repository.dart';
+import 'package:Quiz_Guru/exceptions/base_exception.dart';
+import 'package:Quiz_Guru/exceptions/network_exception.dart';
+import 'package:Quiz_Guru/models/question_model.dart';
+import 'package:Quiz_Guru/models/test_model.dart';
+import 'package:Quiz_Guru/network/network_info.dart';
+import 'package:Quiz_Guru/repositories/user_repository.dart';
 
 class TestRepository {
   final NetworkInfo networkInfo;
@@ -31,14 +32,14 @@ class TestRepository {
 
   Future<Either<BaseException, List<TestModel>>>
       getTestsWithStatistics() async {
-    var isConnected = await networkInfo.isConnected;
+    final isConnected = await networkInfo.isConnected;
     if (!isConnected) {
       return Left(NetworkException('No internet connection'));
     }
 
-    var tests = await _firebaseDatabase.reference().child('tests').once();
+    final tests = await _firebaseDatabase.reference().child('tests').once();
 
-    var userTestsPassed = await _firebaseDatabase
+    final userTestsPassed = await _firebaseDatabase
         .reference()
         .child('users')
         .child(_userRepository.user.uid)
@@ -47,28 +48,31 @@ class TestRepository {
 
     final List<TestModel> result = [];
 
-    await tests.value.forEach((key, value) {
+    await tests.value.forEach((String key, Map<String, dynamic> value) {
       final testId = key;
       var userTries = 0;
       var bestScore = 0;
       try {
-        var userExperience = userTestsPassed.value[testId];
-        userTries = userExperience['user_tries'];
-        bestScore = userExperience['best_score'];
-      } catch (e) {}
+        final dynamic userExperience = userTestsPassed.value[testId];
+        userTries = userExperience['user_tries'] as int;
+        bestScore = userExperience['best_score'] as int;
+      } catch (e) {
+        rethrow;
+      }
       result.add(TestModel(
         id: key,
         questions: value['questions'] == null
             ? null
             : (value['questions'])
-                .map<QuestionModel>((i) => QuestionModel.fromJson(i))
+                .map<QuestionModel>(
+                    (Map<dynamic, dynamic> i) => QuestionModel.fromJson(i))
                 .toList() as List<QuestionModel>,
-        studentsPassed: value['students_passed'],
-        averageScore: value['average_score'],
-        totalPoints: value['total_points'],
-        title: value['title'],
+        studentsPassed: value['students_passed'] as int,
+        averageScore: value['average_score'] as double,
+        totalPoints: value['total_points'] as int,
+        title: value['title'] as String,
         userTries: userTries,
-        tries: value['tries'] ?? null,
+        tries: value['tries'] as int ?? 0,
         userBestScore: bestScore,
       ));
     });
@@ -77,31 +81,31 @@ class TestRepository {
 
   //runs before test starts
   Future<Either<BaseException, Map<String, dynamic>>>
-      runTestsPassedTransactionOnTest(
-          {bool isTestPassed, String testId}) async {
-    var isConnected = await networkInfo.isConnected;
+      runTestsPassedTransactionOnTest({String testId}) async {
+    final bool isConnected = await networkInfo.isConnected;
     if (!isConnected) {
       return Left(NetworkException('No internet connection'));
     }
     try {
-      final transactionResult = await _firebaseDatabase
+      var isTestPassed = false;
+
+      final TransactionResult transactionResult = await _firebaseDatabase
           .reference()
           .child('users')
           .child(_userRepository.user.uid)
-          .runTransaction((userTest) async {
+          .runTransaction((MutableData userTest) async {
         if (userTest == null) {
           return userTest;
         }
         if (userTest.value == null) {
           return userTest;
         }
-        if (!userTest.value.containsKey('tests_passed')) {
-          print('making tests_passed list');
-          userTest.value['tests_passed'] = Map<dynamic, dynamic>();
+        if (!(userTest.value.containsKey('tests_passed') as bool)) {
+          userTest.value['tests_passed'] = <String, dynamic>{};
         }
-        if (!userTest.value['tests_passed'].containsKey(testId)) {
-          print('we don\'t have our test in user list');
-          var testsPassed = userTest.value['tests_passed'];
+        if (!(userTest.value['tests_passed'].containsKey(testId) as bool)) {
+          // print("we don't have our test in user list");
+          final dynamic testsPassed = userTest.value['tests_passed'];
           testsPassed[testId] = {
             'user_tries': 1,
             'best_score': 0,
@@ -109,7 +113,7 @@ class TestRepository {
           };
           userTest.value['tests_passed'] = testsPassed;
         } else {
-          print('we have our test in list');
+          // print('we have our test in list');
           isTestPassed = true;
 
           await userTest.value['tests_passed'][testId]['user_tries']++;
@@ -117,26 +121,26 @@ class TestRepository {
         return userTest;
       });
 
-      int currentAttempt = await _firebaseDatabase
+      final currentAttempt = await _firebaseDatabase
           .reference()
           .child('users')
           .child(_userRepository.user.uid)
           .child('tests_passed/$testId/user_tries')
           .once()
-          .then((value) => value.value);
-      print('current attempt $currentAttempt');
+          .then((DataSnapshot value) => value.value as FutureOr<int>);
+      // print('current attempt $currentAttempt');
       await _firebaseDatabase
           .reference()
           .child('users')
           .child(_userRepository.user.uid)
           .child('tests_passed/$testId/attempts')
-          .update({
+          .update(<String, dynamic>{
         currentAttempt.toString(): {
           "start_time": TZDateTime.now(local).toIso8601String()
         }
       });
 
-      return Right({
+      return Right(<String, dynamic>{
         'transaction_result': transactionResult,
         'is_test_passed': isTestPassed
       });
@@ -148,11 +152,11 @@ class TestRepository {
   Future<Either<BaseException, TransactionResult>>
       runTestIncrementTransactionOnTest(
           {String testId, bool isTestPassed}) async {
-    var isConnected = await networkInfo.isConnected;
+    final isConnected = await networkInfo.isConnected;
     if (!isConnected) {
       return Left(NetworkException('No internet connection'));
     }
-    var transactionResult = await _firebaseDatabase
+    final transactionResult = await _firebaseDatabase
         .reference()
         .child('tests')
         .child(testId)
@@ -174,23 +178,23 @@ class TestRepository {
 
   Future<Either<BaseException, Map<String, dynamic>>>
       runUpdatePointsAndBestScore({String testId, int currentScore}) async {
-    var isConnected = await networkInfo.isConnected;
+    final bool isConnected = await networkInfo.isConnected;
     if (!isConnected) {
       return Left(NetworkException('No internet connection'));
     }
-    final userId = _userRepository.user.uid;
-    var userRef = _firebaseDatabase.reference().child('users').child(userId);
-    var diff = 0;
-    var transaction = await userRef.runTransaction((user) async {
+    final String userId = _userRepository.user.uid;
+    final userRef = _firebaseDatabase.reference().child('users').child(userId);
+    int diff = 0;
+    final TransactionResult transaction =
+        await userRef.runTransaction((MutableData user) async {
       if (user == null) {
         return user;
       }
       if (user.value == null) {
         return user;
       }
-      var test = await user.value['tests_passed'][testId];
-      print(test['best_score']);
-      var prevBestScore = test['best_score'];
+      final dynamic test = await user.value['tests_passed'][testId];
+      final int prevBestScore = test['best_score'] as int;
       if (currentScore > prevBestScore) {
         diff = currentScore - prevBestScore;
         user.value['points'] += diff;
@@ -200,39 +204,39 @@ class TestRepository {
       return user;
     });
 
-    int currentAttempt = await _firebaseDatabase
+    final int currentAttempt = await _firebaseDatabase
         .reference()
         .child('users')
         .child(_userRepository.user.uid)
         .child('tests_passed/$testId/user_tries')
         .once()
-        .then((value) => value.value);
-    print('current attempt $currentAttempt');
+        .then((DataSnapshot value) => value.value as FutureOr<int>);
     await _firebaseDatabase
         .reference()
         .child('users')
         .child(_userRepository.user.uid)
         .child('tests_passed/$testId/attempts/${currentAttempt.toString()}')
-        .update({
+        .update(<String, dynamic>{
       'end_time': TZDateTime.now(local).toIso8601String(),
       'score': currentScore
     });
 
-    return Right({'transaction_result': transaction, 'diff': diff});
+    return Right(
+        <String, dynamic>{'transaction_result': transaction, 'diff': diff});
   }
 
   Future<Either<BaseException, TransactionResult>> runUpdateTestPoints(
       String testId, int diff) async {
-    var isConnected = await networkInfo.isConnected;
+    final isConnected = await networkInfo.isConnected;
     if (!isConnected) {
       return Left(NetworkException('No internet connection'));
     }
-    var totalPointsRef = _firebaseDatabase
+    final totalPointsRef = _firebaseDatabase
         .reference()
         .child('tests')
         .child(testId)
         .child('total_points');
-    var transactionResult =
+    final transactionResult =
         await totalPointsRef.runTransaction((testPoints) async {
       if (testPoints == null) {
         return testPoints;
@@ -240,7 +244,7 @@ class TestRepository {
       if (testPoints.value == null) {
         return testPoints;
       }
-      print(testPoints.value);
+      // print(testPoints.value);
       testPoints.value += diff;
       return testPoints;
     });

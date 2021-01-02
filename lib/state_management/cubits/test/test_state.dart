@@ -18,7 +18,7 @@ class TestState extends Equatable {
   const TestState.started(TestModel test)
       : this._(status: TestStatus.started, test: test);
 
-  TestState.failure(String message,
+  const TestState.failure(String message,
       {List<TestModel> tests = const [], UserModel user})
       : this._(
             status: TestStatus.failure,

@@ -7,15 +7,16 @@ import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 
 // 🌎 Project imports:
-import '../../../exceptions/network_exception.dart';
-import '../../../models/option_model.dart';
-import '../../../models/test_model.dart';
-import '../../../repositories/test_repository.dart';
+import 'package:Quiz_Guru/exceptions/network_exception.dart';
+import 'package:Quiz_Guru/models/option_model.dart';
+import 'package:Quiz_Guru/models/test_model.dart';
+import 'package:Quiz_Guru/repositories/test_repository.dart';
 
 part 'question_state.dart';
 
 class QuestionCubit extends Cubit<QuestionState> {
-  QuestionCubit({@required this.repository}) : super(QuestionState.initial());
+  QuestionCubit({@required this.repository})
+      : super(const QuestionState.initial());
 
   final TestRepository repository;
 
@@ -27,20 +28,20 @@ class QuestionCubit extends Cubit<QuestionState> {
   bool _isRight(
       {@required List<OptionModel> selected,
       @required List<OptionModel> right}) {
-    Function eq = const DeepCollectionEquality.unordered().equals;
-    return eq(selected, right);
+    final Function eq = const DeepCollectionEquality.unordered().equals;
+    return eq(selected, right) as bool;
   }
 
-  void getNextQuestion(List<OptionModel> selectedOptions) async {
+  Future<void> getNextQuestion(List<OptionModel> selectedOptions) async {
     final questionId = state.currentQuestionInd;
     final List<OptionModel> options = state.test.questions[questionId].options;
     final List<OptionModel> rightOptions =
         options.where((element) => element.isRight).toList();
 
-    var newScore = _isRight(right: rightOptions, selected: selectedOptions)
+    final newScore = _isRight(right: rightOptions, selected: selectedOptions)
         ? (state.currentScore + 1)
         : state.currentScore;
-    print('new score is $newScore');
+    // print('new score is $newScore');
     emit(QuestionState.question(
         test: state.test,
         currentQuestionInd: state.currentQuestionInd + 1,
@@ -48,7 +49,7 @@ class QuestionCubit extends Cubit<QuestionState> {
   }
 
   void showSelectedChoice(List<int> value) {
-    print('selected choice $value');
+    // print('selected choice $value');
     emit(QuestionState.changedChoice(
         currentQuestionInd: state.currentQuestionInd,
         currentScore: state.currentScore,
@@ -57,13 +58,13 @@ class QuestionCubit extends Cubit<QuestionState> {
   }
 
   void addOrRemoveToChoice(int value) {
-    List<int> newChoiceList = List<int>()..addAll(state.currentChoice);
+    final List<int> newChoiceList = <int>[...state.currentChoice];
     if (state.currentChoice.contains(value)) {
       newChoiceList.remove(value);
     } else {
       newChoiceList.add(value);
     }
-    print('selected choice $newChoiceList');
+    // print('selected choice $newChoiceList');
     emit(QuestionState.changedChoice(
         currentQuestionInd: state.currentQuestionInd,
         currentScore: state.currentScore,
@@ -71,10 +72,10 @@ class QuestionCubit extends Cubit<QuestionState> {
         test: state.test));
   }
 
-  void finishTest(List<OptionModel> selectedOptions) async {
+  Future<void> finishTest(List<OptionModel> selectedOptions) async {
     final test = state.test;
     final questionId = state.currentQuestionInd;
-    var newScore;
+    int newScore;
 
     if (selectedOptions != null) {
       final List<OptionModel> options = test.questions[questionId].options;
@@ -95,16 +96,17 @@ class QuestionCubit extends Cubit<QuestionState> {
         currentChoice: state.currentChoice));
 
     try {
-      var transactionMap = await repository.runUpdatePointsAndBestScore(
+      final transactionMap = await repository.runUpdatePointsAndBestScore(
           testId: state.test.id, currentScore: newScore);
 
       var diff = 0;
 
-      transactionMap.fold(
-          (l) => throw NetworkException(l.message), (r) => {diff = r['diff']});
+      transactionMap.fold((l) => throw NetworkException(l.message),
+          (r) => diff = r['diff'] as int);
 
       if (diff != 0) {
-        var result = await repository.runUpdateTestPoints(state.test.id, diff);
+        final result =
+            await repository.runUpdateTestPoints(state.test.id, diff);
         result.fold((l) => throw NetworkException(l.message), (r) => null);
       }
       emit(QuestionState.endTest(
@@ -115,7 +117,7 @@ class QuestionCubit extends Cubit<QuestionState> {
       emit(QuestionState.failure(
           test: test,
           currentQuestionInd: test.questions.length - 1,
-          currentChoice: 0,
+          currentChoice: const [0],
           currentScore: state.currentScore,
           message: e.message));
     }

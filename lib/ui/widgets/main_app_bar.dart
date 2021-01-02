@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 // 🌎 Project imports:
-import '../../app_localizations.dart';
-import '../../injection_container.dart';
-import '../../repositories/user_repository.dart';
-import '../../ui/screens/settings_screen.dart';
+import 'package:Quiz_Guru/app_localizations.dart';
+import 'package:Quiz_Guru/injection_container.dart';
+import 'package:Quiz_Guru/repositories/user_repository.dart';
+import 'package:Quiz_Guru/ui/screens/settings_screen.dart';
 
 class MainAppBar extends StatelessWidget {
   final userRepository = sl.get<UserRepository>();
@@ -27,33 +27,30 @@ class MainAppBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                if (!isUserTab)
-                  Text(
-                    AppLocalizations.of(context).translate('hello').toString(),
-                    style: TextStyle(
-                        color: theme.accentColor,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w900),
-                  ),
-                if (!isUserTab)
-                  Text(
-                    AppLocalizations.of(context)
-                        .translate('app_bar_subtitle')
-                        .toString(),
-                    style: TextStyle(
-                        color: theme.accentColor,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w900),
-                  )
-              ],
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              if (!isUserTab)
+                Text(
+                  AppLocalizations.of(context).translate('hello').toString(),
+                  style: TextStyle(
+                      color: theme.accentColor,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w900),
+                ),
+              if (!isUserTab)
+                Text(
+                  AppLocalizations.of(context)
+                      .translate('app_bar_subtitle')
+                      .toString(),
+                  style: TextStyle(
+                      color: theme.accentColor,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w900),
+                )
+            ],
           ),
           Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               IconButton(
                 icon: Icon(
@@ -62,9 +59,9 @@ class MainAppBar extends StatelessWidget {
                   size: 30,
                 ),
                 onPressed: () async {
-                  Navigator.of(context).push(MaterialPageRoute(
+                  Navigator.of(context)
+                      .push<dynamic>(MaterialPageRoute<dynamic>(
                     builder: (ctx) => SettingsScreen(),
-                    maintainState: true,
                   ));
                 },
               ),

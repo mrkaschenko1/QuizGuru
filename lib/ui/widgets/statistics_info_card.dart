@@ -1,11 +1,12 @@
 // 🐦 Flutter imports:
 import 'package:flutter/material.dart';
 
+@immutable
 class StatisticsInfoCard extends StatelessWidget {
-  final title;
-  final value;
+  final String title;
+  final int value;
 
-  StatisticsInfoCard({@required this.title, @required this.value});
+  const StatisticsInfoCard({@required this.title, @required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +21,13 @@ class StatisticsInfoCard extends StatelessWidget {
         color: theme.cardColor,
         border: Border.all(color: theme.accentColor, width: 2),
         boxShadow: [
-          BoxShadow(color: theme.accentColor, offset: Offset(0, 2)),
+          BoxShadow(
+            color: theme.accentColor,
+            offset: const Offset(0, 2),
+          ),
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           FittedBox(

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 // 🌎 Project imports:
-import '../../app_localizations.dart';
-import '../../state_management/cubits/question/question_cubit.dart';
+import 'package:Quiz_Guru/app_localizations.dart';
+import 'package:Quiz_Guru/state_management/cubits/question/question_cubit.dart';
 
 class NextQuestionButton extends StatelessWidget {
   const NextQuestionButton({
@@ -27,8 +27,9 @@ class NextQuestionButton extends StatelessWidget {
       child: FlatButton(
         color: theme.accentColor,
         padding: const EdgeInsets.all(20),
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(16))),
+        onPressed: () => onPressedCallback(state, context),
         child: state.status == QuestionStatus.loading
             ? Center(
                 child: LinearProgressIndicator(
@@ -57,7 +58,6 @@ class NextQuestionButton extends StatelessWidget {
                   )
                 ],
               ),
-        onPressed: () => onPressedCallback(state, context),
       ),
     );
   }

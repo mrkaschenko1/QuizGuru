@@ -5,28 +5,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 // 🌎 Project imports:
-import '../../ui/tabs/rating_tab.dart';
-import '../../ui/tabs/tests_tab.dart';
-import '../../ui/tabs/user_tab.dart';
-import '../../ui/widgets/main_app_bar.dart';
+import 'package:Quiz_Guru/ui/tabs/rating_tab.dart';
+import 'package:Quiz_Guru/ui/tabs/tests_tab.dart';
+import 'package:Quiz_Guru/ui/tabs/user_tab.dart';
+import 'package:Quiz_Guru/ui/widgets/main_app_bar.dart';
 
-enum Tabs { TESTS, RATING, USER }
+enum Tabs { tests, rating, user }
 
 class MainScreen extends StatefulWidget {
-  static const routeName = '/main';
+  static const String routeName = '/main';
 
   @override
   _MainScreenState createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
-  var _pageController;
+  PageController _pageController;
   Tabs _currentIndex;
 
   @override
   void initState() {
-    _pageController = PageController(keepPage: true);
-    _currentIndex = Tabs.TESTS;
+    _pageController = PageController();
+    _currentIndex = Tabs.tests;
     super.initState();
   }
 
@@ -45,7 +45,7 @@ class _MainScreenState extends State<MainScreen> {
         child: Column(
           children: <Widget>[
             MainAppBar(
-              isUserTab: _currentIndex == Tabs.USER,
+              isUserTab: _currentIndex == Tabs.user,
             ),
             Expanded(
               child: PageView(
@@ -55,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
                       _currentIndex = Tabs.values[newPage];
                     });
                   },
-                  children: [TestsTab(), RatingTab(), UserTab()]),
+                  children: <Widget>[TestsTab(), RatingTab(), UserTab()]),
             ),
           ],
         ),
@@ -67,20 +67,20 @@ class _MainScreenState extends State<MainScreen> {
             IconThemeData(size: 24, color: Theme.of(context).accentColor),
         unselectedIconTheme: IconThemeData(
             size: 20, color: Theme.of(context).unselectedWidgetColor),
-        items: [
-          const BottomNavigationBarItem(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
             icon: Icon(
               FeatherIcons.checkSquare,
             ),
             label: '',
           ),
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Icon(
               FeatherIcons.star,
             ),
             label: '',
           ),
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Icon(
               FeatherIcons.user,
             ),

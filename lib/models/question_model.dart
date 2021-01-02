@@ -1,7 +1,7 @@
 // 🌎 Project imports:
-import 'option_model.dart';
+import 'package:Quiz_Guru/models/option_model.dart';
 
-enum QuestionType { One, Multiple }
+enum QuestionType { one, multiple }
 
 class QuestionModel {
   final String text;
@@ -14,17 +14,18 @@ class QuestionModel {
         options = json['options'] == null
             ? null
             : (json['options'])
-                .map<OptionModel>((i) => OptionModel.fromJson(i))
+                .map<OptionModel>(
+                    (Map<dynamic, dynamic> i) => OptionModel.fromJson(i))
                 .toList() as List<OptionModel>;
 
   QuestionType getQuestionType() {
-    int counter = 0;
-    for (OptionModel option in this.options) {
+    var counter = 0;
+    for (final option in options) {
       if (option.isRight) counter++;
     }
     if (counter > 1) {
-      return QuestionType.Multiple;
+      return QuestionType.multiple;
     }
-    return QuestionType.One;
+    return QuestionType.one;
   }
 }

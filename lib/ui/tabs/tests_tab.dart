@@ -6,16 +6,16 @@ import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // 🌎 Project imports:
-import '../../app_localizations.dart';
-import '../../injection_container.dart';
-import '../../state_management/cubits/test/test_cubit.dart';
-import '../../ui/screens/question_screen.dart';
-import '../../ui/widgets/error_tab.dart';
-import '../../ui/widgets/test_card.dart';
-import '../../ui/widgets/user_statistics.dart';
+import 'package:Quiz_Guru/app_localizations.dart';
+import 'package:Quiz_Guru/injection_container.dart';
+import 'package:Quiz_Guru/state_management/cubits/test/test_cubit.dart';
+import 'package:Quiz_Guru/ui/screens/question_screen.dart';
+import 'package:Quiz_Guru/ui/widgets/error_tab.dart';
+import 'package:Quiz_Guru/ui/widgets/test_card.dart';
+import 'package:Quiz_Guru/ui/widgets/user_statistics.dart';
 
 class TestsTab extends StatelessWidget {
-  void refreshTab(BuildContext context) async {
+  Future<void> refreshTab(BuildContext context) async {
     await BlocProvider.of<TestCubit>(context).fetchTests();
   }
 
@@ -32,12 +32,12 @@ class TestsTab extends StatelessWidget {
             } else {
               if (state.tests.isNotEmpty) {
                 return Container(
-                  margin: EdgeInsets.only(left: 5, right: 5, top: 5),
+                  margin: const EdgeInsets.only(left: 5, right: 5, top: 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.only(top: 10, bottom: 10),
+                        padding: const EdgeInsets.only(top: 10, bottom: 10),
                         width: double.infinity,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -105,9 +105,9 @@ class TestsTab extends StatelessWidget {
                                 top: 10, bottom: 20, right: 10),
                             itemBuilder: (context, index) => Container(
                                 width: 200,
-                                padding: EdgeInsets.only(right: 10),
+                                padding: const EdgeInsets.only(right: 10),
                                 child: TestCard(test: state.tests[index])),
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
                           ),
                         ),
@@ -130,8 +130,9 @@ class TestsTab extends StatelessWidget {
                 content: Text(state.message),
               ));
             } else if (state.status == TestStatus.started) {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => QuestionScreen(test: state.test)));
+              Navigator.of(context).pushReplacement<dynamic, dynamic>(
+                  MaterialPageRoute<dynamic>(
+                      builder: (context) => QuestionScreen(test: state.test)));
             }
           },
         ));

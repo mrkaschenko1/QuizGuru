@@ -8,9 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 // 🌎 Project imports:
-import '../../../app_localizations.dart';
-import '../../../state_management/blocs/login/login_bloc.dart';
-import 'custom_auth_input.dart';
+import 'package:Quiz_Guru/app_localizations.dart';
+import 'package:Quiz_Guru/state_management/blocs/login/login_bloc.dart';
+import 'package:Quiz_Guru/ui/widgets/auth/custom_auth_input.dart';
 
 class AuthForm extends StatefulWidget {
   const AuthForm();
@@ -39,7 +39,7 @@ class _AuthFormState extends State<AuthForm> {
     final isValid = _formKey.currentState.validate();
 
     if (isValid) {
-      print('form is valid');
+      // print('form is valid');
       _formKey.currentState.save();
       if (isLogin) {
         BlocProvider.of<LoginBloc>(context).add(LoginButtonPressed(
@@ -87,8 +87,7 @@ class _AuthFormState extends State<AuthForm> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     Widget loginForm({@required bool isLogin, bool isLoading = false}) =>
-        Column(crossAxisAlignment: CrossAxisAlignment.center, children: <
-            Widget>[
+        Column(children: <Widget>[
           Text(
             isLogin
                 ? AppLocalizations.of(context)
@@ -112,7 +111,7 @@ class _AuthFormState extends State<AuthForm> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   AnimatedContainer(
-                    duration: Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 300),
                     height: isLogin ? 0 : 70,
                     curve: Curves.easeInOut,
                     child: CustomAuthInput(
@@ -139,7 +138,7 @@ class _AuthFormState extends State<AuthForm> {
                     icon: FeatherIcons.lock,
                     obscureText: true,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   Column(
@@ -147,38 +146,42 @@ class _AuthFormState extends State<AuthForm> {
                     children: <Widget>[
                       if (!isLoading)
                         Container(
-                            width: double.infinity,
-                            child: FlatButton(
-                              padding: EdgeInsets.all(20),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(16))),
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                        isLogin
-                                            ? AppLocalizations.of(context)
-                                                .translate('login_btn')
-                                                .toString()
-                                                .toUpperCase()
-                                            : AppLocalizations.of(context)
-                                                .translate('register_btn')
-                                                .toString()
-                                                .toUpperCase(),
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w900,
-                                            color: theme.primaryColor)),
-                                    Icon(
-                                      FeatherIcons.chevronRight,
-                                      size: 26,
-                                      color: theme.primaryColor,
-                                    )
-                                  ]),
-                              onPressed: () => _trySubmit(isLogin),
-                              color: theme.accentColor,
-                            )),
+                          width: double.infinity,
+                          child: FlatButton(
+                            padding: const EdgeInsets.all(20),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(16),
+                              ),
+                            ),
+                            onPressed: () => _trySubmit(isLogin),
+                            color: theme.accentColor,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                    isLogin
+                                        ? AppLocalizations.of(context)
+                                            .translate('login_btn')
+                                            .toString()
+                                            .toUpperCase()
+                                        : AppLocalizations.of(context)
+                                            .translate('register_btn')
+                                            .toString()
+                                            .toUpperCase(),
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w900,
+                                        color: theme.primaryColor)),
+                                Icon(
+                                  FeatherIcons.chevronRight,
+                                  size: 26,
+                                  color: theme.primaryColor,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       if (!isLoading)
                         Container(
                           margin: const EdgeInsets.only(bottom: 5, top: 5),
@@ -198,12 +201,13 @@ class _AuthFormState extends State<AuthForm> {
                           child: FlatButton(
                               padding: const EdgeInsets.all(20),
                               color: theme.colorScheme.surface,
-                              shape: RoundedRectangleBorder(
+                              shape: const RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(16))),
                               onPressed: () =>
-                                  BlocProvider.of<LoginBloc>(context)
-                                      .add(GoogleSignUpButtonPressed(isLogin)),
+                                  BlocProvider.of<LoginBloc>(context).add(
+                                      GoogleSignUpButtonPressed(
+                                          isLogin: isLogin)),
                               child: Text(
                                 AppLocalizations.of(context)
                                     .translate('sign_in_with_google_btn')
@@ -236,7 +240,16 @@ class _AuthFormState extends State<AuthForm> {
                                     fontWeight: FontWeight.w600),
                               ),
                               FlatButton(
-                                padding: EdgeInsets.only(left: 5),
+                                padding: const EdgeInsets.only(left: 5),
+                                onPressed: () {
+                                  if (isLogin) {
+                                    BlocProvider.of<LoginBloc>(context)
+                                        .add(ShowSignUpForm());
+                                  } else {
+                                    BlocProvider.of<LoginBloc>(context)
+                                        .add(ShowLoginForm());
+                                  }
+                                },
                                 child: Text(
                                   isLogin
                                       ? AppLocalizations.of(context)
@@ -250,21 +263,12 @@ class _AuthFormState extends State<AuthForm> {
                                       fontSize: 16,
                                       fontWeight: FontWeight.w800),
                                 ),
-                                onPressed: () {
-                                  if (isLogin) {
-                                    BlocProvider.of<LoginBloc>(context)
-                                        .add(ShowSignUpForm());
-                                  } else {
-                                    BlocProvider.of<LoginBloc>(context)
-                                        .add(ShowLoginForm());
-                                  }
-                                },
                               ),
                             ],
                           ),
                         ),
                       if (isLoading)
-                        FittedBox(
+                        const FittedBox(
                             fit: BoxFit.cover,
                             child: Center(
                               child: CircularProgressIndicator(),
@@ -277,7 +281,7 @@ class _AuthFormState extends State<AuthForm> {
           )
         ]);
     return Container(
-      margin: const EdgeInsets.only(top: 0, left: 40, right: 40),
+      margin: const EdgeInsets.only(left: 40, right: 40),
       child: Column(
         children: <Widget>[
           BlocBuilder<LoginBloc, LoginState>(
@@ -302,7 +306,7 @@ class _AuthFormState extends State<AuthForm> {
                 ));
               }
             },
-            child: SizedBox(
+            child: const SizedBox(
               height: 10,
             ),
           ),

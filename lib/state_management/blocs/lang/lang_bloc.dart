@@ -8,14 +8,14 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:meta/meta.dart';
 
 // 🌎 Project imports:
-import '../../../app_localizations.dart';
-import './app_langs.dart';
+import 'package:Quiz_Guru/app_localizations.dart';
+import 'package:Quiz_Guru/state_management/blocs/lang/app_langs.dart';
 
 part 'lang_event.dart';
 part 'lang_state.dart';
 
 class LangBloc extends HydratedBloc<LangEvent, LangState> {
-  LangBloc() : super(LangState(langData: appLangData[AppLang.EN]));
+  LangBloc() : super(LangState(langData: appLangData[AppLang.en]));
 
   @override
   Stream<LangState> mapEventToState(
@@ -30,14 +30,14 @@ class LangBloc extends HydratedBloc<LangEvent, LangState> {
   @override
   LangState fromJson(Map<String, dynamic> json) {
     if (json['locale'] == 'en') {
-      return LangState(langData: appLangData[AppLang.EN]);
+      return LangState(langData: appLangData[AppLang.en]);
     }
-    return LangState(langData: appLangData[AppLang.RU]);
+    return LangState(langData: appLangData[AppLang.ru]);
   }
 
   @override
   Map<String, String> toJson(LangState state) {
-    if (state.langData.languageCode == appLangData[AppLang.EN].languageCode) {
+    if (state.langData.languageCode == appLangData[AppLang.en].languageCode) {
       return {'locale': 'en'};
     }
     return {'locale': 'ru'};

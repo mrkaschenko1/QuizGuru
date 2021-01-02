@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 // 🌎 Project imports:
-import '../../app_localizations.dart';
+import 'package:Quiz_Guru/app_localizations.dart';
 
 class ErrorTab extends StatelessWidget {
-  final Function refreshTab;
+  final void Function() refreshTab;
 
   const ErrorTab({
     Key key,
@@ -21,12 +21,17 @@ class ErrorTab extends StatelessWidget {
       children: [
         Expanded(child: Image.asset('assets/images/doodles/error_person.png')),
         Container(
-            margin: EdgeInsets.only(right: 20, left: 20, bottom: 50),
+            margin: const EdgeInsets.only(right: 20, left: 20, bottom: 50),
             width: double.infinity,
             child: FlatButton(
-              padding: EdgeInsets.all(20),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(16))),
+              padding: const EdgeInsets.all(20),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(16),
+                ),
+              ),
+              onPressed: refreshTab,
+              color: Theme.of(context).accentColor,
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text(
@@ -43,8 +48,6 @@ class ErrorTab extends StatelessWidget {
                   color: Theme.of(context).primaryColor,
                 )
               ]),
-              onPressed: refreshTab,
-              color: Theme.of(context).accentColor,
             )),
       ],
     );

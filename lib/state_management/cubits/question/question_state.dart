@@ -25,13 +25,12 @@ class QuestionState extends Equatable {
       @required this.currentScore,
       this.message});
 
-  QuestionState.question({
-    status: QuestionStatus.question,
-    test,
-    currentChoice = const [0],
-    currentQuestionInd,
-    currentQuestion,
-    currentScore,
+  const QuestionState.question({
+    QuestionStatus status = QuestionStatus.question,
+    TestModel test,
+    List<int> currentChoice = const [0],
+    int currentQuestionInd,
+    int currentScore,
   }) : this._(
             status: status,
             test: test,
@@ -39,24 +38,24 @@ class QuestionState extends Equatable {
             currentQuestionInd: currentQuestionInd,
             currentScore: currentScore);
 
-  QuestionState.endTest({
-    status: QuestionStatus.finished,
-    test,
-    currentScore,
-    currentQuestionInd,
+  const QuestionState.endTest({
+    QuestionStatus status = QuestionStatus.finished,
+    TestModel test,
+    int currentScore,
+    int currentQuestionInd,
   }) : this._(
             status: status,
             test: test,
             currentScore: currentScore,
             currentQuestionInd: currentQuestionInd);
 
-  QuestionState.failure({
-    status: QuestionStatus.failure,
-    test,
-    currentQuestionInd,
-    currentChoice,
-    currentScore,
-    message,
+  const QuestionState.failure({
+    QuestionStatus status = QuestionStatus.failure,
+    TestModel test,
+    int currentQuestionInd,
+    List<int> currentChoice,
+    int currentScore,
+    String message,
   }) : this._(
           status: status,
           test: test,
@@ -66,17 +65,17 @@ class QuestionState extends Equatable {
           message: message,
         );
 
-  QuestionState.initial({
-    status: QuestionStatus.initial,
-    currentScore: 0,
+  const QuestionState.initial({
+    QuestionStatus status = QuestionStatus.initial,
+    int currentScore = 0,
   }) : this._(status: status, currentScore: currentScore);
 
-  QuestionState.loading({
-    status: QuestionStatus.loading,
-    test,
-    currentScore,
-    currentChoice,
-    currentQuestionInd,
+  const QuestionState.loading({
+    QuestionStatus status = QuestionStatus.loading,
+    TestModel test,
+    int currentScore,
+    List<int> currentChoice,
+    int currentQuestionInd,
   }) : this._(
             status: status,
             currentScore: currentScore,
@@ -84,12 +83,12 @@ class QuestionState extends Equatable {
             currentChoice: currentChoice,
             currentQuestionInd: currentQuestionInd);
 
-  QuestionState.changedChoice({
-    status: QuestionStatus.changedChoice,
-    currentQuestionInd,
-    currentScore,
-    currentChoice,
-    test,
+  const QuestionState.changedChoice({
+    QuestionStatus status = QuestionStatus.changedChoice,
+    int currentQuestionInd,
+    int currentScore,
+    List<int> currentChoice,
+    TestModel test,
   }) : this._(
             status: status,
             currentQuestionInd: currentQuestionInd,

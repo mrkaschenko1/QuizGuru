@@ -6,12 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 // 🌎 Project imports:
-import '../../app_localizations.dart';
-import '../../injection_container.dart';
-import '../../state_management/blocs/lang/lang_bloc.dart';
-import '../../state_management/blocs/theme/theme_bloc.dart';
-import '../screens/main_screen.dart';
-import 'home_wrapper.dart';
+import 'package:Quiz_Guru/app_localizations.dart';
+import 'package:Quiz_Guru/injection_container.dart';
+import 'package:Quiz_Guru/state_management/blocs/lang/lang_bloc.dart';
+import 'package:Quiz_Guru/state_management/blocs/theme/theme_bloc.dart';
+import 'package:Quiz_Guru/ui/screens/main_screen.dart';
+import 'package:Quiz_Guru/ui/widgets/home_wrapper.dart';
 
 class AppConfigWrapper extends StatelessWidget {
   @override
@@ -31,11 +31,11 @@ class AppConfigWrapper extends StatelessWidget {
               HomeWrapper.routeName: (context) => HomeWrapper(),
               MainScreen.routeName: (context) => MainScreen(),
             },
-            supportedLocales: [
+            supportedLocales: const [
               Locale('en', 'US'),
               Locale('ru', 'RU'),
             ],
-            localizationsDelegates: [
+            localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,

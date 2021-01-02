@@ -1,6 +1,10 @@
 part of 'user_cubit.dart';
 
-enum UserStatus { loading, success, failure }
+enum UserStatus {
+  loading,
+  success,
+  failure,
+}
 
 class UserState extends Equatable {
   const UserState._({
@@ -12,17 +16,25 @@ class UserState extends Equatable {
   const UserState.loading() : this._();
 
   const UserState.success(UserModel user)
-      : this._(status: UserStatus.success, user: user);
+      : this._(
+          status: UserStatus.success,
+          user: user,
+        );
 
-  UserState.failure(String message) : this._(
-      status: UserStatus.failure,
-      message: message,
-  );
+  const UserState.failure(String message)
+      : this._(
+          status: UserStatus.failure,
+          message: message,
+        );
 
   final UserStatus status;
   final UserModel user;
   final String message;
 
   @override
-  List<Object> get props => [status, user, message];
+  List<Object> get props => [
+        status,
+        user,
+        message,
+      ];
 }

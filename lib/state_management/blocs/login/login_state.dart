@@ -12,7 +12,7 @@ class LoginInitial extends LoginState {}
 class LoginLoading extends LoginState {
   final bool isLogin;
 
-  LoginLoading({this.isLogin});
+  const LoginLoading({this.isLogin});
 
   @override
   List<Object> get props => [isLogin];

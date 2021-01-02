@@ -2,18 +2,18 @@
 import 'package:flutter/foundation.dart';
 
 // 🌎 Project imports:
-import 'question_model.dart';
+import 'package:Quiz_Guru/models/question_model.dart';
 
 class TestModel {
-  final id;
-  final title;
+  final String id;
+  final String title;
   final List<QuestionModel> questions;
-  final studentsPassed;
-  final averageScore;
-  final totalPoints;
-  final userTries;
-  final tries;
-  final userBestScore;
+  final int studentsPassed;
+  final double averageScore;
+  final int totalPoints;
+  final int userTries;
+  final int tries;
+  final int userBestScore;
   final bool isStarting;
 
   TestModel({
@@ -43,7 +43,7 @@ class TestModel {
   }) {
     return TestModel(
         id: id ?? this.id,
-        questions: questions ?? this.questions,
+        questions: questions as List<QuestionModel> ?? this.questions,
         studentsPassed: studentsPassed ?? this.studentsPassed,
         averageScore: averageScore ?? this.averageScore,
         userTries: userTries ?? this.userTries,
@@ -53,12 +53,4 @@ class TestModel {
         title: title ?? this.title,
         isStarting: isStarting ?? this.isStarting);
   }
-
-//  TestModel.fromJson(Map<String, dynamic> json)
-//      : text = json['text'] as String,
-//        options = json['options'] == null
-//            ? null
-//            : (jsonConverter.jsonDecode(json['options']) as List)
-//            .map((i) => OptionModel.fromJson(i))
-//            .toList();
 }

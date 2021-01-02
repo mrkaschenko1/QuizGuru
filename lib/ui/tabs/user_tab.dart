@@ -6,14 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 // 🌎 Project imports:
-import '../../app_localizations.dart';
-import '../../injection_container.dart';
-import '../../state_management/cubits/user/user_cubit.dart';
-import '../../ui/widgets/error_tab.dart';
-import '../../ui/widgets/statistics_info_card.dart';
+import 'package:Quiz_Guru/app_localizations.dart';
+import 'package:Quiz_Guru/injection_container.dart';
+import 'package:Quiz_Guru/state_management/cubits/user/user_cubit.dart';
+import 'package:Quiz_Guru/ui/widgets/error_tab.dart';
+import 'package:Quiz_Guru/ui/widgets/statistics_info_card.dart';
 
 class UserTab extends StatelessWidget {
-  void refreshTab(BuildContext context) async {
+  Future<void> refreshTab(BuildContext context) async {
     await BlocProvider.of<UserCubit>(context).fetchUser();
   }
 
@@ -29,11 +29,10 @@ class UserTab extends StatelessWidget {
           } else {
             if (state.user != null) {
               return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Container(
                     clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                     ),
                     child: SvgPicture.asset(
@@ -41,7 +40,7 @@ class UserTab extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
@@ -51,7 +50,7 @@ class UserTab extends StatelessWidget {
                         fontSize: 32,
                         color: theme.accentColor),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
@@ -65,13 +64,13 @@ class UserTab extends StatelessWidget {
                     margin: const EdgeInsets.only(
                         left: 10, right: 10, bottom: 10, top: 15),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Padding(
                           padding: const EdgeInsets.all(10),
                           child: Column(
                             children: <Widget>[
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   StatisticsInfoCard(
                                     title: AppLocalizations.of(context)
@@ -86,9 +85,8 @@ class UserTab extends StatelessWidget {
                                     value: state.user.testsPassedCount,
                                   ),
                                 ],
-                                mainAxisAlignment: MainAxisAlignment.center,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 15,
                               ),
                               StatisticsInfoCard(

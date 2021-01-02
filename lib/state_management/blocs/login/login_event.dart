@@ -26,11 +26,8 @@ class SignUpButtonPressed extends LoginEvent {
   final String password;
   final String email;
 
-  const SignUpButtonPressed({
-    @required this.username,
-    @required this.password,
-    @required this.email
-  });
+  const SignUpButtonPressed(
+      {@required this.username, @required this.password, @required this.email});
 
   @override
   List<Object> get props => [username, password, email];
@@ -43,14 +40,13 @@ class SignUpButtonPressed extends LoginEvent {
 class GoogleSignUpButtonPressed extends LoginEvent {
   final bool isLogin;
 
-  GoogleSignUpButtonPressed(this.isLogin);
+  const GoogleSignUpButtonPressed({@required this.isLogin});
 
   @override
   List<Object> get props => [isLogin];
 
   @override
-  String toString() =>
-      'GoogleSignUpButtonPressed';
+  String toString() => 'GoogleSignUpButtonPressed';
 }
 
 class ShowLoginForm extends LoginEvent {

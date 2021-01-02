@@ -2,17 +2,17 @@
 import 'package:flutter/material.dart';
 
 enum AppTheme {
-  Light,
-  Dark,
+  light,
+  dark,
 }
 
-final appThemeData = {
-  AppTheme.Light: getLightTheme(),
-  AppTheme.Dark: getDarkTheme(),
+final appThemeData = <AppTheme, ThemeData>{
+  AppTheme.light: _getLightTheme(),
+  AppTheme.dark: _getDarkTheme(),
 };
 
-Function getLightTheme = () {
-  final colorScheme = ColorScheme(
+ThemeData _getLightTheme() {
+  const colorScheme = ColorScheme(
       primary: Colors.white,
       primaryVariant: Color(0xffebd7ca),
       onPrimary: Color(0xff18191F),
@@ -35,16 +35,16 @@ Function getLightTheme = () {
     scaffoldBackgroundColor: colorScheme.background,
     cardColor: Colors.white,
     backgroundColor: colorScheme.background,
-    unselectedWidgetColor: Color(0xFF656565),
-    textTheme: TextTheme(
+    unselectedWidgetColor: const Color(0xFF656565),
+    textTheme: const TextTheme(
       caption: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
     ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
-};
+}
 
-Function getDarkTheme = () {
-  final colorScheme = ColorScheme(
+ThemeData _getDarkTheme() {
+  const colorScheme = ColorScheme(
       primary: Color(0xff18191F),
       primaryVariant: Color(0xff18191F),
       onPrimary: Colors.white,
@@ -65,12 +65,12 @@ Function getDarkTheme = () {
     primaryColorLight: colorScheme.primaryVariant,
     accentColor: colorScheme.secondary,
     scaffoldBackgroundColor: colorScheme.background,
-    cardColor: Color(0xff202129),
+    cardColor: const Color(0xff202129),
     backgroundColor: colorScheme.background,
-    unselectedWidgetColor: Color(0xFF656565),
-    textTheme: TextTheme(
+    unselectedWidgetColor: const Color(0xFF656565),
+    textTheme: const TextTheme(
       caption: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
     ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
-};
+}

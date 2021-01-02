@@ -2,13 +2,13 @@
 import 'package:flutter/material.dart';
 
 // 🌎 Project imports:
-import '../../app_localizations.dart';
+import 'package:Quiz_Guru/app_localizations.dart';
 
 class PodiumItem extends StatelessWidget {
-  final height;
-  final place;
-  final points;
-  final userName;
+  final double height;
+  final int place;
+  final int points;
+  final String userName;
 
   const PodiumItem(
       {Key key, this.height, this.place, this.points, this.userName})
@@ -34,7 +34,7 @@ class PodiumItem extends StatelessWidget {
               color: theme.accentColor,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 2,
           ),
           Text(
@@ -47,15 +47,14 @@ class PodiumItem extends StatelessWidget {
               color: theme.accentColor,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Container(
             height: height,
-            margin: EdgeInsets.symmetric(horizontal: 1),
+            margin: const EdgeInsets.symmetric(horizontal: 1),
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.black, width: 2),
-                color: theme.accentColor),
+                border: Border.all(width: 2), color: theme.accentColor),
             child: Center(
               child: Text(
                 place.toString(),

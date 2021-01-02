@@ -12,11 +12,11 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:optional/optional.dart';
 
 // 🌎 Project imports:
-import '../exceptions/auth_exception.dart';
-import '../exceptions/base_exception.dart';
-import '../exceptions/network_exception.dart';
-import '../models/user_model.dart';
-import '../network/network_info.dart';
+import 'package:Quiz_Guru/exceptions/auth_exception.dart';
+import 'package:Quiz_Guru/exceptions/base_exception.dart';
+import 'package:Quiz_Guru/exceptions/network_exception.dart';
+import 'package:Quiz_Guru/models/user_model.dart';
+import 'package:Quiz_Guru/network/network_info.dart';
 
 class UserRepository {
   final NetworkInfo networkInfo;
@@ -37,13 +37,13 @@ class UserRepository {
     @required String email,
     @required String password,
   }) async {
-    var isConnected = await networkInfo.isConnected;
+    final isConnected = await networkInfo.isConnected;
     if (!isConnected) {
       return Left(NetworkException('No internet connection'));
     }
     try {
-      UserCredential signInResult = await _firebaseAuth
-          .signInWithEmailAndPassword(email: email, password: password);
+      final signInResult = await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
       return Right(signInResult);
     } catch (e) {
       return Left(AuthException(e.toString()));
@@ -55,13 +55,13 @@ class UserRepository {
     @required String email,
     @required String password,
   }) async {
-    var isConnected = await networkInfo.isConnected;
+    final isConnected = await networkInfo.isConnected;
     if (!isConnected) {
       return Left(NetworkException('No internet connection'));
     }
     try {
-      UserCredential signUpResult = await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
+      final signUpResult = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
       await _firebaseDatabase
           .reference()
           .child('users')
@@ -70,7 +70,7 @@ class UserRepository {
         "username": username,
         "email": email,
         "points": 0,
-        "tests_passed": [],
+        "tests_passed": <String>[],
         "lang": "en"
       });
       return Right(signUpResult);
@@ -80,7 +80,7 @@ class UserRepository {
   }
 
   Future<Either<BaseException, UserCredential>> signInWithGoogle() async {
-    var isConnected = await networkInfo.isConnected;
+    final isConnected = await networkInfo.isConnected;
     if (!isConnected) {
       return Left(NetworkException('No internet connection'));
     }
@@ -106,7 +106,7 @@ class UserRepository {
         final User currentUser = _firebaseAuth.currentUser;
         assert(user.uid == currentUser.uid);
 
-        var userProfile = await _firebaseDatabase
+        final userProfile = await _firebaseDatabase
             .reference()
             .child('users')
             .child(currentUser.uid)
@@ -120,7 +120,7 @@ class UserRepository {
             "username": currentUser.displayName,
             "email": currentUser.email,
             "points": 0,
-            "tests_passed": []
+            "tests_passed": <String>[]
           });
         }
       }
@@ -131,76 +131,80 @@ class UserRepository {
   }
 
   Future<Either<BaseException, Optional>> logout() async {
-    var isConnected = await networkInfo.isConnected;
+    final isConnected = await networkInfo.isConnected;
     if (!isConnected) {
       return Left(NetworkException('No internet connection'));
     }
     try {
       await _googleSignIn.signOut();
       await _firebaseAuth.signOut();
-      return Right(Optional.empty());
+      return const Right(Optional<dynamic>.empty());
     } catch (e) {
       return Left(AuthException(e.toString()));
     }
   }
 
   Future<Either<BaseException, List<dynamic>>> getRating() async {
-    var isConnected = await networkInfo.isConnected;
+    final isConnected = await networkInfo.isConnected;
     if (!isConnected) {
       return Left(NetworkException('No internet connection'));
     }
-    var usersSnapshot = await _firebaseDatabase
+    final usersSnapshot = await _firebaseDatabase
         .reference()
         .child('users')
         .orderByChild('points')
         .limitToLast(10)
         .once();
 
-    var usersData = [];
-    usersSnapshot.value.map((userId, user) {
-      usersData.add({"username": user['username'], "points": user['points']});
+    final usersData = <Map<String, dynamic>>[];
+    usersSnapshot.value.map((String userId, Map<String, dynamic> user) {
+      usersData.add(<String, dynamic>{
+        "username": user['username'],
+        "points": user['points']
+      });
       return MapEntry(userId, user);
     });
-    usersData.sort((b, a) =>
-        a['points'].compareTo(b['points'])); //sorting in descending order
+    usersData.sort((Map<String, dynamic> b, Map<String, dynamic> a) =>
+        (a['points'] as int)
+            .compareTo(b['points'] as int)); //sorting in descending order
     return Right(usersData);
   }
 
   Future<Either<BaseException, UserModel>> getUserInfo() async {
-    var isConnected = await networkInfo.isConnected;
+    final isConnected = await networkInfo.isConnected;
     if (!isConnected) {
       return Left(NetworkException('No internet connection'));
     }
-    var fireBaseRef = _firebaseDatabase.reference();
-    var currentUser = await fireBaseRef
+    final fireBaseRef = _firebaseDatabase.reference();
+    final currentUser = await fireBaseRef
         .child('users')
         .child(FirebaseAuth.instance.currentUser.uid)
         .once();
-    var userPoints = currentUser.value['points'];
-    var usersBetter = await fireBaseRef
+    final userPoints = currentUser.value['points'] as int;
+    final usersBetter = await fireBaseRef
         .child('users')
         .orderByChild('points')
         .startAt(userPoints + 1)
         .once();
 
-    var userRating;
+    int userRating;
     if (usersBetter.value == null) {
       userRating = 1;
     } else {
-      userRating = usersBetter.value.length + 1;
+      userRating = usersBetter.value.length + 1 as int;
     }
 
-    var testsCount;
-    if (!currentUser.value.containsKey('tests_passed')) {
+    int testsCount;
+    if (!(currentUser.value.containsKey('tests_passed') as bool)) {
       testsCount = 0;
     } else {
-      testsCount = currentUser.value['tests_passed'].length;
+      testsCount = currentUser.value['tests_passed'].length as int;
     }
 
     return Right(UserModel(
         id: user.uid,
-        username: currentUser.value['username'],
-        email: currentUser.value['email'],
+        username: currentUser.value['username'] as String,
+        email: currentUser.value['email'] as String,
         testsPassedCount: testsCount,
         ratingPosition: userRating,
         points: userPoints));

@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // 🌎 Project imports:
-import '../../injection_container.dart';
-import '../../state_management/blocs/login/login_bloc.dart';
-import '../widgets/auth/auth_form.dart';
+import 'package:Quiz_Guru/injection_container.dart';
+import 'package:Quiz_Guru/state_management/blocs/login/login_bloc.dart';
+import 'package:Quiz_Guru/ui/widgets/auth/auth_form.dart';
 
 class AuthScreen extends StatelessWidget {
   @override
@@ -15,7 +15,7 @@ class AuthScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
-        child: Stack(children: [
+        child: Stack(children: <Widget>[
           Positioned(
             top: 75,
             left: -25,
@@ -25,11 +25,11 @@ class AuthScreen extends StatelessWidget {
             ),
           ),
           LayoutBuilder(
-            builder: (context, constraints) => Container(
-                margin: EdgeInsets.only(top: 230),
+            builder: (_, __) => Container(
+                margin: const EdgeInsets.only(top: 230),
                 child: BlocProvider<LoginBloc>(
-                    create: (context) => sl.get<LoginBloc>(),
-                    child: AuthForm())),
+                    create: (_) => sl.get<LoginBloc>(),
+                    child: const AuthForm())),
           ),
         ]),
       ),
